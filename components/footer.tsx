@@ -3,7 +3,7 @@
 import { Facebook, Instagram, Phone, Mail, MapPin } from "lucide-react"
 
 interface FooterProps {
-  language: "sq" | "en"
+  language?: "sq" | "en"
 }
 
 const translations = {
@@ -33,7 +33,7 @@ const translations = {
   },
 }
 
-export function Footer({ language }: FooterProps) {
+export function Footer({ language = "sq" }: FooterProps) {
   const t = translations[language]
 
   const scrollToSection = (sectionId: string) => {

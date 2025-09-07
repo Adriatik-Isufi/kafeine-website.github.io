@@ -4,8 +4,8 @@ import { useState, useEffect } from "react"
 import { LanguageToggle } from "./language-toggle"
 
 interface NavigationProps {
-  language: "sq" | "en"
-  onLanguageChange: (lang: "sq" | "en") => void
+  language?: "sq" | "en"
+  onLanguageChange?: (lang: "sq" | "en") => void
 }
 
 const translations = {
@@ -29,7 +29,7 @@ const translations = {
   },
 }
 
-function Navigation({ language, onLanguageChange }: NavigationProps) {
+function Navigation({ language = "sq", onLanguageChange }: NavigationProps) {
   const [isScrolled, setIsScrolled] = useState(false)
   const t = translations[language]
 
@@ -127,9 +127,11 @@ function Navigation({ language, onLanguageChange }: NavigationProps) {
           </button>
         </div>
 
-        <div className="opacity-60 hover:opacity-100 transition-opacity">
-          <LanguageToggle onLanguageChange={onLanguageChange} currentLang={language} />
-        </div>
+        {onLanguageChange && (
+          <div className="opacity-60 hover:opacity-100 transition-opacity">
+            <LanguageToggle onLanguageChange={onLanguageChange} currentLang={language} />
+          </div>
+        )}
       </div>
     </nav>
   )

@@ -1,12 +1,20 @@
 {
-  "name": "my-v0-project",
+  "name": "kafeine-website",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "build": "next build",
+    "export": "next build && next export",
+    "deploy": "npm run export && touch out/.nojekyll",
     "dev": "next dev",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "docker:build": "docker build -t kafeine-website .",
+    "docker:run": "docker run -p 8900:3000 kafeine-website",
+    "docker:dev": "docker compose up dev -d",
+    "docker:prod": "docker compose up app -d",
+    "docker:stop": "docker compose down",
+    "docker:logs": "docker compose logs -f"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
