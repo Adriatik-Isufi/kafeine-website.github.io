@@ -460,7 +460,7 @@ import { getImagePath } from "@/lib/utils"
 <img src={getImagePath("/images/logo.png")} alt="Logo" />
 
 // For background images:
-<div style={{ backgroundImage: `url(${getImagePath("/images/hero.jpg")})` }} />
+<div style={% raw %}{{ backgroundImage: `url(${getImagePath("/images/hero.jpg")})` }}{% endraw %} />
 ```
 
 **Why This is Needed:**
