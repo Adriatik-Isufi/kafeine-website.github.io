@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { MapPin, Phone, Clock } from "lucide-react"
 import { DotLottieReact } from "@lottiefiles/dotlottie-react"
 import Image from "next/image"
+import { getImagePath } from "@/lib/utils"
 
 interface ContactSectionProps {
   language: "sq" | "en"
@@ -106,7 +107,7 @@ export function ContactSection({ language }: ContactSectionProps) {
         {/* Left Half - Full Height Map Image */}
         <div className="relative min-h-[50vh] lg:min-h-screen cursor-pointer group" onClick={() => window.open('https://maps.app.goo.gl/wNuyyjrLL8s8Mzwb7', '_blank')}>
           <Image
-            src="/pristina-map-dark.png"
+            src={getImagePath("/pristina-map-dark.png")}
             alt="Pristina Map"
             fill
             className="object-cover group-hover:scale-105 transition-transform duration-300"
