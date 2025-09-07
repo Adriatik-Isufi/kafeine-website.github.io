@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { getImagePath } from "@/lib/utils"
 
 interface MenuSectionProps {
   language: "sq" | "en"
@@ -73,27 +74,27 @@ export function MenuSection({ language }: MenuSectionProps) {
 
   const menuItems = {
     drinks: [
-      { name: t.espresso, desc: t.espressoDesc, price: "150 L", image: "/images/coffee-pour.jpg" },
-      { name: t.cappuccino, desc: t.cappuccinoDesc, price: "200 L", image: "/images/coffee-pour.jpg" },
-      { name: t.latte, desc: t.latteDesc, price: "220 L", image: "/images/coffee-pour.jpg" },
-      { name: t.tea, desc: t.teaDesc, price: "120 L", image: "/herbal-tea.jpg" },
-      { name: t.juice, desc: t.juiceDesc, price: "180 L", image: "/fresh-orange-juice.png" },
-      { name: t.smoothie, desc: t.smoothieDesc, price: "250 L", image: "/berry-smoothie.png" },
+      { name: t.espresso, desc: t.espressoDesc, price: "150 L", image: getImagePath("/images/coffee-pour.jpg") },
+      { name: t.cappuccino, desc: t.cappuccinoDesc, price: "200 L", image: getImagePath("/images/coffee-pour.jpg") },
+      { name: t.latte, desc: t.latteDesc, price: "220 L", image: getImagePath("/images/coffee-pour.jpg") },
+      { name: t.tea, desc: t.teaDesc, price: "120 L", image: getImagePath("/herbal-tea.jpg") },
+      { name: t.juice, desc: t.juiceDesc, price: "180 L", image: getImagePath("/fresh-orange-juice.png") },
+      { name: t.smoothie, desc: t.smoothieDesc, price: "250 L", image: getImagePath("/berry-smoothie.png") },
     ],
     food: [
       {
         name: "Sandwich",
         desc: "Fresh sandwich with local ingredients",
         price: "280 L",
-        image: "/images/coffee-pour.jpg",
+        image: getImagePath("/images/coffee-pour.jpg"),
       },
-      { name: "Salad", desc: "Mixed green salad", price: "320 L", image: "/images/coffee-pour.jpg" },
-      { name: "Pasta", desc: "Homemade pasta", price: "450 L", image: "/images/coffee-pour.jpg" },
+      { name: "Salad", desc: "Mixed green salad", price: "320 L", image: getImagePath("/images/coffee-pour.jpg") },
+      { name: "Pasta", desc: "Homemade pasta", price: "450 L", image: getImagePath("/images/coffee-pour.jpg") },
     ],
     desserts: [
-      { name: t.carrotCake, desc: t.carrotCakeDesc, price: "300 L", image: "/images/carrot-cake.jpg" },
-      { name: t.cheesecake, desc: t.cheesecakeDesc, price: "350 L", image: "/images/lemon-cheesecake.jpg" },
-      { name: t.tiramisu, desc: t.tiramisuDesc, price: "320 L", image: "/images/lotus-cheesecake.jpg" },
+      { name: t.carrotCake, desc: t.carrotCakeDesc, price: "300 L", image: getImagePath("/images/carrot-cake.jpg") },
+      { name: t.cheesecake, desc: t.cheesecakeDesc, price: "350 L", image: getImagePath("/images/lemon-cheesecake.jpg") },
+      { name: t.tiramisu, desc: t.tiramisuDesc, price: "320 L", image: getImagePath("/images/lotus-cheesecake.jpg") },
     ],
   }
 

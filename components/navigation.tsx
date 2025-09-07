@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { LanguageToggle } from "./language-toggle"
+import { getImagePath } from "@/lib/utils"
 
 interface NavigationProps {
   language?: "sq" | "en"
@@ -58,7 +59,7 @@ function Navigation({ language = "sq", onLanguageChange }: NavigationProps) {
     >
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         <div className="flex items-center">
-          <img src="/images/logo.png" alt="Kafeinë" className="h-16 w-16" />
+          <img src={getImagePath("/images/logo.png")} alt="Kafeinë" className="h-16 w-16" />
         </div>
 
         <div className="hidden md:flex items-center space-x-8">

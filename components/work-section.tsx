@@ -2,6 +2,7 @@
 
 import { Wifi, Zap, Coffee, Users, Clock, MapPin } from "lucide-react"
 import Image from "next/image"
+import { getImagePath } from "@/lib/utils"
 
 interface WorkSectionProps {
   language: "sq" | "en"
@@ -104,7 +105,7 @@ export function WorkSection({ language }: WorkSectionProps) {
                 {/* Main workspace image */}
                 <div className="relative overflow-hidden rounded-3xl shadow-2xl transform rotate-1 hover:rotate-0 transition-transform duration-500">
                   <Image
-                    src="/images/workspace.png"
+                    src={getImagePath("/images/workspace.png")}
                     alt="Woman working in coffee shop"
                     width={600}
                     height={400}
@@ -120,7 +121,7 @@ export function WorkSection({ language }: WorkSectionProps) {
                 {/* Overlapping second image */}
                 <div className="absolute -bottom-10 -right-10 w-64 h-64 overflow-hidden rounded-2xl shadow-xl transform -rotate-3 hover:rotate-0 transition-transform duration-500 border-4 border-white">
                   <Image
-                    src="/images/workspace-male.png"
+                    src={getImagePath("/images/workspace-male.png")}
                     alt="Man working in coffee shop"
                     width={300}
                     height={300}

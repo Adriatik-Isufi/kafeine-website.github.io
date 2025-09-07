@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { getImagePath } from "@/lib/utils"
 
 interface GallerySectionProps {
   language: "sq" | "en"
@@ -27,13 +28,13 @@ export function GallerySection({ language }: GallerySectionProps) {
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
 
   const images = [
-    { src: "/images/coffee-pour.jpg", alt: "Coffee Pour", size: "large" },
-    { src: "/images/carrot-cake.jpg", alt: "Carrot Cake", size: "medium" },
-    { src: "/images/berry-cake.jpg", alt: "Berry Cake", size: "small" },
-    { src: "/images/lemon-cheesecake.jpg", alt: "Lemon Cheesecake", size: "medium" },
-    { src: "/images/lemon-cake.jpg", alt: "Lemon Cake", size: "large" },
-    { src: "/images/carrot-cake-slice.jpg", alt: "Carrot Cake Slice", size: "small" },
-    { src: "/images/lotus-cheesecake.jpg", alt: "Lotus Cheesecake", size: "medium" },
+    { src: getImagePath("/images/coffee-pour.jpg"), alt: "Coffee Pour", size: "large" },
+    { src: getImagePath("/images/carrot-cake.jpg"), alt: "Carrot Cake", size: "medium" },
+    { src: getImagePath("/images/berry-cake.jpg"), alt: "Berry Cake", size: "small" },
+    { src: getImagePath("/images/lemon-cheesecake.jpg"), alt: "Lemon Cheesecake", size: "medium" },
+    { src: getImagePath("/images/lemon-cake.jpg"), alt: "Lemon Cake", size: "large" },
+    { src: getImagePath("/images/carrot-cake-slice.jpg"), alt: "Carrot Cake Slice", size: "small" },
+    { src: getImagePath("/images/lotus-cheesecake.jpg"), alt: "Lotus Cheesecake", size: "medium" },
   ]
 
   return (

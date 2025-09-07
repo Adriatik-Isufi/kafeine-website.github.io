@@ -1,6 +1,7 @@
 "use client"
 
 import { Facebook, Instagram, Phone, Mail, MapPin } from "lucide-react"
+import { getImagePath } from "@/lib/utils"
 
 interface FooterProps {
   language?: "sq" | "en"
@@ -49,7 +50,7 @@ export function Footer({ language = "sq" }: FooterProps) {
         <div className="grid md:grid-cols-4 gap-8">
           <div className="md:col-span-2">
             <div className="flex items-center space-x-2 mb-4">
-              <img src="/images/logo.png" alt="Kafeinë" className="h-8 w-8" />
+              <img src={getImagePath("/images/logo.png")} alt="Kafeinë" className="h-8 w-8" />
               <span className="text-2xl font-bold">Kafeinë</span>
             </div>
             <p className="text-accent-foreground/80 leading-relaxed max-w-md">{t.description}</p>
