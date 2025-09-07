@@ -30,6 +30,8 @@ const translations = {
     workHere: "Puno Këtu",
     workDescription:
       "Sill laptopën tënde, porosit kafenë e preferuar dhe gëzo një ditë produktive në mjedisin tonë të ngrohtë dhe frymëzues.",
+    cta: "Eja dhe Puno me Ne!",
+    ctaDesc: "Çdo ditë nga 07:00 deri në 23:00, hapësira jonë është e gatshme për ju. Thjesht ejani, zgjidhni tavolinën tuaj të preferuar dhe filloni punën.",
   },
   en: {
     title: "Workspace",
@@ -52,6 +54,8 @@ const translations = {
     workHere: "Work Here",
     workDescription:
       "Bring your laptop, order your favorite coffee and enjoy a productive day in our warm and inspiring environment.",
+    cta: "Come and Work with Us!",
+    ctaDesc: "Every day from 07:00 to 23:00, our space is ready for you. Just come, choose your preferred table and start working.",
   },
 }
 
@@ -62,82 +66,129 @@ export function WorkSection({ language }: WorkSectionProps) {
     { icon: Wifi, title: t.wifi, desc: t.wifiDesc },
     { icon: Zap, title: t.power, desc: t.powerDesc },
     { icon: Users, title: t.quiet, desc: t.quietDesc },
+  ]
+
+  const bottomFeatures = [
     { icon: Coffee, title: t.comfort, desc: t.comfortDesc },
     { icon: Clock, title: t.hours, desc: t.hoursDesc },
     { icon: MapPin, title: t.location, desc: t.locationDesc },
   ]
 
   return (
-    <section id="workspace" className="py-20 bg-gradient-to-br from-background via-muted/20 to-primary/5">
+    <section id="workspace" className="py-20 bg-gradient-to-br from-background via-muted/20 to-primary/5 overflow-hidden">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-20">
+        {/* Header */}
+        <div className="text-center mb-16">
           <h2 className="text-4xl md:text-6xl font-bold text-foreground mb-6">{t.title}</h2>
           <p className="text-xl md:text-2xl text-muted-foreground mb-8">{t.subtitle}</p>
           <p className="text-lg leading-relaxed max-w-4xl mx-auto text-muted-foreground">{t.description}</p>
         </div>
 
-        <div className="relative mb-20">
-          {/* Main content area with overlapping images */}
-          <div className="grid lg:grid-cols-12 gap-8 items-center">
-            {/* Left side - Features */}
-            <div className="lg:col-span-5 space-y-8">
-              <div className="space-y-6">
-                {features.slice(0, 3).map((feature, index) => (
+        {/* Main Content Grid with Asymmetric Layout */}
+        <div className="relative max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-12 gap-8 mb-20">
+            
+            {/* Left Column - Features + First Image */}
+            <div className="lg:col-span-5 space-y-6">
+              {/* Feature Cards */}
+              <div className="space-y-4">
+                {features.map((feature, index) => (
                   <div
                     key={index}
-                    className="flex items-start gap-4 p-6 rounded-2xl bg-white/50 backdrop-blur-sm border border-primary/10 hover:bg-white/70 transition-all duration-300"
+                    className="group relative overflow-hidden"
                   >
-                    <div className="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center flex-shrink-0">
-                      <feature.icon className="w-6 h-6 text-white" />
-                    </div>
-                    <div>
-                      <h4 className="text-lg font-semibold mb-1 text-foreground">{feature.title}</h4>
-                      <p className="text-muted-foreground text-sm">{feature.desc}</p>
+                    <div className="flex items-start gap-4 p-5 rounded-2xl bg-white/60 backdrop-blur-sm border border-primary/10 hover:bg-white/80 transition-all duration-300 hover:shadow-xl hover:scale-[1.02]">
+                      <div className="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                        <feature.icon className="w-6 h-6 text-white" />
+                      </div>
+                      <div>
+                        <h4 className="text-lg font-semibold mb-1 text-foreground">{feature.title}</h4>
+                        <p className="text-muted-foreground text-sm leading-relaxed">{feature.desc}</p>
+                      </div>
                     </div>
                   </div>
                 ))}
               </div>
+
+              {/* Woman with Tea Image - Positioned below features */}
+              <div className="relative group cursor-pointer">
+                <div className="overflow-hidden rounded-3xl shadow-2xl transform hover:scale-[1.02] transition-all duration-500">
+                  <Image
+                    src={getImagePath("/New Batch/DNnqzMuIqqi_7.jpg")}
+                    alt="Woman with tea"
+                    width={500}
+                    height={400}
+                    className="w-full h-[320px] object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+              </div>
             </div>
 
-            {/* Center - Large image */}
+            {/* Right Column - Hero Image + Overlapping Elements */}
             <div className="lg:col-span-7 relative">
+              {/* Main Hero Image */}
               <div className="relative">
-                {/* Main workspace image */}
-                <div className="relative overflow-hidden rounded-3xl shadow-2xl transform rotate-1 hover:rotate-0 transition-transform duration-500">
+                <div className="overflow-hidden rounded-3xl shadow-2xl transform rotate-1 hover:rotate-0 transition-all duration-500">
                   <Image
                     src={getImagePath("/images/workspace.png")}
                     alt="Woman working in coffee shop"
-                    width={600}
-                    height={400}
-                    className="w-full h-[500px] object-cover"
+                    width={700}
+                    height={500}
+                    className="w-full h-[600px] object-cover"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
-                  <div className="absolute bottom-6 left-6 text-white">
-                    <h3 className="text-2xl font-bold mb-2">{t.workHere}</h3>
-                    <p className="text-white/90 max-w-md">{t.workDescription}</p>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  
+                  {/* Text Overlay */}
+                  <div className="absolute bottom-8 left-8 right-8 text-white">
+                    <h3 className="text-3xl font-bold mb-3">{t.workHere}</h3>
+                    <p className="text-white/90 text-lg leading-relaxed max-w-xl">{t.workDescription}</p>
                   </div>
                 </div>
 
-                {/* Overlapping second image */}
-                <div className="absolute -bottom-10 -right-10 w-64 h-64 overflow-hidden rounded-2xl shadow-xl transform -rotate-3 hover:rotate-0 transition-transform duration-500 border-4 border-white">
-                  <Image
-                    src={getImagePath("/images/workspace-male.png")}
-                    alt="Man working in coffee shop"
-                    width={300}
-                    height={300}
-                    className="w-full h-full object-cover"
-                  />
+                {/* Floating Coffee Cup Image - Top Right */}
+                <div className="absolute -top-12 -right-8 w-72 h-48 hidden lg:block">
+                  <div className="relative overflow-hidden rounded-2xl shadow-2xl transform rotate-3 hover:rotate-0 transition-all duration-500 border-4 border-white">
+                    <Image
+                      src={getImagePath("/New Batch/DNz_ox82HJV_1.jpg")}
+                      alt="Coffee and laptop"
+                      width={300}
+                      height={200}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </div>
+
+                {/* Bottom Feature Cards - Floating Style */}
+                <div className="absolute -bottom-16 left-0 right-0 hidden lg:flex justify-center gap-4 px-8">
+                  {bottomFeatures.map((feature, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center gap-3 p-4 rounded-xl bg-white/90 backdrop-blur-md border border-primary/10 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
+                      style={{
+                        transform: `translateY(${index * 10}px) rotate(${index % 2 === 0 ? -1 : 1}deg)`,
+                      }}
+                    >
+                      <div className="w-10 h-10 bg-gradient-to-br from-secondary to-primary rounded-lg flex items-center justify-center flex-shrink-0">
+                        <feature.icon className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-sm text-foreground">{feature.title}</h4>
+                        <p className="text-muted-foreground text-xs">{feature.desc}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Right side features - positioned absolutely for creative layout */}
-          <div className="hidden lg:block absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-8 space-y-4">
-            {features.slice(3).map((feature, index) => (
+          {/* Mobile Bottom Features */}
+          <div className="lg:hidden grid sm:grid-cols-2 gap-4 mb-16 mt-8">
+            {bottomFeatures.map((feature, index) => (
               <div
                 key={index}
-                className="flex items-center gap-3 p-4 rounded-xl bg-white/80 backdrop-blur-sm border border-primary/10 shadow-lg hover:shadow-xl transition-all duration-300 max-w-xs"
+                className="flex items-center gap-3 p-4 rounded-xl bg-white/60 backdrop-blur-sm border border-primary/10 hover:bg-white/80 transition-all duration-300"
               >
                 <div className="w-10 h-10 bg-gradient-to-br from-secondary to-primary rounded-lg flex items-center justify-center flex-shrink-0">
                   <feature.icon className="w-5 h-5 text-white" />
@@ -149,48 +200,35 @@ export function WorkSection({ language }: WorkSectionProps) {
               </div>
             ))}
           </div>
-        </div>
 
-        <div className="lg:hidden grid sm:grid-cols-2 gap-4 mb-16">
-          {features.slice(3).map((feature, index) => (
-            <div
-              key={index}
-              className="flex items-center gap-3 p-4 rounded-xl bg-white/50 backdrop-blur-sm border border-primary/10"
-            >
-              <div className="w-10 h-10 bg-gradient-to-br from-secondary to-primary rounded-lg flex items-center justify-center flex-shrink-0">
-                <feature.icon className="w-5 h-5 text-white" />
+          {/* CTA Section with Modern Design */}
+          <div className="relative mt-24 lg:mt-32">
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-secondary/20 to-primary/20 blur-3xl" />
+            <div className="relative bg-gradient-to-br from-white/80 to-white/60 backdrop-blur-xl rounded-3xl p-12 border border-primary/20 shadow-2xl">
+              <div className="max-w-3xl mx-auto text-center">
+                <h3 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                  {t.cta}
+                </h3>
+                <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
+                  {t.ctaDesc}
+                </p>
+                
+                {/* Feature Pills */}
+                <div className="flex flex-wrap justify-center gap-3">
+                  <div className="flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full">
+                    <Wifi className="w-4 h-4 text-primary" />
+                    <span className="text-sm font-medium text-foreground">Wi-Fi Falas</span>
+                  </div>
+                  <div className="flex items-center gap-2 px-4 py-2 bg-secondary/10 rounded-full">
+                    <Zap className="w-4 h-4 text-secondary" />
+                    <span className="text-sm font-medium text-foreground">Priza Karikimi</span>
+                  </div>
+                  <div className="flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full">
+                    <Coffee className="w-4 h-4 text-primary" />
+                    <span className="text-sm font-medium text-foreground">Kafe e Freskët</span>
+                  </div>
+                </div>
               </div>
-              <div>
-                <h4 className="font-semibold text-sm text-foreground">{feature.title}</h4>
-                <p className="text-muted-foreground text-xs">{feature.desc}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="text-center">
-          <div className="bg-gradient-to-r from-primary/10 via-secondary/10 to-primary/10 rounded-3xl p-12 max-w-3xl mx-auto border border-primary/20">
-            <h3 className="text-3xl font-bold text-foreground mb-4">
-              {language === "sq" ? "Eja dhe Puno me Ne!" : "Come and Work with Us!"}
-            </h3>
-            <p className="text-muted-foreground text-lg mb-6 leading-relaxed">
-              {language === "sq"
-                ? "Çdo ditë nga 07:00 deri në 23:00, hapësira jonë është e gatshme për ju. Thjesht ejani, zgjidhni tavolinën tuaj të preferuar dhe filloni punën."
-                : "Every day from 07:00 to 23:00, our space is ready for you. Just come, choose your preferred table and start working."}
-            </p>
-            <div className="flex flex-wrap justify-center gap-4 text-sm text-muted-foreground">
-              <span className="flex items-center gap-2">
-                <Wifi className="w-4 h-4" />
-                Wi-Fi Falas
-              </span>
-              <span className="flex items-center gap-2">
-                <Zap className="w-4 h-4" />
-                Priza Karikimi
-              </span>
-              <span className="flex items-center gap-2">
-                <Coffee className="w-4 h-4" />
-                Kafe e Freskët
-              </span>
             </div>
           </div>
         </div>

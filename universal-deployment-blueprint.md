@@ -230,8 +230,8 @@ const nextConfig = {
   },
   output: 'export',            // Enable static export
   trailingSlash: true,         // Add trailing slashes to routes
-  basePath: '',                // Set if deploying to subdirectory (e.g., '/my-app')
-  assetPrefix: '',             // Set if using CDN or custom domain
+  basePath: process.env.NODE_ENV === 'production' ? '/[REPO-NAME]' : '',  // Environment-aware basePath
+  assetPrefix: process.env.NODE_ENV === 'production' ? '/[REPO-NAME]/' : '', // Environment-aware assetPrefix
 }
 
 export default nextConfig
@@ -241,8 +241,14 @@ export default nextConfig
 - `output: 'export'`: Enables static site generation (REQUIRED)
 - `images: { unoptimized: true }`: Required for static export
 - `trailingSlash: true`: Ensures proper routing in static hosting
-- `basePath`: Leave empty for root deployment, or set to `/repository-name` for GitHub Pages subdirectory
+- `basePath`: **Environment-aware** - empty in development, `/repository-name` in production
+- `assetPrefix`: **Environment-aware** - empty in development, `/repository-name/` in production
 - Build and type checking errors are ignored for flexible deployment (set to false for stricter builds)
+
+**🚨 Critical for Multi-Repository GitHub Pages:**
+If you have multiple repositories with GitHub Pages (e.g., one with custom domain), use the environment-aware configuration above. This ensures:
+- **Development**: Works at `http://localhost:3000/` (no basePath issues)
+- **Production**: Works at `username.github.io/repository-name/` (correct subdirectory)
 
 ### TypeScript Configuration
 
@@ -368,12 +374,17 @@ export default config;
 /** @type {import('postcss-load-config').Config} */
 const config = {
   plugins: {
-    tailwindcss: {},
+    '@tailwindcss/postcss': {},  // Use @tailwindcss/postcss for Tailwind CSS v4+
   },
-};
+}
 
-export default config;
+export default config
 ```
+
+**⚠️ Important for Tailwind CSS v4+:**
+If your project uses Tailwind CSS v4 or higher, you MUST use `@tailwindcss/postcss` instead of `tailwindcss` in the PostCSS configuration. Check your `package.json` for the Tailwind version:
+- **v3.x**: Use `tailwindcss: {}`
+- **v4.x+**: Use `@tailwindcss/postcss: {}`
 
 ### shadcn/ui Configuration
 
@@ -401,6 +412,61 @@ export default config;
   "iconLibrary": "lucide"
 }
 ```
+
+### Image Path Utility (Multi-Environment Support)
+
+**File: `lib/utils.ts`** (Add to existing utils file)
+```typescript
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+
+// Helper function to get correct image paths for GitHub Pages deployment
+export function getImagePath(path: string): string {
+  // Only add basePath in production (GitHub Pages deployment)
+  const isProduction = process.env.NODE_ENV === 'production'
+  const basePath = '/[REPO-NAME]'  // Replace with your repository name
+  
+  // In development, return the path as-is
+  if (!isProduction) {
+    return path
+  }
+  
+  // In production, add basePath
+  // If path already starts with basePath, return as is
+  if (path.startsWith(basePath)) {
+    return path
+  }
+  // If path starts with /, prepend basePath
+  if (path.startsWith('/')) {
+    return `${basePath}${path}`
+  }
+  // If path doesn't start with /, prepend basePath and /
+  return `${basePath}/${path}`
+}
+```
+
+**Usage in Components:**
+```tsx
+import { getImagePath } from "@/lib/utils"
+
+// Instead of:
+<img src="/images/logo.png" alt="Logo" />
+
+// Use:
+<img src={getImagePath("/images/logo.png")} alt="Logo" />
+
+// For background images:
+<div style={{ backgroundImage: `url(${getImagePath("/images/hero.jpg")})` }} />
+```
+
+**Why This is Needed:**
+Images in the `public` folder don't automatically respect the `basePath` configuration. This utility ensures:
+- **Development**: Images load from `/images/logo.png`
+- **Production**: Images load from `/repository-name/images/logo.png`
 
 ### Git Configuration
 
@@ -645,6 +711,20 @@ docker compose --env-file .env.docker up app -d
 ```
 
 ## GitHub Pages Deployment
+
+### Multi-Repository GitHub Pages Setup
+
+**⚠️ Important for Multiple Repositories:**
+If you have multiple GitHub repositories with Pages enabled (especially with custom domains), you may encounter conflicts. This blueprint handles this scenario with environment-aware configurations.
+
+**Common Scenarios:**
+1. **Primary repository** with custom domain (e.g., `username.github.io` → `example.com`)
+2. **Secondary repository** for subdirectory deployment (e.g., `project-name.github.io` → `username.github.io/project-name/`)
+
+**Configuration Requirements:**
+- Use environment-aware `basePath` and `assetPrefix` in `next.config.mjs`
+- Use `getImagePath` utility for all image references
+- Ensure no CNAME file conflicts between repositories
 
 ### Static Export Process
 
@@ -1004,6 +1084,70 @@ PORT=3001 pnpm dev
 - Dynamic routes without `generateStaticParams`
 - Server components with dynamic data fetching
 
+#### 6. Tailwind CSS v4 Compilation Errors
+
+**Problem:** 
+```
+Error: It looks like you're trying to use `tailwindcss` directly as a PostCSS plugin. 
+The PostCSS plugin has moved to a separate package...
+```
+
+**Solution:** Update `postcss.config.mjs`:
+```javascript
+// For Tailwind CSS v4+
+const config = {
+  plugins: {
+    '@tailwindcss/postcss': {},  // Not 'tailwindcss': {}
+  },
+}
+```
+
+#### 7. Component Props Runtime Errors
+
+**Problem:** 
+```
+TypeError: Cannot read properties of undefined (reading 'home')
+TypeError: Cannot read properties of undefined (reading 'description')
+```
+
+**Solution:** Make component props optional with defaults:
+```tsx
+// Before
+interface NavigationProps {
+  language: "sq" | "en"
+  onLanguageChange: (lang: "sq" | "en") => void
+}
+
+// After
+interface NavigationProps {
+  language?: "sq" | "en"
+  onLanguageChange?: (lang: "sq" | "en") => void
+}
+
+function Navigation({ language = "sq", onLanguageChange }: NavigationProps) {
+  // Component can now be called without props: <Navigation />
+}
+```
+
+#### 8. Multi-Repository GitHub Pages Issues
+
+**Problem:** Site loads but images/assets return 404 errors, or development server shows 404
+**Root Cause:** Conflicts between multiple GitHub Pages repositories or custom domains
+
+**Solution:** Use environment-aware configuration:
+1. **Update `next.config.mjs`** with environment-aware basePath
+2. **Create `getImagePath` utility** for images
+3. **Check GitHub Pages settings** - ensure no conflicting custom domains
+
+**Diagnostic Steps:**
+```bash
+# Check if basePath is causing dev server issues
+pnpm dev  # Should work at http://localhost:3000/
+
+# Check if images load in dev vs production
+console.log(process.env.NODE_ENV)  # 'development' vs 'production'
+```
+
 **Problem:** Images not working
 **Solution:** 
 ```jsx
@@ -1077,8 +1221,17 @@ When using this blueprint for your project, replace these placeholders:
 
 1. **[PROJECT-NAME]** - Your project name (lowercase, hyphens for spaces)
 2. **[YOUR-PROJECT-NAME]** - Your project display name
-3. **Port numbers** - Change if defaults (3000, 3001) are in use
-4. **Repository name** - In `basePath` if deploying to subdirectory
+3. **[REPO-NAME]** - Your repository name (in `basePath` and `getImagePath`)
+4. **Port numbers** - Change if defaults (3000, 3001) are in use
+
+**🚨 Critical Replacements for Multi-Repository Setup:**
+```javascript
+// In next.config.mjs
+basePath: process.env.NODE_ENV === 'production' ? '/your-repo-name' : '',
+
+// In lib/utils.ts
+const basePath = '/your-repo-name'  // Replace with actual repository name
+```
 
 ### Optional Customizations
 

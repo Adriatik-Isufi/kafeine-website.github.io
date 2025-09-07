@@ -14,7 +14,6 @@ const translations = {
     home: "Kreu",
     about: "Rreth Nesh",
     menu: "Menyja",
-    work: "Puna",
     gallery: "Galeria",
     reviews: "Vlerësimet",
     contact: "Kontakti",
@@ -23,7 +22,6 @@ const translations = {
     home: "Home",
     about: "About",
     menu: "Menu",
-    work: "Work",
     gallery: "Gallery",
     reviews: "Reviews",
     contact: "Contact",
@@ -59,7 +57,7 @@ function Navigation({ language = "sq", onLanguageChange }: NavigationProps) {
     >
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         <div className="flex items-center">
-          <img src={getImagePath("/images/logo.png")} alt="Kafeinë" className="h-16 w-16" />
+          <img src={getImagePath("/images/logo.png")} alt="Kafeinë" className="h-20 w-auto object-contain" />
         </div>
 
         <div className="hidden md:flex items-center space-x-8">
@@ -89,15 +87,6 @@ function Navigation({ language = "sq", onLanguageChange }: NavigationProps) {
             onMouseLeave={(e) => (e.target.style.color = "white")}
           >
             {t.menu}
-          </button>
-          <button
-            onClick={() => scrollToSection("work")}
-            className="font-medium transition-colors"
-            style={{ color: "white" }}
-            onMouseEnter={(e) => (e.target.style.color = "#e18b1a")}
-            onMouseLeave={(e) => (e.target.style.color = "white")}
-          >
-            {t.work}
           </button>
           <button
             onClick={() => scrollToSection("gallery")}
