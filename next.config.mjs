@@ -11,8 +11,8 @@ const nextConfig = {
   },
   output: 'export',            // Enable static export
   trailingSlash: true,         // Add trailing slashes to routes
-  basePath: '',                // Set if deploying to subdirectory (e.g., '/my-app')
-  assetPrefix: '',             // Set if using CDN or custom domain
+  basePath: '/kafeine-website',                // Set if deploying to subdirectory (e.g., '/my-app')
+  assetPrefix: '/kafeine-website/',             // Set if using CDN or custom domain
 }
 
 export default nextConfig
