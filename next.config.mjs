@@ -11,8 +11,8 @@ const nextConfig = {
   },
   output: 'export',            // Enable static export
   trailingSlash: true,         // Add trailing slashes to routes
-  basePath: '/kafeine-website.github.io',                // Set if deploying to subdirectory (e.g., '/my-app')
-  assetPrefix: '/kafeine-website.github.io/',             // Set if using CDN or custom domain
+  basePath: process.env.NODE_ENV === 'production' ? '/kafeine-website.github.io' : '',  // Only in production
+  assetPrefix: process.env.NODE_ENV === 'production' ? '/kafeine-website.github.io/' : '', // Only in production
 }
 
 export default nextConfig
