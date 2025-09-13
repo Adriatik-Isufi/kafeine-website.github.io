@@ -10,10 +10,10 @@ import { MapPin, Clock, Users, Coffee } from "lucide-react"
 export default function CareersPage() {
   return (
     <div className="min-h-screen bg-background">
-      <Navigation />
+      <Navigation isCareerPage={true} />
 
       {/* Hero Section */}
-      <section className="pt-24 pb-16 bg-gradient-to-br from-primary/10 to-secondary/10">
+      <section className="pt-32 pb-16 bg-gradient-to-br from-primary/10 to-secondary/10">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto">
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">Puno me Ne</h1>

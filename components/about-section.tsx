@@ -1,7 +1,5 @@
 "use client"
 
-import { DotLottieReact } from "@lottiefiles/dotlottie-react"
-
 interface AboutSectionProps {
   language: "sq" | "en"
 }
@@ -46,21 +44,13 @@ export function AboutSection({ language }: AboutSectionProps) {
 
   return (
     <section id="about" className="py-20 bg-muted relative overflow-hidden">
-      <div className="absolute top-10 right-10 w-32 h-32 opacity-20 z-0">
-        <DotLottieReact
-          src="https://lottie.host/076689ac-fe46-4151-aa4f-dd3ef88582eb/gZ7nyyGSmr.lottie"
-          loop
-          autoplay
-        />
-      </div>
-
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
           <div>
             <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-8">{t.title}</h2>
-            <h3 className="text-2xl font-bold text-primary mb-4">{t.story}</h3>
+            <h3 className="text-2xl font-bold text-foreground mb-4">{t.story}</h3>
             <p className="text-lg leading-relaxed mb-6">{t.description}</p>
-            <h3 className="text-2xl font-bold text-primary mb-4">{t.mission}</h3>
+            <h3 className="text-2xl font-bold text-foreground mb-4">{t.mission}</h3>
             <p className="text-lg leading-relaxed">{t.missionText}</p>
           </div>
           <div className="relative">
@@ -72,13 +62,6 @@ export function AboutSection({ language }: AboutSectionProps) {
               playsInline
               className="rounded-lg shadow-xl w-full h-[500px] object-cover"
             />
-            <div className="absolute top-4 right-4 w-16 h-16 bg-white/10 backdrop-blur-sm rounded-full p-2">
-              <DotLottieReact
-                src="https://lottie.host/076689ac-fe46-4151-aa4f-dd3ef88582eb/gZ7nyyGSmr.lottie"
-                loop
-                autoplay
-              />
-            </div>
           </div>
         </div>
 
@@ -102,8 +85,11 @@ export function AboutSection({ language }: AboutSectionProps) {
             <p className="text-muted-foreground">{t.communityText}</p>
           </div>
           <div className="text-center bg-card p-8 rounded-lg shadow-lg">
-            <div className="w-16 h-16 bg-accent rounded-full flex items-center justify-center mx-auto mb-4">
-              <span className="text-2xl">🏛️</span>
+            <div
+              className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+              style={{ backgroundColor: "#252421" }}
+            >
+              <span className="text-2xl text-white">🏛️</span>
             </div>
             <h4 className="text-xl font-bold text-foreground mb-3">{t.tradition}</h4>
             <p className="text-muted-foreground">{t.traditionText}</p>

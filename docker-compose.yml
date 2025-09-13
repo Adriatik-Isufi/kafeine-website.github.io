@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # Production-like build (serves static files)
   app:

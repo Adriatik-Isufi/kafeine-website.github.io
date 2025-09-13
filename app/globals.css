@@ -125,12 +125,19 @@
   }
 
   /* Force proper backgrounds for sections to prevent white-on-white issues */
-  nav {
+  nav:not(.career-nav) {
     background: transparent !important;
   }
 
-  nav.scrolled {
+  nav.scrolled:not(.career-nav) {
     background: rgba(37, 36, 33, 0.95) !important;
+  }
+
+  /* Career page navbar styling */
+  nav.career-nav {
+    background: rgba(26, 26, 26, 0.95) !important;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   #contact {

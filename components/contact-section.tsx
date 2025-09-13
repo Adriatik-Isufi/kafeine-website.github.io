@@ -3,7 +3,7 @@
 import type React from "react"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { MapPin, Phone, Clock } from "lucide-react"
+import { MapPin, Phone, Clock, Mail, MessageCircle, Instagram, Music, Briefcase, ArrowRight } from "lucide-react"
 import { DotLottieReact } from "@lottiefiles/dotlottie-react"
 import Image from "next/image"
 import { getImagePath } from "@/lib/utils"
@@ -36,8 +36,12 @@ const translations = {
     tiktok: "TikTok: @kafeine.ks",
     getInTouch: "Kontaktoni",
     careersTitle: "Të Interesuar për Punë?",
-    careersText: "Jeni të interesuar për të punuar me ne? Kontrolloni pozicionet e disponueshme dhe aplikoni tani për të bërë pjesë të familjes Kafeinë.",
+    careersText: "Bëhu pjesë e familjes Kafeinë",
     viewPositions: "Shiko Pozicionet",
+    visitUs: "Na Vizitoni",
+    callUs: "Na Telefononi",
+    messageUs: "Na Shkruani",
+    followUs: "Na Ndiqni",
   },
   en: {
     title: "Contact Us",
@@ -62,8 +66,12 @@ const translations = {
     tiktok: "TikTok: @kafeine.ks",
     getInTouch: "Get In Touch",
     careersTitle: "Interested in Working for Us?",
-    careersText: "Are you interested in working with us? Check our available positions and apply now to become part of the Kafeinë family.",
+    careersText: "Join the Kafeinë family",
     viewPositions: "View Positions",
+    visitUs: "Visit Us",
+    callUs: "Call Us",
+    messageUs: "Message Us",
+    followUs: "Follow Us",
   },
 }
 
@@ -78,7 +86,6 @@ export function ContactSection({ language }: ContactSectionProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // Frontend only - just show success message
     setIsSubmitted(true)
     setTimeout(() => {
       setIsSubmitted(false)
@@ -101,10 +108,9 @@ export function ContactSection({ language }: ContactSectionProps) {
         background: "linear-gradient(135deg, #252421 0%, #7e491d 50%, #e18b1a 100%)",
       }}
     >
-      {/* Full Width Split Layout */}
       <div className="grid lg:grid-cols-2 min-h-screen">
         
-        {/* Left Half - Full Height Map Image */}
+        {/* Left Half - Map */}
         <div className="relative min-h-[50vh] lg:min-h-screen cursor-pointer group" onClick={() => window.open('https://maps.app.goo.gl/wNuyyjrLL8s8Mzwb7', '_blank')}>
           <Image
             src={getImagePath("/pristina-map-dark.png")}
@@ -113,159 +119,197 @@ export function ContactSection({ language }: ContactSectionProps) {
             className="object-cover group-hover:scale-105 transition-transform duration-300"
             priority
           />
-          {/* Location pin only - no dark overlay */}
-
-        </div>
-
-        {/* Right Half - All Content */}
-        <div className="bg-[#2a2a2a] p-8 lg:p-12 flex flex-col justify-center">
-          
-          {/* Title Section */}
-          <div className="text-center mb-12">
-            <div className="flex items-center justify-center gap-4 mb-4">
-              <h2 className="text-4xl md:text-5xl font-bold text-white">{t.title}</h2>
-              <div className="w-16 h-16 opacity-60">
-                <DotLottieReact
-                  src="https://lottie.host/076689ac-fe46-4151-aa4f-dd3ef88582eb/gZ7nyyGSmr.lottie"
-                  loop
-                  autoplay
-                />
+          {/* Floating location indicator */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+            <div className="relative">
+              <div className="absolute inset-0 bg-[#e18b1a] rounded-full animate-ping opacity-75"></div>
+              <div className="relative bg-[#e18b1a] rounded-full p-3">
+                <MapPin className="w-6 h-6 text-white" />
               </div>
             </div>
-            <p className="text-xl text-white/90">{t.subtitle}</p>
+          </div>
+        </div>
+
+        {/* Right Half - Content */}
+        <div className="bg-gradient-to-b from-[#1a1a1a] to-[#2a2a2a] p-8 lg:p-16 flex flex-col justify-center relative overflow-hidden">
+          
+          {/* Background Pattern */}
+          <div className="absolute inset-0 opacity-5">
+            <div className="absolute inset-0" style={{
+              backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.1) 35px, rgba(255,255,255,.1) 70px)`,
+            }}></div>
           </div>
 
-          {/* Contact Form */}
-          <div className="mb-12">
-            <h3 className="text-3xl font-bold text-white mb-8 text-center">{t.getInTouch}</h3>
-            
-            {isSubmitted ? (
-              <div className="text-center py-12">
-                <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
-                    <span className="text-white text-xl">✓</span>
+          <div className="relative z-10">
+            {/* Title with Lottie */}
+            <div className="text-center mb-16">
+              <div className="flex items-center justify-center gap-4 mb-4">
+                <h2 className="text-5xl lg:text-6xl font-bold text-white">{t.title}</h2>
+                <div className="w-20 h-20">
+                  <DotLottieReact
+                    src="https://lottie.host/076689ac-fe46-4151-aa4f-dd3ef88582eb/gZ7nyyGSmr.lottie"
+                    loop
+                    autoplay
+                  />
+                </div>
+              </div>
+              <p className="text-xl text-white/70 font-light">{t.subtitle}</p>
+            </div>
+
+            {/* Quick Contact Info - Minimal Style */}
+            <div className="mb-16 space-y-8">
+              
+              {/* Visit Us */}
+              <div className="group cursor-pointer" onClick={() => window.open('https://maps.app.goo.gl/wNuyyjrLL8s8Mzwb7', '_blank')}>
+                <h3 className="text-sm uppercase tracking-widest text-[#e18b1a] mb-3">{t.visitUs}</h3>
+                <div className="flex items-start gap-4">
+                  <MapPin className="w-5 h-5 text-white/50 mt-1 flex-shrink-0" />
+                  <div>
+                    <p className="text-white text-lg font-light leading-relaxed">{t.addressText}</p>
+                    <p className="text-white/50 text-sm mt-1">{t.hoursText}</p>
                   </div>
                 </div>
-                <p className="text-green-400 font-semibold text-lg">{t.success}</p>
+                <div className="h-px bg-gradient-to-r from-white/10 to-transparent mt-6"></div>
               </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-6 max-w-lg mx-auto">
-                <div className="space-y-2">
-                  <label className="block text-sm font-medium text-white uppercase tracking-wider">{t.name}</label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    className="w-full bg-white/10 border-0 border-b-2 border-white/30 text-white text-lg py-3 px-2 focus:border-[#e18b1a] focus:outline-none transition-colors placeholder:text-white/50 rounded-none"
-                    placeholder="Your name..."
-                  />
+
+              {/* Call Us */}
+              <div className="group">
+                <h3 className="text-sm uppercase tracking-widest text-[#e18b1a] mb-3">{t.callUs}</h3>
+                <div className="flex items-center gap-4">
+                  <Phone className="w-5 h-5 text-white/50 flex-shrink-0" />
+                  <div className="flex gap-6">
+                    <a href="tel:+38348419418" className="text-white text-lg font-light hover:text-[#e18b1a] transition-colors">
+                      {t.phoneText}
+                    </a>
+                    <span className="text-white/30">|</span>
+                    <a href="mailto:kafeine.ks@gmail.com" className="text-white text-lg font-light hover:text-[#e18b1a] transition-colors">
+                      {t.emailText}
+                    </a>
+                  </div>
                 </div>
-                <div className="space-y-2">
-                  <label className="block text-sm font-medium text-white uppercase tracking-wider">{t.email}</label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    className="w-full bg-white/10 border-0 border-b-2 border-white/30 text-white text-lg py-3 px-2 focus:border-[#e18b1a] focus:outline-none transition-colors placeholder:text-white/50 rounded-none"
-                    placeholder="your@email.com"
-                  />
+                <div className="h-px bg-gradient-to-r from-white/10 to-transparent mt-6"></div>
+              </div>
+
+              {/* Message Us - WhatsApp prominent */}
+              <div 
+                className="group cursor-pointer bg-gradient-to-r from-green-500/10 to-transparent p-6 -mx-6 rounded-2xl hover:from-green-500/20 transition-all duration-300"
+                onClick={() => window.open(`https://wa.me/38348419418`, '_blank')}
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <MessageCircle className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <p className="text-white text-lg font-medium">WhatsApp</p>
+                      <p className="text-white/60 text-sm">{t.whatsappText}</p>
+                    </div>
+                  </div>
+                  <ArrowRight className="w-5 h-5 text-green-400 group-hover:translate-x-2 transition-transform" />
                 </div>
-                <div className="space-y-2">
-                  <label className="block text-sm font-medium text-white uppercase tracking-wider">
-                    {t.message}
-                  </label>
+              </div>
+
+              {/* Social Links - Inline */}
+              <div>
+                <h3 className="text-sm uppercase tracking-widest text-[#e18b1a] mb-4">{t.followUs}</h3>
+                <div className="flex gap-4">
+                  <a 
+                    href="https://instagram.com/kafeine.ks" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-gradient-to-br hover:from-pink-500 hover:to-purple-600 transition-all duration-300 group"
+                  >
+                    <Instagram className="w-5 h-5 text-white group-hover:scale-110 transition-transform" />
+                  </a>
+                  <a 
+                    href="https://tiktok.com/@kafeine.ks" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300 group"
+                  >
+                    <Music className="w-5 h-5 text-white group-hover:scale-110 transition-transform" />
+                  </a>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Contact Form - Cleaner Design */}
+            <div className="mb-12">
+              <h3 className="text-2xl font-light text-white mb-8">{t.getInTouch}</h3>
+              
+              {isSubmitted ? (
+                <div className="text-center py-12">
+                  <div className="inline-flex items-center justify-center w-16 h-16 bg-green-500/20 rounded-full mb-4">
+                    <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                      <span className="text-white">✓</span>
+                    </div>
+                  </div>
+                  <p className="text-green-400 text-lg">{t.success}</p>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <input
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      className="bg-transparent border-b border-white/20 text-white py-3 px-0 focus:border-[#e18b1a] focus:outline-none transition-colors placeholder:text-white/40"
+                      placeholder={t.name}
+                    />
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className="bg-transparent border-b border-white/20 text-white py-3 px-0 focus:border-[#e18b1a] focus:outline-none transition-colors placeholder:text-white/40"
+                      placeholder={t.email}
+                    />
+                  </div>
                   <textarea
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
                     required
                     rows={4}
-                    className="w-full bg-white/10 border-0 border-b-2 border-white/30 text-white text-lg py-3 px-2 focus:border-[#e18b1a] focus:outline-none transition-colors resize-none placeholder:text-white/50 rounded-none"
-                    placeholder="Tell us what's on your mind..."
+                    className="w-full bg-transparent border-b border-white/20 text-white py-3 px-0 focus:border-[#e18b1a] focus:outline-none transition-colors resize-none placeholder:text-white/40"
+                    placeholder={t.message}
                   />
-                </div>
-                <div className="pt-4">
                   <Button
                     type="submit"
-                    style={{
-                      background: "linear-gradient(to right, #e18b1a, #e2ba84)",
-                      color: "white",
-                      border: "none",
-                    }}
-                    className="w-full hover:from-[#e2ba84] hover:to-[#e18b1a] px-12 py-4 text-lg font-semibold rounded-full transition-all duration-300 hover:scale-105 shadow-lg"
+                    className="bg-[#e18b1a] hover:bg-[#e18b1a]/90 text-white px-8 py-6 rounded-full font-medium text-base transition-all duration-300 hover:scale-105"
                   >
                     {t.send}
+                    <ArrowRight className="ml-2 w-4 h-4" />
                   </Button>
-                </div>
-              </form>
-            )}
-          </div>
-
-          {/* Info Cards */}
-          <div className="grid grid-cols-2 gap-4 mb-12">
-            {/* Address */}
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20 hover:border-[#e18b1a]/50 transition-all duration-300 group">
-              <div className="text-center">
-                <div className="w-12 h-12 bg-gradient-to-br from-[#e18b1a] to-[#e2ba84] rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
-                  <MapPin className="w-6 h-6 text-white" />
-                </div>
-                <h4 className="font-bold text-sm mb-2 text-white">{t.address}</h4>
-                <p className="text-xs leading-relaxed text-white/80">{t.addressText}</p>
-              </div>
+                </form>
+              )}
             </div>
 
-            {/* Phone */}
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20 hover:border-[#e2ba84]/50 transition-all duration-300 group">
-              <div className="text-center">
-                <div className="w-12 h-12 bg-gradient-to-br from-[#e2ba84] to-[#7e491d] rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
-                  <Phone className="w-6 h-6 text-white" />
-                </div>
-                <h4 className="font-bold text-sm mb-2 text-white">{t.phone}</h4>
-                <p className="text-xs leading-relaxed text-white/80">{t.phoneText}</p>
-              </div>
-            </div>
-
-            {/* Hours */}
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20 hover:border-green-500/50 transition-all duration-300 group">
-              <div className="text-center">
-                <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
-                  <Clock className="w-6 h-6 text-white" />
-                </div>
-                <h4 className="font-bold text-sm mb-2 text-white">{t.hours}</h4>
-                <p className="text-xs leading-relaxed text-white/80">{t.hoursText}</p>
-              </div>
-            </div>
-
-            {/* Social Media */}
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20 hover:border-purple-500/50 transition-all duration-300 group">
-              <div className="text-center">
-                <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
-                  <span className="text-lg text-white">📱</span>
-                </div>
-                <h4 className="font-bold text-sm mb-2 text-white">{t.social}</h4>
-                <p className="text-xs text-white/80">@kafeine.ks</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Careers Section */}
-          <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 text-center">
-            <h3 className="text-xl md:text-2xl font-bold text-white mb-3">{t.careersTitle}</h3>
-            <p className="text-white/80 text-sm leading-relaxed mb-4">
-              {t.careersText}
-            </p>
-            <a
-              href="/careers"
-              className="inline-block bg-gradient-to-r from-[#e18b1a] to-[#e2ba84] hover:from-[#e2ba84] hover:to-[#e18b1a] text-white px-6 py-2 rounded-full font-semibold transition-all duration-300 hover:scale-105 shadow-lg text-sm"
+            {/* Careers CTA - Minimal */}
+            <div 
+              className="border-t border-white/10 pt-8 cursor-pointer group"
+              onClick={() => window.location.href = '/careers'}
             >
-              {t.viewPositions}
-            </a>
-          </div>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                  <Briefcase className="w-10 h-10 text-[#e18b1a]" />
+                  <div>
+                    <h3 className="text-white font-medium text-lg">{t.careersTitle}</h3>
+                    <p className="text-white/60 text-sm">{t.careersText}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 text-[#e18b1a] group-hover:gap-4 transition-all">
+                  <span className="text-sm font-medium">{t.viewPositions}</span>
+                  <ArrowRight className="w-4 h-4" />
+                </div>
+              </div>
+            </div>
 
+          </div>
         </div>
       </div>
     </section>

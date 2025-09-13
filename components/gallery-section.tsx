@@ -2,6 +2,7 @@
 
 import React, { useState } from "react"
 import { getImagePath } from "@/lib/utils"
+import { DotLottieReact } from "@lottiefiles/dotlottie-react"
 
 interface GallerySectionProps {
   language: "sq" | "en"
@@ -125,6 +126,18 @@ export function GallerySection({ language }: GallerySectionProps) {
 
           {/* Desktop Layout - Absolute positioned images */}
           <div className="hidden md:block">
+            {/* Lottie Animation - Bottom left */}
+            <div 
+              className="absolute bottom-10 left-10 hover:rotate-2 transition-transform duration-300"
+              style={{width: '300px', height: '360px', zIndex: 1}}
+            >
+              <DotLottieReact
+                src="https://lottie.host/c5b2c2f8-8a34-4f4c-b7c5-0c7de60e81ad/QmAiB5name.lottie"
+                loop
+                autoplay
+                style={{width: '100%', height: '100%'}}
+              />
+            </div>
             {/* Image 1 - Center focal point */}
             <div 
               className="image-wrapper absolute cursor-pointer group hover:z-50 hover:scale-105"
