@@ -1,8 +1,8 @@
-import type { Metadata } from 'next'
-import { GeistSans } from 'geist/font/sans'
-import { GeistMono } from 'geist/font/mono'
-import { Analytics } from '@vercel/analytics/next'
-import './globals.css'
+import type React from "react"
+import type { Metadata } from "next"
+import { GeistSans } from "geist/font/sans"
+import { GeistMono } from "geist/font/mono"
+import "./globals.css"
 
 export const metadata: Metadata = {
   title: "Kafeinë - Kafeja më e mirë në Prishtinë | Desserts & Light Meals",
@@ -66,8 +66,8 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://kafeine.com",
     languages: {
-      'sq': 'https://kafeine.com',
-      'en': 'https://kafeine.com/en',
+      sq: "https://kafeine.com",
+      en: "https://kafeine.com/en",
     },
   },
   category: "restaurant",
@@ -134,7 +134,7 @@ export default function RootLayout({
               image: [
                 "https://kafeine.com/images/logo.png",
                 "https://kafeine.com/images/coffee-pour.jpg",
-                "https://kafeine.com/Menu/espresso1.png"
+                "https://kafeine.com/Menu/espresso1.png",
               ],
               telephone: "+383 48 419 418",
               email: "kafeine.ks@gmail.com",
@@ -152,7 +152,7 @@ export default function RootLayout({
                 longitude: "21.1655",
               },
               openingHours: [
-                "Mo-Su 07:00-23:00" // Adjust based on actual hours
+                "Mo-Su 07:00-23:00", // Adjust based on actual hours
               ],
               priceRange: "€€",
               servesCuisine: ["Coffee", "Desserts", "Light Meals", "Albanian"],
@@ -172,14 +172,14 @@ export default function RootLayout({
                   actionPlatform: [
                     "http://schema.org/DesktopWebPlatform",
                     "http://schema.org/IOSPlatform",
-                    "http://schema.org/AndroidPlatform"
-                  ]
-                }
+                    "http://schema.org/AndroidPlatform",
+                  ],
+                },
               },
               aggregateRating: {
                 "@type": "AggregateRating",
                 ratingValue: "4.8",
-                reviewCount: "150"
+                reviewCount: "150",
               },
               menu: {
                 "@type": "Menu",
@@ -187,20 +187,20 @@ export default function RootLayout({
                   {
                     "@type": "MenuSection",
                     name: "Coffee & Espresso",
-                    description: "Freshly roasted coffee and espresso drinks"
+                    description: "Freshly roasted coffee and espresso drinks",
                   },
                   {
-                    "@type": "MenuSection", 
+                    "@type": "MenuSection",
                     name: "Desserts",
-                    description: "Handmade desserts and sweet treats"
+                    description: "Handmade desserts and sweet treats",
                   },
                   {
                     "@type": "MenuSection",
                     name: "Light Meals",
-                    description: "Sandwiches, wraps and light food options"
-                  }
-                ]
-              }
+                    description: "Sandwiches, wraps and light food options",
+                  },
+                ],
+              },
             }),
           }}
         />
@@ -215,12 +215,13 @@ export default function RootLayout({
               "@id": "https://kafeine.com",
               name: "Kafeinë",
               alternateName: ["Kafe Kafeinë", "Coffee Kafeine"],
-              description: "The finest coffee shop in Pristina serving authentic Albanian coffee, handmade desserts, and light meals",
+              description:
+                "The finest coffee shop in Pristina serving authentic Albanian coffee, handmade desserts, and light meals",
               url: "https://kafeine.com",
               sameAs: [
                 "https://www.facebook.com/profile.php?id=61567364573918",
                 "https://www.instagram.com/kafeine.ks",
-                "https://www.tiktok.com/@kafeine.ks"
+                "https://www.tiktok.com/@kafeine.ks",
               ],
               knowsLanguage: ["sq", "en"],
               areaServed: {
@@ -228,17 +229,14 @@ export default function RootLayout({
                 name: "Prishtinë",
                 containedInPlace: {
                   "@type": "Country",
-                  name: "Kosovo"
-                }
-              }
+                  name: "Kosovo",
+                },
+              },
             }),
           }}
         />
       </head>
-      <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
-        {children}
-        <Analytics />
-      </body>
+      <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>{children}</body>
     </html>
   )
 }
