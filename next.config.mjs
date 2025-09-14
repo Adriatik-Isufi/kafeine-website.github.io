@@ -11,8 +11,7 @@ const nextConfig = {
   },
   output: 'export',            // Enable static export
   trailingSlash: true,         // Add trailing slashes to routes
-  basePath: process.env.NODE_ENV === 'production' ? '/kafeine-website.github.io' : '',  // Only in production
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/kafeine-website.github.io/' : '', // Only in production
+  // Custom domain setup - no basePath needed
 }
 
 export default nextConfig
