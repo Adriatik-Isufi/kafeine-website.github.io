@@ -136,11 +136,11 @@ export default function RootLayout({
                 "https://kafeine.com/images/coffee-pour.jpg",
                 "https://kafeine.com/Menu/espresso1.png"
               ],
-              telephone: "+383-xx-xxx-xxx", // Replace with actual phone
-              email: "info@kafeine.com", // Replace with actual email
+              telephone: "+383 48 419 418",
+              email: "kafeine.ks@gmail.com",
               address: {
                 "@type": "PostalAddress",
-                streetAddress: "Rruga e Kafesë", // Replace with actual address
+                streetAddress: "Luan Haradinaj, 92",
                 addressLocality: "Prishtinë",
                 postalCode: "10000",
                 addressCountry: "XK",
@@ -218,9 +218,9 @@ export default function RootLayout({
               description: "The finest coffee shop in Pristina serving authentic Albanian coffee, handmade desserts, and light meals",
               url: "https://kafeine.com",
               sameAs: [
-                // Add your social media URLs here
-                "https://www.facebook.com/kafeineprishtine",
-                "https://www.instagram.com/kafeineprishtine"
+                "https://www.facebook.com/profile.php?id=61567364573918",
+                "https://www.instagram.com/kafeine.ks",
+                "https://www.tiktok.com/@kafeine.ks"
               ],
               knowsLanguage: ["sq", "en"],
               areaServed: {
