@@ -1,6 +1,6 @@
 "use client"
 
-import { Phone, Mail, MapPin } from "lucide-react"
+import { Phone, Mail, MapPin, MessageCircle } from "lucide-react"
 import { getImagePath } from "@/lib/utils"
 
 interface FooterProps {
@@ -107,7 +107,32 @@ export function Footer({ language = "sq" }: FooterProps) {
               </div>
               <div className="flex items-center space-x-2">
                 <Phone className="w-4 h-4 text-[#e18b1a]" />
-                <span className="text-gray-300 text-sm">+383 48 419 418</span>
+                <div className="flex flex-col space-y-1">
+                  <div className="flex items-center gap-2">
+                    <a href="tel:+38348419418" className="text-gray-300 text-sm hover:text-[#e18b1a] transition-colors">
+                      +383 48 419 418
+                    </a>
+                    <button
+                      onClick={() => window.open(`https://wa.me/38348419418`, '_blank')}
+                      className="w-3 h-3 text-green-400 hover:text-green-300 transition-colors"
+                      title="WhatsApp"
+                    >
+                      <MessageCircle className="w-full h-full" />
+                    </button>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <a href="tel:+38348514516" className="text-gray-300 text-sm hover:text-[#e18b1a] transition-colors">
+                      +383 48 514 516
+                    </a>
+                    <button
+                      onClick={() => window.open(`https://wa.me/38348514516`, '_blank')}
+                      className="w-3 h-3 text-green-400 hover:text-green-300 transition-colors"
+                      title="WhatsApp"
+                    >
+                      <MessageCircle className="w-full h-full" />
+                    </button>
+                  </div>
+                </div>
               </div>
               <div className="flex items-center space-x-2">
                 <Mail className="w-4 h-4 text-[#e18b1a]" />

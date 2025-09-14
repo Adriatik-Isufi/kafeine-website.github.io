@@ -17,6 +17,7 @@
     "docker:logs": "docker compose logs -f"
   },
   "dependencies": {
+    "@emailjs/browser": "latest",
     "@hookform/resolvers": "^3.10.0",
     "@lottiefiles/dotlottie-react": "latest",
     "@radix-ui/react-accordion": "1.2.2",

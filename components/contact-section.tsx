@@ -2,6 +2,7 @@
 
 import type React from "react"
 import { useState } from "react"
+import emailjs from "@emailjs/browser"
 import { Button } from "@/components/ui/button"
 import { MapPin, Phone, Clock, Mail, MessageCircle, Briefcase, ArrowRight } from "lucide-react"
 import { DotLottieReact } from "@lottiefiles/dotlottie-react"
@@ -25,8 +26,8 @@ const translations = {
     addressText: "Luan Haradinaj, 92, Pristina, Kosovo",
     phone: "Telefoni",
     phoneText: "+383 48 419 418",
-    whatsapp: "WhatsApp",
-    whatsappText: "+383 48 419 418",
+    phoneText2: "+383 48 514 516",
+    phoneField: "Telefoni",
     hours: "Orari",
     hoursText: "Hënë - Diel: 07:00 - 23:00",
     emailLabel: "Email-i",
@@ -55,8 +56,8 @@ const translations = {
     addressText: "Luan Haradinaj, 92, Pristina, Kosovo",
     phone: "Phone",
     phoneText: "+383 48 419 418",
-    whatsapp: "WhatsApp",
-    whatsappText: "+383 48 419 418",
+    phoneText2: "+383 48 514 516", 
+    phoneField: "Phone",
     hours: "Hours",
     hoursText: "Mon - Sun: 07:00 - 23:00",
     emailLabel: "Email",
@@ -80,24 +81,53 @@ export function ContactSection({ language }: ContactSectionProps) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    phone: "",
     message: "",
   })
-  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle")
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitted(true)
-    setTimeout(() => {
-      setIsSubmitted(false)
-      setFormData({ name: "", email: "", message: "" })
-    }, 3000)
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }))
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    })
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+    setSubmitStatus("idle")
+
+    try {
+      // EmailJS configuration
+      await emailjs.send(
+        "service_2sbw13k", // Service ID
+        "template_9jfsp93", // Template ID
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          phone: formData.phone,
+          message: formData.message,
+          to_name: "Kafeinë",
+        },
+        "KKENUxLOnvZvdWiu2", // Public Key
+      )
+
+      setSubmitStatus("success")
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        message: "",
+      })
+    } catch (error) {
+      console.error("Email send failed:", error)
+      setSubmitStatus("error")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -178,9 +208,31 @@ export function ContactSection({ language }: ContactSectionProps) {
                 <div className="flex items-center gap-4">
                   <Phone className="w-5 h-5 text-white/50 flex-shrink-0" />
                   <div className="flex gap-6">
-                    <a href="tel:+38348419418" className="text-white text-lg font-light hover:text-[#e18b1a] transition-colors">
-                      {t.phoneText}
-                    </a>
+                    <div className="flex items-center gap-2">
+                      <a href="tel:+38348419418" className="text-white text-lg font-light hover:text-[#e18b1a] transition-colors">
+                        {t.phoneText}
+                      </a>
+                      <button
+                        onClick={() => window.open(`https://wa.me/38348419418`, '_blank')}
+                        className="w-5 h-5 text-green-400 hover:text-green-300 transition-colors"
+                        title="WhatsApp"
+                      >
+                        <MessageCircle className="w-full h-full" />
+                      </button>
+                    </div>
+                    <span className="text-white/30">|</span>
+                    <div className="flex items-center gap-2">
+                      <a href="tel:+38348514516" className="text-white text-lg font-light hover:text-[#e18b1a] transition-colors">
+                        {t.phoneText2}
+                      </a>
+                      <button
+                        onClick={() => window.open(`https://wa.me/38348514516`, '_blank')}
+                        className="w-5 h-5 text-green-400 hover:text-green-300 transition-colors"
+                        title="WhatsApp"
+                      >
+                        <MessageCircle className="w-full h-full" />
+                      </button>
+                    </div>
                     <span className="text-white/30">|</span>
                     <a href="mailto:kafeine.ks@gmail.com" className="text-white text-lg font-light hover:text-[#e18b1a] transition-colors">
                       {t.emailText}
@@ -190,24 +242,6 @@ export function ContactSection({ language }: ContactSectionProps) {
                 <div className="h-px bg-gradient-to-r from-white/10 to-transparent mt-6"></div>
               </div>
 
-              {/* Message Us - WhatsApp prominent */}
-              <div 
-                className="group cursor-pointer bg-gradient-to-r from-green-500/10 to-transparent p-6 -mx-6 rounded-2xl hover:from-green-500/20 transition-all duration-300"
-                onClick={() => window.open(`https://wa.me/38348419418`, '_blank')}
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                      <MessageCircle className="w-6 h-6 text-white" />
-                    </div>
-                    <div>
-                      <p className="text-white text-lg font-medium">WhatsApp</p>
-                      <p className="text-white/60 text-sm">{t.whatsappText}</p>
-                    </div>
-                  </div>
-                  <ArrowRight className="w-5 h-5 text-green-400 group-hover:translate-x-2 transition-transform" />
-                </div>
-              </div>
 
               {/* Social Links - Inline */}
               <div>
@@ -252,7 +286,7 @@ export function ContactSection({ language }: ContactSectionProps) {
             <div className="mb-12">
               <h3 className="text-2xl font-light text-white mb-8">{t.getInTouch}</h3>
               
-              {isSubmitted ? (
+              {submitStatus === "success" ? (
                 <div className="text-center py-12">
                   <div className="inline-flex items-center justify-center w-16 h-16 bg-green-500/20 rounded-full mb-4">
                     <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
@@ -261,6 +295,21 @@ export function ContactSection({ language }: ContactSectionProps) {
                   </div>
                   <p className="text-green-400 text-lg">{t.success}</p>
                 </div>
+              ) : submitStatus === "error" ? (
+                <div className="text-center py-12">
+                  <div className="inline-flex items-center justify-center w-16 h-16 bg-red-500/20 rounded-full mb-4">
+                    <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
+                      <span className="text-white">✗</span>
+                    </div>
+                  </div>
+                  <p className="text-red-400 text-lg">Gabim në dërgim. Provoni përsëri.</p>
+                  <Button
+                    onClick={() => setSubmitStatus("idle")}
+                    className="mt-4 bg-white/10 hover:bg-white/20 text-white px-6 py-2 rounded-full"
+                  >
+                    Provo Përsëri
+                  </Button>
+                </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid md:grid-cols-2 gap-6">
@@ -268,36 +317,49 @@ export function ContactSection({ language }: ContactSectionProps) {
                       type="text"
                       name="name"
                       value={formData.name}
-                      onChange={handleChange}
+                      onChange={handleInputChange}
                       required
-                      className="bg-transparent border-b border-white/20 text-white py-3 px-0 focus:border-[#e18b1a] focus:outline-none transition-colors placeholder:text-white/40"
+                      disabled={isSubmitting}
+                      className="bg-transparent border-b border-white/20 text-white py-3 px-0 focus:border-[#e18b1a] focus:outline-none transition-colors placeholder:text-white/40 disabled:opacity-50"
                       placeholder={t.name}
                     />
                     <input
                       type="email"
                       name="email"
                       value={formData.email}
-                      onChange={handleChange}
+                      onChange={handleInputChange}
                       required
-                      className="bg-transparent border-b border-white/20 text-white py-3 px-0 focus:border-[#e18b1a] focus:outline-none transition-colors placeholder:text-white/40"
+                      disabled={isSubmitting}
+                      className="bg-transparent border-b border-white/20 text-white py-3 px-0 focus:border-[#e18b1a] focus:outline-none transition-colors placeholder:text-white/40 disabled:opacity-50"
                       placeholder={t.email}
                     />
                   </div>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    disabled={isSubmitting}
+                    className="w-full bg-transparent border-b border-white/20 text-white py-3 px-0 focus:border-[#e18b1a] focus:outline-none transition-colors placeholder:text-white/40 disabled:opacity-50"
+                    placeholder={language === "sq" ? "Telefoni" : "Phone"}
+                  />
                   <textarea
                     name="message"
                     value={formData.message}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     required
                     rows={4}
-                    className="w-full bg-transparent border-b border-white/20 text-white py-3 px-0 focus:border-[#e18b1a] focus:outline-none transition-colors resize-none placeholder:text-white/40"
+                    disabled={isSubmitting}
+                    className="w-full bg-transparent border-b border-white/20 text-white py-3 px-0 focus:border-[#e18b1a] focus:outline-none transition-colors resize-none placeholder:text-white/40 disabled:opacity-50"
                     placeholder={t.message}
                   />
                   <Button
                     type="submit"
-                    className="bg-[#e18b1a] hover:bg-[#e18b1a]/90 text-white px-8 py-6 rounded-full font-medium text-base transition-all duration-300 hover:scale-105"
+                    disabled={isSubmitting}
+                    className="bg-[#e18b1a] hover:bg-[#e18b1a]/90 text-white px-8 py-6 rounded-full font-medium text-base transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                   >
-                    {t.send}
-                    <ArrowRight className="ml-2 w-4 h-4" />
+                    {isSubmitting ? (language === "sq" ? "Po dërgohet..." : "Sending...") : t.send}
+                    {!isSubmitting && <ArrowRight className="ml-2 w-4 h-4" />}
                   </Button>
                 </form>
               )}

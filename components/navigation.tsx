@@ -344,6 +344,13 @@ function Navigation({ language = "sq", onLanguageChange, isCareerPage = false }:
                   <Phone className="w-5 h-5 text-amber-400 transition-transform duration-200 hover:scale-110" />
                   <span className="text-sm">+383 48 419 418</span>
                 </a>
+                <a
+                  href="tel:+38348514516"
+                  className="flex items-center space-x-3 text-white/80 hover:text-white transition-all duration-200 p-3 rounded-lg hover:bg-white/10 hover:scale-105 active:scale-95"
+                >
+                  <Phone className="w-5 h-5 text-amber-400 transition-transform duration-200 hover:scale-110" />
+                  <span className="text-sm">+383 48 514 516</span>
+                </a>
 
                 <a
                   href="mailto:kafeine.ks@gmail.com"

@@ -83,7 +83,7 @@ export function MenuSection({ language }: MenuSectionProps) {
   const menuItems = {
     espresso: [
       { name: "Espresso", prices: { small: "1.00€", double: "1.60€" } },
-      { name: "Macchiato", prices: { small: "1.00€", large: "1.60€" } },
+      { name: "Macchiato", prices: { small: "1.00€", large: "1.20€" } },
       { name: "Espresso Arabica", prices: { small: "1.30€" } },
       { name: "Espresso Tonic", prices: { small: "2.00€" } },
       { name: "Caffe Latte", prices: { small: "1.50€" } },
@@ -109,7 +109,7 @@ export function MenuSection({ language }: MenuSectionProps) {
       { name: "Iced Caffe Latte", prices: { small: "1.80€", medium: "2.10€", large: "2.40€" } },
       { name: "White Iced Matcha Latte", prices: { small: "3.00€", medium: "3.50€", large: "4.00€" } },
       { name: "Mocha Frappe", prices: { small: "2.50€", medium: "2.90€", large: "3.30€" } },
-      { name: "Caramel Frappe", prices: { small: "2.50€", medium: "2.50€", large: "3.30€" } },
+      { name: "Caramel Frappe", prices: { small: "2.50€", medium: "2.90€", large: "3.30€" } },
       { name: "Vanilla Bean Frappe", prices: { small: "2.50€", medium: "3.00€", large: "3.50€" } },
       { name: "Cookies and Cream Frappe", prices: { small: "3.00€", medium: "3.50€", large: "4.00€" } },
     ],
@@ -148,14 +148,11 @@ export function MenuSection({ language }: MenuSectionProps) {
       { name: "Peach Granita", prices: { small: "1.80€" } },
     ],
     food: [
-      { name: "Sandwich Pulë", prices: { small: "4.50€" } },
-      { name: "Sandwich Prosciutto", prices: { small: "5.00€" } },
-      { name: "Sandwich Tuna", prices: { small: "4.00€" } },
-      { name: "Baguette me Pulë", prices: { small: "5.50€" } },
-      { name: "Baguette Pulë Pesto", prices: { small: "6.00€" } },
-      { name: "Panini Caprese", prices: { small: "4.80€" } },
-      { name: "Club Sandwich", prices: { small: "6.50€" } },
-      { name: "Wrap Pulë", prices: { small: "5.20€" } },
+      { name: "Baguette me pulë dhe suxhuk te tymosur", prices: { small: "3.80€" } },
+      { name: "Baguette Pulë Pesto", prices: { small: "3.80€" } },
+      { name: "Baguette Vegjetarian", prices: { small: "3.80€" } },
+      { name: "Baguette Tuna", prices: { small: "3.80€" } },
+      { name: "Focaccia me Përshutë dhe Suxhuk të tymosur", prices: { small: "4.00€" } },
     ],
   }
 
