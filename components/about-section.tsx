@@ -55,13 +55,27 @@ export function AboutSection({ language }: AboutSectionProps) {
           </div>
           <div className="relative">
             <video
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/2025-05-14_09-30-40_UTC-aycOG1Go9UmBZKPGnM0T8vFWWZOh6G.mp4"
               autoPlay
               muted
               loop
               playsInline
               className="rounded-lg shadow-xl w-full h-[500px] object-cover"
-            />
+            >
+              {/* Primary source - Local video */}
+              <source 
+                src="/videos/about-kafeine.mp4" 
+                type="video/mp4" 
+              />
+              {/* Fallback source - Vercel Blob Storage */}
+              <source 
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/2025-05-14_09-30-40_UTC-aycOG1Go9UmBZKPGnM0T8vFWWZOh6G.mp4" 
+                type="video/mp4" 
+              />
+              {/* Fallback content for browsers that don't support video */}
+              <div className="bg-gradient-to-br from-amber-100 to-amber-200 w-full h-full flex items-center justify-center rounded-lg">
+                <p className="text-amber-800 text-lg font-medium">Loading coffee experience...</p>
+              </div>
+            </video>
           </div>
         </div>
 

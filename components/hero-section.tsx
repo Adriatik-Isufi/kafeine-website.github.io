@@ -48,7 +48,7 @@ export function HeroSection({ language }: HeroSectionProps) {
 
       <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
         <div className="animate-fade-in-up">
-          <img src={getImagePath("/images/logo.png")} alt="Kafeinë Logo" className="h-20 w-20 mx-auto mb-6 animate-float" />
+          <img src={getImagePath("/images/logo.png")} alt="Kafeinë Logo" className="h-52 md:h-52 w-auto mx-auto mb-6 animate-float" />
           <h1 className="text-5xl md:text-7xl font-bold mb-4 text-balance text-white">
             {t.welcome} <span className="text-[#e18b1a]">Kafeinë</span>
           </h1>

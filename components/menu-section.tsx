@@ -16,6 +16,9 @@ const translations = {
     smoothies: "Smoothie",
     milkshakes: "Milkshake",
     granitas: "Granita",
+    food: "Ushqim",
+    dessertTitle: "Ëmbëlsirat Tona",
+    dessertMessage: "Kemi një larmi ëmbëlsirash të shijshme siç shihen në fotografitë më poshtë. Për të ditur saktësisht çfarë kemi në disponim sot, ju lutemi na vizitoni ose na kontaktoni.",
   },
   en: {
     title: "Our Menu",
@@ -25,31 +28,48 @@ const translations = {
     smoothies: "Smoothies",
     milkshakes: "Milkshakes",
     granitas: "Granitas",
+    food: "Food",
+    dessertTitle: "Our Desserts",
+    dessertMessage: "We have a variety of delicious desserts as you can see in the pictures below. To know exactly what we have in store today, please visit us or contact us.",
   },
 }
 
 const categoryImages = {
   espresso: ["/Menu/espresso1.png", "/Menu/machiato1.png", "/Menu/turkcoffe1.jpg"],
-  icedCoffee: ["/Menu/IcedMotcha1.png", "/Menu/IcedCaramel1.png", "/Menu/MatchaLate1.jpg", "/Menu/IcedCoffe1.jpg"],
-  teas: ["/herbal-tea.jpg", "/images/workspace.png", "/images/workspace-male.png"],
-  smoothies: ["/berry-smoothie.png", "/fresh-orange-juice.png", "/images/workspace.png"],
-  milkshakes: ["/fresh-orange-juice.png", "/berry-smoothie.png", "/images/workspace.png"],
-  granitas: ["/berry-smoothie.png", "/fresh-orange-juice.png", "/herbal-tea.jpg"],
+  icedCoffee: ["/Menu/IcedCoffe1.jpg", "/Menu/MatchaLate1.jpg", "/Menu/IcedMotcha1.png", "/Menu/IcedCaramel1.png"],
+  teas: ["/Menu/IcedTea1.jpg", "/Menu/IcedTea2.jpg", "/Menu/IcedTea3.jpg"],
+  smoothies: [
+    "/Menu/Smoothie1.jpg",
+    "/Menu/Smoothie2.jpg",
+    "/Menu/Smoothie3.jpg",
+    "/Menu/Smoothie4.jpg",
+    "/Menu/Smoothie5.jpg",
+    "/Menu/Smoothie6.jpg",
+    "/Menu/Smoothie7.jpg",
+  ],
+  milkshakes: ["/Menu/Milkshake1.jpg", "/Menu/Milkshake2.jpg", "/Menu/Milkshake3.jpg"],
+  granitas: [
+    "/Menu/Granita1.jpg",
+    "/Menu/Granita2.jpg",
+    "/Menu/Granita3.jpg",
+    "/Menu/Granita4.jpg",
+    "/Menu/Granita5.jpg",
+    "/Menu/Granita6.jpg",
+  ],
+  food: ["/Menu/Food1.jpg", "/Menu/Food2.jpg", "/Menu/Food3.jpg", "/videos/SandwitchEaten1.mp4", "/videos/SandwithcEaten.mp4"],
 }
 
 export function MenuSection({ language }: MenuSectionProps) {
   const t = translations[language]
   const [activeTab, setActiveTab] = useState<
-    "espresso" | "icedCoffee" | "teas" | "smoothies" | "milkshakes" | "granitas"
+    "espresso" | "icedCoffee" | "teas" | "smoothies" | "milkshakes" | "granitas" | "food"
   >("espresso")
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
   // Auto-rotate carousel
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentImageIndex((prev) => 
-        (prev + 1) % categoryImages[activeTab].length
-      )
+      setCurrentImageIndex((prev) => (prev + 1) % categoryImages[activeTab].length)
     }, 4000) // Change image every 4 seconds
 
     return () => clearInterval(interval)
@@ -127,6 +147,16 @@ export function MenuSection({ language }: MenuSectionProps) {
       { name: "Cherry Granita", prices: { small: "1.80€" } },
       { name: "Peach Granita", prices: { small: "1.80€" } },
     ],
+    food: [
+      { name: "Sandwich Pulë", prices: { small: "4.50€" } },
+      { name: "Sandwich Prosciutto", prices: { small: "5.00€" } },
+      { name: "Sandwich Tuna", prices: { small: "4.00€" } },
+      { name: "Baguette me Pulë", prices: { small: "5.50€" } },
+      { name: "Baguette Pulë Pesto", prices: { small: "6.00€" } },
+      { name: "Panini Caprese", prices: { small: "4.80€" } },
+      { name: "Club Sandwich", prices: { small: "6.50€" } },
+      { name: "Wrap Pulë", prices: { small: "5.20€" } },
+    ],
   }
 
   return (
@@ -135,6 +165,7 @@ export function MenuSection({ language }: MenuSectionProps) {
       className="py-20 min-h-screen"
       style={{
         backgroundColor: "#252421",
+        minHeight: "100vh",
       }}
     >
       <div className="container mx-auto px-4">
@@ -144,7 +175,7 @@ export function MenuSection({ language }: MenuSectionProps) {
             className="text-4xl md:text-5xl font-bold mb-8"
             style={{
               color: "#ffffff",
-              textShadow: "0 2px 4px rgba(0,0,0,0.5)",
+              textShadow: "0 4px 8px rgba(0,0,0,0.8)",
             }}
           >
             {t.title}
@@ -153,12 +184,14 @@ export function MenuSection({ language }: MenuSectionProps) {
 
         {/* Category Navigation */}
         <div className="flex justify-center mb-12">
-          <div className="flex flex-wrap gap-2 p-2 rounded-2xl border"
-               style={{
-                 backgroundColor: "#1a1a1a",
-                 borderColor: "rgba(255,255,255,0.1)",
-               }}>
-            {(["espresso", "icedCoffee", "teas", "smoothies", "milkshakes", "granitas"] as const).map((tab) => (
+          <div
+            className="flex flex-wrap gap-2 p-2 rounded-2xl border"
+            style={{
+              backgroundColor: "#1a1a1a",
+              borderColor: "rgba(255,255,255,0.1)",
+            }}
+          >
+            {(["espresso", "icedCoffee", "teas", "smoothies", "milkshakes", "granitas", "food"] as const).map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
@@ -175,41 +208,47 @@ export function MenuSection({ language }: MenuSectionProps) {
         </div>
 
         {/* Split Screen Layout - Mobile Responsive */}
-        <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 max-w-7xl mx-auto">
-          
+        <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 max-w-7xl mx-auto lg:items-start">
           {/* Left Side - Auto-Rotating Visual Gallery */}
           <div className="relative order-2 lg:order-1">
-            <div className="lg:sticky lg:top-8">
-              {/* Main Featured Image with Auto Carousel */}
+            <div className="lg:sticky lg:top-4">
+              {/* Main Featured Image/Video with Auto Carousel */}
               <div className="relative h-64 md:h-80 lg:h-[500px] rounded-3xl overflow-hidden mb-4 lg:mb-6 shadow-2xl">
-                <Image
-                  src={categoryImages[activeTab][currentImageIndex]}
-                  alt={t[activeTab]}
-                  fill
-                  className="object-cover transition-all duration-1000"
-                />
+                {categoryImages[activeTab][currentImageIndex]?.endsWith('.mp4') ? (
+                  <video
+                    src={categoryImages[activeTab][currentImageIndex]}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    className="w-full h-full object-cover transition-all duration-1000"
+                  />
+                ) : (
+                  <Image
+                    src={categoryImages[activeTab][currentImageIndex] || "/placeholder.svg"}
+                    alt={t[activeTab]}
+                    fill
+                    className="object-cover transition-all duration-1000"
+                  />
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                
+
                 {/* Category Badge */}
                 <div className="absolute top-4 lg:top-6 left-4 lg:left-6">
-                  <div 
+                  <div
                     className="px-3 py-1.5 lg:px-4 lg:py-2 rounded-full backdrop-blur-md border"
                     style={{
                       backgroundColor: "rgba(225, 139, 26, 0.9)",
                       borderColor: "rgba(255,255,255,0.3)",
                     }}
                   >
-                    <span className="text-white font-semibold text-xs lg:text-sm">
-                      {t[activeTab]}
-                    </span>
+                    <span className="text-white font-semibold text-xs lg:text-sm">{t[activeTab]}</span>
                   </div>
                 </div>
 
                 {/* Category Description */}
                 <div className="absolute bottom-4 lg:bottom-6 left-4 lg:left-6 right-4 lg:right-6">
-                  <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-1 lg:mb-2">
-                    {t[activeTab]}
-                  </h3>
+                  <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-1 lg:mb-2">{t[activeTab]}</h3>
                   <p className="text-white/80 text-xs md:text-sm lg:text-base">
                     {menuItems[activeTab].length} items available • Freshly prepared
                   </p>
@@ -231,62 +270,105 @@ export function MenuSection({ language }: MenuSectionProps) {
               </div>
 
               {/* Image Thumbnails - Hidden on Mobile */}
-              <div className="hidden lg:grid grid-cols-3 gap-3">
-                {categoryImages[activeTab].map((img, index) => (
-                  <div 
-                    key={index} 
-                    className="relative h-24 rounded-xl overflow-hidden transition-opacity cursor-pointer"
-                    style={{
-                      opacity: currentImageIndex === index ? 1 : 0.6,
-                    }}
-                    onClick={() => setCurrentImageIndex(index)}
-                  >
-                    <Image
-                      src={img}
-                      alt=""
-                      fill
-                      className="object-cover"
-                    />
-                    <div className="absolute inset-0 bg-black/20" />
-                    {currentImageIndex === index && (
-                      <div className="absolute inset-0 border-2 border-[#e18b1a] rounded-xl" />
-                    )}
-                  </div>
-                ))}
+              <div className="hidden lg:block relative">
+                <div
+                  className={`flex gap-3 pb-2 scroll-smooth ${
+                    categoryImages[activeTab].length <= 4 ? "justify-center" : "overflow-x-auto scrollbar-hide"
+                  }`}
+                  id={`thumbnails-${activeTab}`}
+                >
+                  {categoryImages[activeTab].map((media, index) => (
+                    <div
+                      key={index}
+                      className={`relative rounded-xl overflow-hidden transition-opacity cursor-pointer ${
+                        categoryImages[activeTab].length <= 4 ? "h-28 w-28 flex-shrink-0" : "h-24 w-24 flex-shrink-0"
+                      }`}
+                      style={{
+                        opacity: currentImageIndex === index ? 1 : 0.6,
+                      }}
+                      onClick={() => setCurrentImageIndex(index)}
+                    >
+                      {media.endsWith('.mp4') ? (
+                        <video 
+                          src={media} 
+                          muted 
+                          className="w-full h-full object-cover" 
+                        />
+                      ) : (
+                        <Image src={media || "/placeholder.svg"} alt="" fill className="object-cover" />
+                      )}
+                      <div className="absolute inset-0 bg-black/20" />
+                      {/* Play icon for videos */}
+                      {media.endsWith('.mp4') && (
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="w-8 h-8 bg-white/80 rounded-full flex items-center justify-center">
+                            <span className="text-black text-sm">▶</span>
+                          </div>
+                        </div>
+                      )}
+                      {currentImageIndex === index && (
+                        <div className="absolute inset-0 border-2 border-[#e18b1a] rounded-xl" />
+                      )}
+                    </div>
+                  ))}
+                </div>
+
+                {/* Navigation Arrows - Only show when more than 4 images */}
+                {categoryImages[activeTab].length > 4 && (
+                  <>
+                    <button
+                      onClick={() => {
+                        const container = document.getElementById(`thumbnails-${activeTab}`)
+                        if (container) container.scrollLeft -= 120
+                      }}
+                      className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-8 h-8 rounded-full bg-black/50 hover:bg-[#e18b1a] text-white flex items-center justify-center transition-all duration-300 backdrop-blur-sm border border-white/20"
+                    >
+                      ←
+                    </button>
+                    <button
+                      onClick={() => {
+                        const container = document.getElementById(`thumbnails-${activeTab}`)
+                        if (container) container.scrollLeft += 120
+                      }}
+                      className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-8 h-8 rounded-full bg-black/50 hover:bg-[#e18b1a] text-white flex items-center justify-center transition-all duration-300 backdrop-blur-sm border border-white/20"
+                    >
+                      →
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           </div>
 
           {/* Right Side - Menu Items - Mobile Responsive */}
           <div className="space-y-4 order-1 lg:order-2">
-            <div className="mb-4 lg:mb-6">
-              <h3 className="text-xl lg:text-2xl font-bold text-white mb-2">Menu Items</h3>
-              <div className="w-12 lg:w-16 h-1 rounded-full" style={{ backgroundColor: "#e18b1a" }} />
-            </div>
-
             {/* Menu Items List - Mobile Optimized */}
-            <div className="space-y-3 max-h-[400px] lg:max-h-[600px] overflow-y-auto pr-2 custom-scrollbar">
+            <div className="space-y-3 max-h-[400px] lg:max-h-[626px] overflow-y-auto pr-2 custom-scrollbar">
               {menuItems[activeTab].map((item, index) => (
                 <div
                   key={index}
                   className="group relative p-3 lg:p-4 rounded-xl lg:rounded-2xl transition-all duration-300 hover:scale-[1.02] border cursor-pointer"
                   style={{
-                    backgroundColor: "rgba(255,255,255,0.05)",
-                    borderColor: "rgba(255,255,255,0.1)",
+                    backgroundColor: "#1a1a1a",
+                    borderColor: "rgba(255,255,255,0.2)",
                     backdropFilter: "blur(10px)",
                   }}
                 >
                   <div className="flex justify-between items-start">
                     <div className="flex-1 pr-2 lg:pr-4">
-                      <h4 className="text-base lg:text-lg xl:text-xl font-semibold text-white mb-1 group-hover:text-[#e18b1a] transition-colors duration-300 leading-tight">
+                      <h4
+                        className="text-base lg:text-lg xl:text-xl font-semibold mb-1 group-hover:text-[#e18b1a] transition-colors duration-300 leading-tight"
+                        style={{
+                          color: "#ffffff",
+                          textShadow: "0 2px 4px rgba(0,0,0,0.8)",
+                        }}
+                      >
                         {item.name}
                       </h4>
-                      
+
                       {/* Item number - Hidden on small mobile */}
                       <div className="hidden sm:flex items-center gap-2 mb-2">
-                        <span className="text-xs text-gray-400 font-mono">
-                          #{String(index + 1).padStart(2, '0')}
-                        </span>
+                        <span className="text-xs text-gray-400 font-mono">#{String(index + 1).padStart(2, "0")}</span>
                         <div className="flex-1 h-px bg-gradient-to-r from-gray-600 to-transparent" />
                       </div>
 
@@ -295,9 +377,7 @@ export function MenuSection({ language }: MenuSectionProps) {
                         {Object.entries(item.prices).map(([size, price]) => (
                           <div key={size} className="flex items-center gap-1.5 lg:gap-2">
                             {Object.keys(item.prices).length > 1 && (
-                              <span className="text-xs uppercase tracking-wider font-medium text-gray-400">
-                                {size}
-                              </span>
+                              <span className="text-xs uppercase tracking-wider font-medium text-gray-400">{size}</span>
                             )}
                             <span
                               className="text-sm lg:text-base font-bold px-2.5 lg:px-3 py-1 rounded-full text-white"
@@ -312,7 +392,7 @@ export function MenuSection({ language }: MenuSectionProps) {
 
                     {/* Add to cart icon - Hidden on mobile, shown on hover on desktop */}
                     <div className="hidden lg:block opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <div 
+                      <div
                         className="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform"
                         style={{ backgroundColor: "#e18b1a" }}
                       >
@@ -328,6 +408,30 @@ export function MenuSection({ language }: MenuSectionProps) {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+
+        {/* Dessert Section */}
+        <div className="mt-16 text-center">
+          <h3
+            className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4"
+            style={{
+              color: "#ffffff",
+              textShadow: "0 4px 8px rgba(0,0,0,0.8)",
+            }}
+          >
+            {t.dessertTitle}
+          </h3>
+          <div className="max-w-4xl mx-auto">
+            <p
+              className="text-sm md:text-base lg:text-lg leading-relaxed"
+              style={{
+                color: "rgba(255,255,255,0.8)",
+                textShadow: "0 2px 4px rgba(0,0,0,0.6)",
+              }}
+            >
+              {t.dessertMessage}
+            </p>
           </div>
         </div>
       </div>
@@ -346,6 +450,13 @@ export function MenuSection({ language }: MenuSectionProps) {
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
           background: #d17a0f;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
         }
       `}</style>
     </section>

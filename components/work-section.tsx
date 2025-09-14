@@ -24,14 +24,12 @@ const translations = {
     comfort: "Ulëse të Rehatshme",
     comfortDesc: "Karrige dhe tavolina ergonomike",
     hours: "Orari i Punës",
-    hoursDesc: "E hapur çdo ditë nga 07:00 - 23:00",
+    hoursDesc: "E hapur çdo ditë nga 07:00 - 23:00. Zgjidhni tavolinën tuaj të preferuar!",
     location: "Lokacioni",
     locationDesc: "Në qendër të Prishtinës, lehtë i arritshëm",
     workHere: "Puno Këtu",
     workDescription:
       "Sill laptopën tënde, porosit kafenë e preferuar dhe gëzo një ditë produktive në mjedisin tonë të ngrohtë dhe frymëzues.",
-    cta: "Eja dhe Puno me Ne!",
-    ctaDesc: "Çdo ditë nga 07:00 deri në 23:00, hapësira jonë është e gatshme për ju. Thjesht ejani, zgjidhni tavolinën tuaj të preferuar dhe filloni punën.",
   },
   en: {
     title: "Workspace",
@@ -48,14 +46,12 @@ const translations = {
     comfort: "Comfortable Seating",
     comfortDesc: "Ergonomic chairs and tables",
     hours: "Working Hours",
-    hoursDesc: "Open daily from 07:00 - 23:00",
+    hoursDesc: "Open daily from 07:00 - 23:00. Choose your preferred table!",
     location: "Location",
     locationDesc: "In the center of Pristina, easily accessible",
     workHere: "Work Here",
     workDescription:
       "Bring your laptop, order your favorite coffee and enjoy a productive day in our warm and inspiring environment.",
-    cta: "Come and Work with Us!",
-    ctaDesc: "Every day from 07:00 to 23:00, our space is ready for you. Just come, choose your preferred table and start working.",
   },
 }
 
@@ -110,17 +106,23 @@ export function WorkSection({ language }: WorkSectionProps) {
                 ))}
               </div>
 
-              {/* Woman with Tea Image - Positioned below features */}
+              {/* Work and Eat Video - Positioned below features */}
               <div className="relative group cursor-pointer">
                 <div className="overflow-hidden rounded-3xl shadow-2xl transform hover:scale-[1.02] transition-all duration-500">
-                  <Image
-                    src={getImagePath("/New Batch/DNnqzMuIqqi_7.jpg")}
-                    alt="Woman with tea"
-                    width={500}
-                    height={400}
+                  <video
+                    src="/videos/WorkAndEat.mp4"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
                     className="w-full h-[320px] object-cover group-hover:scale-110 transition-transform duration-700"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  
+                  {/* Video overlay text */}
+                  <div className="absolute bottom-4 left-4 right-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <p className="text-sm font-medium">Work & Eat Experience</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -201,36 +203,6 @@ export function WorkSection({ language }: WorkSectionProps) {
             ))}
           </div>
 
-          {/* CTA Section with Modern Design */}
-          <div className="relative mt-24 lg:mt-32">
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-secondary/20 to-primary/20 blur-3xl" />
-            <div className="relative bg-gradient-to-br from-white/80 to-white/60 backdrop-blur-xl rounded-3xl p-12 border border-primary/20 shadow-2xl">
-              <div className="max-w-3xl mx-auto text-center">
-                <h3 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-                  {t.cta}
-                </h3>
-                <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
-                  {t.ctaDesc}
-                </p>
-                
-                {/* Feature Pills */}
-                <div className="flex flex-wrap justify-center gap-3">
-                  <div className="flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full">
-                    <Wifi className="w-4 h-4 text-primary" />
-                    <span className="text-sm font-medium text-foreground">Wi-Fi Falas</span>
-                  </div>
-                  <div className="flex items-center gap-2 px-4 py-2 bg-secondary/10 rounded-full">
-                    <Zap className="w-4 h-4 text-secondary" />
-                    <span className="text-sm font-medium text-foreground">Priza Karikimi</span>
-                  </div>
-                  <div className="flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full">
-                    <Coffee className="w-4 h-4 text-primary" />
-                    <span className="text-sm font-medium text-foreground">Kafe e Freskët</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </section>

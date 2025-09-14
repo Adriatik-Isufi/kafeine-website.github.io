@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { LanguageToggle } from "./language-toggle"
 import { getImagePath } from "@/lib/utils"
-import { Menu, X, Phone, Mail, Home, Info, Utensils, ImageIcon, Star, MessageCircle } from "lucide-react"
+import { Menu, X, Phone, Mail, Home, Info, Utensils, ImageIcon, Star, MessageCircle, Laptop } from "lucide-react"
 
 interface NavigationProps {
   language?: "sq" | "en"
@@ -16,6 +16,7 @@ const translations = {
     home: "Kreu",
     about: "Rreth Nesh",
     menu: "Menyja",
+    workspace: "Hapësira Pune",
     gallery: "Galeria",
     reviews: "Vlerësimet",
     contact: "Kontakti",
@@ -24,6 +25,7 @@ const translations = {
     home: "Home",
     about: "About",
     menu: "Menu",
+    workspace: "Workspace", 
     gallery: "Gallery",
     reviews: "Reviews",
     contact: "Contact",
@@ -45,7 +47,7 @@ function Navigation({ language = "sq", onLanguageChange, isCareerPage = false }:
       if (isCareerPage) return
 
       // Define sections in order
-      const sections = ["home", "about", "menu", "gallery", "reviews", "contact"]
+      const sections = ["home", "about", "menu", "workspace", "gallery", "reviews", "contact"]
       const navbarHeight = 80
 
       let currentSectionId = "home"
@@ -89,6 +91,7 @@ function Navigation({ language = "sq", onLanguageChange, isCareerPage = false }:
       home: "white",      // Dark background sections
       about: "#252421",   // Light background sections  
       menu: "white",      // Dark background sections
+      workspace: "#252421", // Light background sections
       gallery: "#252421", // Light background sections
       reviews: "white",   // Dark background sections
       contact: "white"    // Dark background sections (contact has dark gradient)
@@ -129,6 +132,8 @@ function Navigation({ language = "sq", onLanguageChange, isCareerPage = false }:
         return <Info className="w-5 h-5" />
       case "menu":
         return <Utensils className="w-5 h-5" />
+      case "workspace":
+        return <Laptop className="w-5 h-5" />
       case "gallery":
         return <ImageIcon className="w-5 h-5" />
       case "reviews":
@@ -164,6 +169,7 @@ function Navigation({ language = "sq", onLanguageChange, isCareerPage = false }:
                 key === "home" ||
                 key === "about" ||
                 key === "menu" ||
+                key === "workspace" ||
                 key === "gallery" ||
                 key === "reviews" ||
                 key === "contact"
@@ -272,6 +278,7 @@ function Navigation({ language = "sq", onLanguageChange, isCareerPage = false }:
                     key === "home" ||
                     key === "about" ||
                     key === "menu" ||
+                    key === "workspace" ||
                     key === "gallery" ||
                     key === "reviews" ||
                     key === "contact"
