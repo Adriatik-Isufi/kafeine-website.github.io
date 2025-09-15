@@ -13,13 +13,13 @@ const translations = {
     title: "Fotografi Ushqimore",
     subtitle: "për Kafeinë Coffee Company",
     description:
-      "Foto profesionale të ushqimit, kafesë dhe ëmbëlsirave për të bërë produktet tona më tërheqëse dhe të dallueshme.",
+      "Shfletoni një përzgjedhje fotosh nga ambienti ynë dhe momentet tona me kafe, ushqime të lehta dhe ëmbëlsira që shërbejmë.",
     cta: "Shiko Galerinë",
   },
   en: {
     title: "Food Photography",
     subtitle: "for Kafeinë Coffee Company",
-    description: "Professional food, coffee and dessert photography to make our products more appealing and stand out.",
+    description: "Browse a selection of photos from our environment and moments with coffee, light meals and desserts that we serve.",
     cta: "View Gallery",
   },
 }
