@@ -51,7 +51,7 @@ const categoryImages = {
     "/Menu/Smoothie6.jpg",
     "/Menu/Smoothie7.jpg",
   ],
-  milkshakes: ["/Menu/Milkshake1.jpg", "/Menu/Milkshake2.jpg", "/Menu/Milkshake3.jpg"],
+  milkshakes: ["/Menu/MilkShake1.jpg", "/Menu/MilkShake2.jpg", "/Menu/MilkShake3.jpg"],
   granitas: [
     "/Menu/Granita1.jpg",
     "/Menu/Granita2.jpg",
