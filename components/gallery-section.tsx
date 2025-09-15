@@ -33,6 +33,13 @@ export function GallerySection({ language }: GallerySectionProps) {
   const [mouseStart, setMouseStart] = useState<number | null>(null)
   const [mouseEnd, setMouseEnd] = useState<number | null>(null)
   const [isDragging, setIsDragging] = useState(false)
+  
+  // Thumbnail strip swipe states
+  const [thumbTouchStart, setThumbTouchStart] = useState<number | null>(null)
+  const [thumbTouchEnd, setThumbTouchEnd] = useState<number | null>(null)
+  const [thumbMouseStart, setThumbMouseStart] = useState<number | null>(null)
+  const [thumbMouseEnd, setThumbMouseEnd] = useState<number | null>(null)
+  const [isThumbDragging, setIsThumbDragging] = useState(false)
 
   const minSwipeDistance = 50
 
@@ -128,6 +135,72 @@ export function GallerySection({ language }: GallerySectionProps) {
 
   const onMouseLeave = () => {
     setIsDragging(false)
+  }
+
+  // Thumbnail strip swipe handlers
+  const onThumbTouchStart = (e: React.TouchEvent) => {
+    setThumbTouchEnd(null)
+    setThumbTouchStart(e.targetTouches[0].clientX)
+  }
+
+  const onThumbTouchMove = (e: React.TouchEvent) => {
+    setThumbTouchEnd(e.targetTouches[0].clientX)
+  }
+
+  const onThumbTouchEnd = () => {
+    if (!thumbTouchStart || !thumbTouchEnd) return
+
+    const distance = thumbTouchStart - thumbTouchEnd
+    const isLeftSwipe = distance > minSwipeDistance
+    const isRightSwipe = distance < -minSwipeDistance
+
+    const thumbnailStrip = document.getElementById('thumbnail-strip')
+    if (thumbnailStrip) {
+      const scrollAmount = 100 // pixels to scroll
+      if (isLeftSwipe) {
+        thumbnailStrip.scrollLeft += scrollAmount
+      } else if (isRightSwipe) {
+        thumbnailStrip.scrollLeft -= scrollAmount
+      }
+    }
+  }
+
+  const onThumbMouseDown = (e: React.MouseEvent) => {
+    setThumbMouseEnd(null)
+    setThumbMouseStart(e.clientX)
+    setIsThumbDragging(true)
+  }
+
+  const onThumbMouseMove = (e: React.MouseEvent) => {
+    if (!isThumbDragging) return
+    setThumbMouseEnd(e.clientX)
+  }
+
+  const onThumbMouseUp = () => {
+    if (!thumbMouseStart || !thumbMouseEnd || !isThumbDragging) {
+      setIsThumbDragging(false)
+      return
+    }
+
+    const distance = thumbMouseStart - thumbMouseEnd
+    const isLeftDrag = distance > minSwipeDistance
+    const isRightDrag = distance < -minSwipeDistance
+
+    const thumbnailStrip = document.getElementById('thumbnail-strip')
+    if (thumbnailStrip) {
+      const scrollAmount = 100 // pixels to scroll
+      if (isLeftDrag) {
+        thumbnailStrip.scrollLeft += scrollAmount
+      } else if (isRightDrag) {
+        thumbnailStrip.scrollLeft -= scrollAmount
+      }
+    }
+
+    setIsThumbDragging(false)
+  }
+
+  const onThumbMouseLeave = () => {
+    setIsThumbDragging(false)
   }
 
   const handleKeyPress = (e: KeyboardEvent) => {
@@ -552,22 +625,41 @@ export function GallerySection({ language }: GallerySectionProps) {
               </button>
 
               {/* Thumbnail Strip */}
-              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 bg-black/30 p-3 rounded-xl backdrop-blur-sm">
-                {images.map((image, index) => (
-                  <button
-                    key={index}
-                    onClick={() => openGallery(index)}
-                    className={`w-12 h-12 rounded-lg overflow-hidden transition-all duration-300 hover:scale-110 ${
-                      index === currentImageIndex ? 'ring-2 ring-[#ff9500] scale-110' : 'opacity-70 hover:opacity-100'
-                    }`}
-                  >
-                    <img
-                      src={image.src || "/placeholder.svg"}
-                      alt={image.alt}
-                      className="w-full h-full object-cover"
-                    />
-                  </button>
-                ))}
+              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/30 p-3 rounded-xl backdrop-blur-sm max-w-sm sm:max-w-lg md:max-w-xl lg:max-w-2xl">
+                <div 
+                  id="thumbnail-strip"
+                  className="flex space-x-2 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing scroll-smooth"
+                  onTouchStart={onThumbTouchStart}
+                  onTouchMove={onThumbTouchMove}
+                  onTouchEnd={onThumbTouchEnd}
+                  onMouseDown={onThumbMouseDown}
+                  onMouseMove={onThumbMouseMove}
+                  onMouseUp={onThumbMouseUp}
+                  onMouseLeave={onThumbMouseLeave}
+                  style={{
+                    userSelect: "none",
+                    WebkitUserSelect: "none",
+                    MozUserSelect: "none",
+                    msUserSelect: "none",
+                  }}
+                >
+                  {images.map((image, index) => (
+                    <button
+                      key={index}
+                      onClick={() => openGallery(index)}
+                      className={`w-12 h-12 rounded-lg overflow-hidden transition-all duration-300 hover:scale-110 flex-shrink-0 ${
+                        index === currentImageIndex ? 'ring-2 ring-[#ff9500] scale-110' : 'opacity-70 hover:opacity-100'
+                      }`}
+                    >
+                      <img
+                        src={image.src || "/placeholder.svg"}
+                        alt={image.alt}
+                        className="w-full h-full object-cover pointer-events-none"
+                        draggable={false}
+                      />
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
 
@@ -580,6 +672,15 @@ export function GallerySection({ language }: GallerySectionProps) {
         )}
       </div>
       
+      <style jsx>{`
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
     </section>
   )
 }
