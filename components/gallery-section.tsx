@@ -28,6 +28,13 @@ export function GallerySection({ language }: GallerySectionProps) {
   const t = translations[language]
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0)
+  const [touchStart, setTouchStart] = useState<number | null>(null)
+  const [touchEnd, setTouchEnd] = useState<number | null>(null)
+  const [mouseStart, setMouseStart] = useState<number | null>(null)
+  const [mouseEnd, setMouseEnd] = useState<number | null>(null)
+  const [isDragging, setIsDragging] = useState(false)
+
+  const minSwipeDistance = 50
 
   const images = [
     { src: getImagePath("/New Batch/DJJvASBPbHA_3.jpg"), alt: "Coffee and Pastry", size: "large" },
@@ -62,6 +69,65 @@ export function GallerySection({ language }: GallerySectionProps) {
     const prevIndex = (currentImageIndex - 1 + images.length) % images.length
     setCurrentImageIndex(prevIndex)
     setSelectedImage(images[prevIndex].src)
+  }
+
+  // Touch event handlers for swipe
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null)
+    setTouchStart(e.targetTouches[0].clientX)
+  }
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX)
+  }
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return
+
+    const distance = touchStart - touchEnd
+    const isLeftSwipe = distance > minSwipeDistance
+    const isRightSwipe = distance < -minSwipeDistance
+
+    if (isLeftSwipe) {
+      nextImage()
+    } else if (isRightSwipe) {
+      prevImage()
+    }
+  }
+
+  // Mouse event handlers for desktop drag
+  const onMouseDown = (e: React.MouseEvent) => {
+    setMouseEnd(null)
+    setMouseStart(e.clientX)
+    setIsDragging(true)
+  }
+
+  const onMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return
+    setMouseEnd(e.clientX)
+  }
+
+  const onMouseUp = () => {
+    if (!mouseStart || !mouseEnd || !isDragging) {
+      setIsDragging(false)
+      return
+    }
+
+    const distance = mouseStart - mouseEnd
+    const isLeftDrag = distance > minSwipeDistance
+    const isRightDrag = distance < -minSwipeDistance
+
+    if (isLeftDrag) {
+      nextImage()
+    } else if (isRightDrag) {
+      prevImage()
+    }
+
+    setIsDragging(false)
+  }
+
+  const onMouseLeave = () => {
+    setIsDragging(false)
   }
 
   const handleKeyPress = (e: KeyboardEvent) => {
@@ -439,11 +505,27 @@ export function GallerySection({ language }: GallerySectionProps) {
               </button>
 
               {/* Main Image */}
-              <div className="relative max-w-4xl max-h-full">
+              <div 
+                className="relative max-w-4xl max-h-full cursor-grab active:cursor-grabbing select-none"
+                onTouchStart={onTouchStart}
+                onTouchMove={onTouchMove}
+                onTouchEnd={onTouchEnd}
+                onMouseDown={onMouseDown}
+                onMouseMove={onMouseMove}
+                onMouseUp={onMouseUp}
+                onMouseLeave={onMouseLeave}
+                style={{
+                  userSelect: "none",
+                  WebkitUserSelect: "none",
+                  MozUserSelect: "none",
+                  msUserSelect: "none",
+                }}
+              >
                 <img
                   src={selectedImage || "/placeholder.svg"}
                   alt={images[currentImageIndex]?.alt || "Gallery image"}
-                  className="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl"
+                  className="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl pointer-events-none"
+                  draggable={false}
                 />
                 
                 {/* Close Button */}
@@ -497,6 +579,7 @@ export function GallerySection({ language }: GallerySectionProps) {
           </div>
         )}
       </div>
+      
     </section>
   )
 }
