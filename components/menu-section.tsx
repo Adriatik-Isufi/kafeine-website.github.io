@@ -1,6 +1,8 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import type React from "react"
+
+import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 
 interface MenuSectionProps {
@@ -18,7 +20,8 @@ const translations = {
     granitas: "Granita",
     food: "Ushqim",
     dessertTitle: "Ëmbëlsirat Tona",
-    dessertMessage: "Kemi një larmi ëmbëlsirash të shijshme siç shihen në fotografitë më poshtë. Për të ditur saktësisht çfarë kemi në disponim sot, ju lutemi na vizitoni ose na kontaktoni.",
+    dessertMessage:
+      "Kemi një larmi ëmbëlsirash të shijshme siç shihen në fotografitë më poshtë. Për të ditur saktësisht çfarë kemi në disponim sot, ju lutemi na vizitoni ose na kontaktoni.",
   },
   en: {
     title: "Our Menu",
@@ -30,7 +33,8 @@ const translations = {
     granitas: "Granitas",
     food: "Food",
     dessertTitle: "Our Desserts",
-    dessertMessage: "We have a variety of delicious desserts as you can see in the pictures below. To know exactly what we have in store today, please visit us or contact us.",
+    dessertMessage:
+      "We have a variety of delicious desserts as you can see in the pictures below. To know exactly what we have in store today, please visit us or contact us.",
   },
 }
 
@@ -56,7 +60,13 @@ const categoryImages = {
     "/Menu/Granita5.jpg",
     "/Menu/Granita6.jpg",
   ],
-  food: ["/Menu/Food1.jpg", "/Menu/Food2.jpg", "/Menu/Food3.jpg", "/videos/SandwitchEaten1.mp4", "/videos/SandwithcEaten.mp4"],
+  food: [
+    "/Menu/Food1.jpg",
+    "/Menu/Food2.jpg",
+    "/Menu/Food3.jpg",
+    "/videos/SandwitchEaten1.mp4",
+    "/videos/SandwithcEaten.mp4",
+  ],
 }
 
 export function MenuSection({ language }: MenuSectionProps) {
@@ -65,8 +75,75 @@ export function MenuSection({ language }: MenuSectionProps) {
     "espresso" | "icedCoffee" | "teas" | "smoothies" | "milkshakes" | "granitas" | "food"
   >("espresso")
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const mobileTabsRef = useRef<HTMLDivElement>(null)
+  const carouselRef = useRef<HTMLDivElement>(null)
+  const [touchStart, setTouchStart] = useState<number | null>(null)
+  const [touchEnd, setTouchEnd] = useState<number | null>(null)
+  const [mouseStart, setMouseStart] = useState<number | null>(null)
+  const [mouseEnd, setMouseEnd] = useState<number | null>(null)
+  const [isDragging, setIsDragging] = useState(false)
 
-  // Auto-rotate carousel
+  const minSwipeDistance = 50
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null) // otherwise the swipe is fired even with usual touch events
+    setTouchStart(e.targetTouches[0].clientX)
+  }
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX)
+  }
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return
+
+    const distance = touchStart - touchEnd
+    const isLeftSwipe = distance > minSwipeDistance
+    const isRightSwipe = distance < -minSwipeDistance
+
+    if (isLeftSwipe) {
+      // Swipe left - next image
+      setCurrentImageIndex((prev) => (prev + 1) % categoryImages[activeTab].length)
+    } else if (isRightSwipe) {
+      // Swipe right - previous image
+      setCurrentImageIndex((prev) => (prev - 1 + categoryImages[activeTab].length) % categoryImages[activeTab].length)
+    }
+  }
+
+  const onMouseDown = (e: React.MouseEvent) => {
+    setMouseEnd(null)
+    setMouseStart(e.clientX)
+    setIsDragging(true)
+  }
+
+  const onMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return
+    setMouseEnd(e.clientX)
+  }
+
+  const onMouseUp = () => {
+    if (!mouseStart || !mouseEnd || !isDragging) {
+      setIsDragging(false)
+      return
+    }
+
+    const distance = mouseStart - mouseEnd
+    const isLeftDrag = distance > minSwipeDistance
+    const isRightDrag = distance < -minSwipeDistance
+
+    if (isLeftDrag) {
+      setCurrentImageIndex((prev) => (prev + 1) % categoryImages[activeTab].length)
+    } else if (isRightDrag) {
+      setCurrentImageIndex((prev) => (prev - 1 + categoryImages[activeTab].length) % categoryImages[activeTab].length)
+    }
+
+    setIsDragging(false)
+  }
+
+  const onMouseLeave = () => {
+    setIsDragging(false)
+  }
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % categoryImages[activeTab].length)
@@ -75,7 +152,6 @@ export function MenuSection({ language }: MenuSectionProps) {
     return () => clearInterval(interval)
   }, [activeTab])
 
-  // Reset image index when category changes
   useEffect(() => {
     setCurrentImageIndex(0)
   }, [activeTab])
@@ -156,6 +232,32 @@ export function MenuSection({ language }: MenuSectionProps) {
     ],
   }
 
+  const handleTabSelect = (tab: typeof activeTab) => {
+    setActiveTab(tab)
+
+    if (mobileTabsRef.current) {
+      const tabButtons = mobileTabsRef.current.querySelectorAll("button")
+      const tabs = ["espresso", "icedCoffee", "teas", "smoothies", "milkshakes", "granitas", "food"]
+      const tabIndex = tabs.indexOf(tab)
+
+      if (tabButtons[tabIndex]) {
+        const button = tabButtons[tabIndex] as HTMLElement
+        const container = mobileTabsRef.current
+        const buttonLeft = button.offsetLeft
+        const containerScrollLeft = container.scrollLeft
+        const containerWidth = container.clientWidth
+        const buttonWidth = button.offsetWidth
+
+        const targetScrollLeft = buttonLeft - 16
+
+        container.scrollTo({
+          left: Math.max(0, targetScrollLeft),
+          behavior: "smooth",
+        })
+      }
+    }
+  }
+
   return (
     <section
       id="menu"
@@ -181,26 +283,89 @@ export function MenuSection({ language }: MenuSectionProps) {
 
         {/* Category Navigation */}
         <div className="flex justify-center mb-12">
-          <div
-            className="flex flex-wrap gap-2 p-2 rounded-2xl border"
-            style={{
-              backgroundColor: "#1a1a1a",
-              borderColor: "rgba(255,255,255,0.1)",
-            }}
-          >
-            {(["espresso", "icedCoffee", "teas", "smoothies", "milkshakes", "granitas", "food"] as const).map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className="px-4 py-2 md:px-6 md:py-3 rounded-xl font-medium transition-all duration-300 text-sm md:text-base"
+          <div className="w-full max-w-4xl">
+            {/* Mobile: Horizontal scrolling tabs */}
+            <div className="lg:hidden">
+              <div
+                ref={mobileTabsRef}
+                className="flex gap-2 p-2 rounded-2xl border overflow-x-auto scrollbar-hide"
                 style={{
-                  backgroundColor: activeTab === tab ? "#e18b1a" : "transparent",
-                  color: "#ffffff",
+                  backgroundColor: "#1a1a1a",
+                  borderColor: "rgba(255,255,255,0.1)",
                 }}
               >
-                {t[tab]}
-              </button>
-            ))}
+                {(["espresso", "icedCoffee", "teas", "smoothies", "milkshakes", "granitas", "food"] as const).map(
+                  (tab) => (
+                    <button
+                      key={tab}
+                      onClick={() => handleTabSelect(tab)}
+                      className="px-4 py-3 rounded-xl font-medium transition-all duration-300 text-sm whitespace-nowrap min-w-fit flex-shrink-0"
+                      style={{
+                        backgroundColor: activeTab === tab ? "#e18b1a" : "transparent",
+                        color: "#ffffff",
+                        minHeight: "44px", // Touch target size
+                      }}
+                    >
+                      {t[tab]}
+                    </button>
+                  ),
+                )}
+              </div>
+            </div>
+
+            {/* Tablet: Wrapped layout with centering */}
+            <div className="hidden lg:flex xl:hidden justify-center">
+              <div
+                className="flex flex-wrap justify-center gap-2 p-2 rounded-2xl border"
+                style={{
+                  backgroundColor: "#1a1a1a",
+                  borderColor: "rgba(255,255,255,0.1)",
+                }}
+              >
+                {(["espresso", "icedCoffee", "teas", "smoothies", "milkshakes", "granitas", "food"] as const).map(
+                  (tab) => (
+                    <button
+                      key={tab}
+                      onClick={() => setActiveTab(tab)}
+                      className="px-4 py-2 md:px-6 md:py-3 rounded-xl font-medium transition-all duration-300 text-sm md:text-base"
+                      style={{
+                        backgroundColor: activeTab === tab ? "#e18b1a" : "transparent",
+                        color: "#ffffff",
+                      }}
+                    >
+                      {t[tab]}
+                    </button>
+                  ),
+                )}
+              </div>
+            </div>
+
+            {/* Desktop: Single row layout */}
+            <div className="hidden xl:flex justify-center">
+              <div
+                className="flex gap-2 p-2 rounded-2xl border"
+                style={{
+                  backgroundColor: "#1a1a1a",
+                  borderColor: "rgba(255,255,255,0.1)",
+                }}
+              >
+                {(["espresso", "icedCoffee", "teas", "smoothies", "milkshakes", "granitas", "food"] as const).map(
+                  (tab) => (
+                    <button
+                      key={tab}
+                      onClick={() => setActiveTab(tab)}
+                      className="px-6 py-3 rounded-xl font-medium transition-all duration-300 text-base whitespace-nowrap"
+                      style={{
+                        backgroundColor: activeTab === tab ? "#e18b1a" : "transparent",
+                        color: "#ffffff",
+                      }}
+                    >
+                      {t[tab]}
+                    </button>
+                  ),
+                )}
+              </div>
+            </div>
           </div>
         </div>
 
@@ -210,28 +375,46 @@ export function MenuSection({ language }: MenuSectionProps) {
           <div className="relative order-2 lg:order-1">
             <div className="lg:sticky lg:top-4">
               {/* Main Featured Image/Video with Auto Carousel */}
-              <div className="relative h-64 md:h-80 lg:h-[500px] rounded-3xl overflow-hidden mb-4 lg:mb-6 shadow-2xl">
-                {categoryImages[activeTab][currentImageIndex]?.endsWith('.mp4') ? (
+              <div
+                ref={carouselRef}
+                className="relative h-64 md:h-80 lg:h-[500px] rounded-3xl overflow-hidden mb-4 lg:mb-6 shadow-2xl cursor-grab active:cursor-grabbing select-none"
+                onTouchStart={onTouchStart}
+                onTouchMove={onTouchMove}
+                onTouchEnd={onTouchEnd}
+                onMouseDown={onMouseDown}
+                onMouseMove={onMouseMove}
+                onMouseUp={onMouseUp}
+                onMouseLeave={onMouseLeave}
+                style={{
+                  userSelect: "none",
+                  WebkitUserSelect: "none",
+                  MozUserSelect: "none",
+                  msUserSelect: "none",
+                }}
+              >
+                {categoryImages[activeTab][currentImageIndex]?.endsWith(".mp4") ? (
                   <video
                     src={categoryImages[activeTab][currentImageIndex]}
                     autoPlay
                     muted
                     loop
                     playsInline
-                    className="w-full h-full object-cover transition-all duration-1000"
+                    className="w-full h-full object-cover transition-all duration-1000 pointer-events-none"
+                    draggable={false}
                   />
                 ) : (
                   <Image
                     src={categoryImages[activeTab][currentImageIndex] || "/placeholder.svg"}
                     alt={t[activeTab]}
                     fill
-                    className="object-cover transition-all duration-1000"
+                    className="object-cover transition-all duration-1000 pointer-events-none"
+                    draggable={false}
                   />
                 )}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
 
                 {/* Category Badge */}
-                <div className="absolute top-4 lg:top-6 left-4 lg:left-6">
+                <div className="absolute top-4 lg:top-6 left-4 lg:left-6 pointer-events-none">
                   <div
                     className="px-3 py-1.5 lg:px-4 lg:py-2 rounded-full backdrop-blur-md border"
                     style={{
@@ -244,7 +427,7 @@ export function MenuSection({ language }: MenuSectionProps) {
                 </div>
 
                 {/* Category Description */}
-                <div className="absolute bottom-4 lg:bottom-6 left-4 lg:left-6 right-4 lg:right-6">
+                <div className="absolute bottom-4 lg:bottom-6 left-4 lg:left-6 right-4 lg:right-6 pointer-events-none">
                   <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-1 lg:mb-2">{t[activeTab]}</h3>
                   <p className="text-white/80 text-xs md:text-sm lg:text-base">
                     {menuItems[activeTab].length} items available • Freshly prepared
@@ -252,7 +435,7 @@ export function MenuSection({ language }: MenuSectionProps) {
                 </div>
 
                 {/* Carousel Indicators */}
-                <div className="absolute bottom-4 right-4 lg:right-6 flex gap-2">
+                <div className="absolute bottom-4 right-4 lg:right-6 flex gap-2 pointer-events-auto">
                   {categoryImages[activeTab].map((_, index) => (
                     <button
                       key={index}
@@ -263,6 +446,12 @@ export function MenuSection({ language }: MenuSectionProps) {
                       }}
                     />
                   ))}
+                </div>
+
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none lg:hidden">
+                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/30 backdrop-blur-sm border border-white/20 opacity-0 animate-pulse">
+                    <span className="text-white text-xs">← Swipe →</span>
+                  </div>
                 </div>
               </div>
 
@@ -285,18 +474,13 @@ export function MenuSection({ language }: MenuSectionProps) {
                       }}
                       onClick={() => setCurrentImageIndex(index)}
                     >
-                      {media.endsWith('.mp4') ? (
-                        <video 
-                          src={media} 
-                          muted 
-                          className="w-full h-full object-cover" 
-                        />
+                      {media.endsWith(".mp4") ? (
+                        <video src={media} muted className="w-full h-full object-cover" />
                       ) : (
                         <Image src={media || "/placeholder.svg"} alt="" fill className="object-cover" />
                       )}
                       <div className="absolute inset-0 bg-black/20" />
-                      {/* Play icon for videos */}
-                      {media.endsWith('.mp4') && (
+                      {media.endsWith(".mp4") && (
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="w-8 h-8 bg-white/80 rounded-full flex items-center justify-center">
                             <span className="text-black text-sm">▶</span>
@@ -310,7 +494,6 @@ export function MenuSection({ language }: MenuSectionProps) {
                   ))}
                 </div>
 
-                {/* Navigation Arrows - Only show when more than 4 images */}
                 {categoryImages[activeTab].length > 4 && (
                   <>
                     <button
@@ -339,7 +522,6 @@ export function MenuSection({ language }: MenuSectionProps) {
 
           {/* Right Side - Menu Items - Mobile Responsive */}
           <div className="space-y-4 order-1 lg:order-2">
-            {/* Menu Items List - Mobile Optimized */}
             <div className="space-y-3 max-h-[400px] lg:max-h-[626px] overflow-y-auto pr-2 custom-scrollbar">
               {menuItems[activeTab].map((item, index) => (
                 <div
@@ -363,13 +545,11 @@ export function MenuSection({ language }: MenuSectionProps) {
                         {item.name}
                       </h4>
 
-                      {/* Item number - Hidden on small mobile */}
                       <div className="hidden sm:flex items-center gap-2 mb-2">
                         <span className="text-xs text-gray-400 font-mono">#{String(index + 1).padStart(2, "0")}</span>
                         <div className="flex-1 h-px bg-gradient-to-r from-gray-600 to-transparent" />
                       </div>
 
-                      {/* Prices - Mobile Optimized */}
                       <div className="flex flex-wrap gap-1.5 lg:gap-2">
                         {Object.entries(item.prices).map(([size, price]) => (
                           <div key={size} className="flex items-center gap-1.5 lg:gap-2">
@@ -387,7 +567,6 @@ export function MenuSection({ language }: MenuSectionProps) {
                       </div>
                     </div>
 
-                    {/* Add to cart icon - Hidden on mobile, shown on hover on desktop */}
                     <div className="hidden lg:block opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       <div
                         className="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform"
@@ -398,7 +577,6 @@ export function MenuSection({ language }: MenuSectionProps) {
                     </div>
                   </div>
 
-                  {/* Hover effect overlay */}
                   <div className="absolute inset-0 rounded-xl lg:rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
                     <div className="absolute inset-0 rounded-xl lg:rounded-2xl bg-gradient-to-r from-[#e18b1a]/5 to-transparent" />
                   </div>
@@ -454,6 +632,17 @@ export function MenuSection({ language }: MenuSectionProps) {
         .scrollbar-hide {
           -ms-overflow-style: none;
           scrollbar-width: none;
+        }
+        
+        /* Added swipe hint animation */
+        @keyframes fadeInOut {
+          0%, 100% { opacity: 0; }
+          50% { opacity: 0.7; }
+        }
+        
+        .animate-pulse {
+          animation: fadeInOut 3s ease-in-out infinite;
+          animation-delay: 2s;
         }
       `}</style>
     </section>

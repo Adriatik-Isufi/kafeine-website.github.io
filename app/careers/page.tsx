@@ -378,8 +378,8 @@ export default function CareersPage() {
                     <Clock className="h-4 w-4" />8 orë në ditë
                   </div>
                   <p className="text-sm">
-                    Kërkojmë barista me përvojë për të krijuar kafe të shkëlqyer dhe për të ofruar shërbim të
-                    jashtëzakonshëm për klientët.
+                    Kërkojmë barista me përvojë dhe pasion për kafenë, që të krijojnë pije të shkëlqyera – nga espresso klasike
+                    deri te specialitetet moderne – dhe të ofrojnë një shërbim mikpritës për çdo klient.
                   </p>
                   <div className="flex flex-wrap gap-2">
                     <Badge variant="secondary">Përvojë</Badge>
@@ -396,7 +396,7 @@ export default function CareersPage() {
                   <Users className="h-5 w-5 text-primary" />
                   Arkatare
                 </CardTitle>
-                <CardDescription>Kohë e pjesshme</CardDescription>
+                <CardDescription>Kohë e plotë</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
@@ -406,15 +406,17 @@ export default function CareersPage() {
                   </div>
                   <div className="flex items-center gap-2 text-sm text-muted-foreground">
                     <Clock className="h-4 w-4" />
-                    4-6 orë në ditë
+                    8 orë në ditë
                   </div>
                   <p className="text-sm">
-                    Kërkojmë arkatare të sjellshëm për të ofruar përvojë të shkëlqyer për klientët tanë.
+                    Kërkojmë arkatare të sjellshme dhe të besueshme, e cila do të kujdeset për pagesat, organizimin e arkës dhe mirëseardhjen e 
+                    klientëve, duke siguruar një përvojë të këndshme dhe të shpejtë.
                   </p>
                   <div className="flex flex-wrap gap-2">
                     <Badge variant="secondary">Fleksibilitet</Badge>
                     <Badge variant="secondary">Shërbim klienti</Badge>
                     <Badge variant="secondary">Organizim</Badge>
+                    <Badge variant="secondary">Besueshmëri</Badge>
                   </div>
                 </div>
               </CardContent>

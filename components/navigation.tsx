@@ -255,7 +255,7 @@ function Navigation({ language = "sq", onLanguageChange, isCareerPage = false }:
                 <img
                   src={getImagePath("/images/logo.png") || "/placeholder.svg"}
                   alt="Kafeinë"
-                  className="h-12 w-auto object-contain filter brightness-0 invert"
+                  className="h-20 w-auto object-contain filter brightness-0 invert"
                 />
               </div>
               {onLanguageChange && (
