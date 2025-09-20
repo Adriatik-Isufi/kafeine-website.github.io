@@ -1,5 +1,6 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import { Wifi, Zap, Coffee, Users, Clock, MapPin } from "lucide-react"
 import Image from "next/image"
 import { getImagePath } from "@/lib/utils"
@@ -57,6 +58,21 @@ const translations = {
 
 export function WorkSection({ language }: WorkSectionProps) {
   const t = translations[language]
+  const [currentWorkImageIndex, setCurrentWorkImageIndex] = useState(0)
+
+  const workImages = [
+    "/images/Work1.jpg",
+    "/images/workspace.png"
+  ]
+
+  // Auto-rotate work images every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentWorkImageIndex((prev) => (prev + 1) % workImages.length)
+    }, 5000)
+
+    return () => clearInterval(interval)
+  }, [])
 
   const features = [
     { icon: Wifi, title: t.wifi, desc: t.wifiDesc },
@@ -133,11 +149,11 @@ export function WorkSection({ language }: WorkSectionProps) {
               <div className="relative">
                 <div className="overflow-hidden rounded-3xl shadow-2xl transform rotate-1 hover:rotate-0 transition-all duration-500">
                   <Image
-                    src={getImagePath("/images/workspace.png")}
-                    alt="Woman working in coffee shop"
+                    src={getImagePath(workImages[currentWorkImageIndex])}
+                    alt="Workspace environment"
                     width={700}
                     height={500}
-                    className="w-full h-[600px] object-cover"
+                    className="w-full h-[600px] object-cover transition-opacity duration-1000"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                   
@@ -162,7 +178,7 @@ export function WorkSection({ language }: WorkSectionProps) {
                 </div>
 
                 {/* Bottom Feature Cards - Floating Style */}
-                <div className="absolute -bottom-16 left-0 right-0 hidden lg:flex justify-center gap-4 px-8">
+                <div className="absolute -bottom-24 left-0 right-0 hidden lg:flex justify-center gap-4 px-8">
                   {bottomFeatures.map((feature, index) => (
                     <div
                       key={index}

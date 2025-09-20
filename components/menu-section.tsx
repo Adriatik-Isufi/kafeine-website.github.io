@@ -4,6 +4,7 @@ import type React from "react"
 
 import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
+import { X } from "lucide-react"
 
 interface MenuSectionProps {
   language: "sq" | "en"
@@ -22,6 +23,9 @@ const translations = {
     dessertTitle: "Ëmbëlsirat Tona",
     dessertMessage:
       "Kemi një larmi ëmbëlsirash të shijshme siç shihen në fotografitë më poshtë. Për të ditur saktësisht çfarë kemi në disponim sot, ju lutemi na vizitoni ose na kontaktoni.",
+    specialties: "Specialitetet",
+    viewGallery: "Shiko Galerinë",
+    closeGallery: "Mbyll",
   },
   en: {
     title: "Our Menu",
@@ -35,11 +39,14 @@ const translations = {
     dessertTitle: "Our Desserts",
     dessertMessage:
       "We have a variety of delicious desserts as you can see in the pictures below. To know exactly what we have in store today, please visit us or contact us.",
+    specialties: "Specialties",
+    viewGallery: "View Gallery",
+    closeGallery: "Close",
   },
 }
 
 const categoryImages = {
-  espresso: ["/Menu/espresso1.png", "/Menu/machiato1.png", "/Menu/turkcoffe1.jpg"],
+  espresso: ["/Menu/Coffe1.jpg", "/Menu/Coffe2.jpg", "/Menu/machiato1.png", "/Menu/turkcoffe1.jpg"],
   icedCoffee: ["/Menu/IcedCoffe1.jpg", "/Menu/MatchaLate1.jpg", "/Menu/IcedMotcha1.png", "/Menu/IcedCaramel1.png"],
   teas: ["/Menu/IcedTea1.jpg", "/Menu/IcedTea2.jpg", "/Menu/IcedTea3.jpg"],
   smoothies: [
@@ -69,12 +76,27 @@ const categoryImages = {
   ],
 }
 
+// Dessert/Specialty images for the story-like gallery
+const dessertImages = [
+  "/images/Desert1.jpg",
+  "/images/berry-cake.jpg", 
+  "/images/carrot-cake.jpg",
+  "/images/carrot-cake-slice.jpg",
+  "/images/lemon-cake.jpg",
+  "/images/lemon-cheesecake.jpg",
+  "/images/lotus-cheesecake.jpg",
+]
+
 export function MenuSection({ language }: MenuSectionProps) {
   const t = translations[language]
   const [activeTab, setActiveTab] = useState<
     "espresso" | "icedCoffee" | "teas" | "smoothies" | "milkshakes" | "granitas" | "food"
   >("espresso")
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const [isGalleryOpen, setIsGalleryOpen] = useState(false)
+  const [currentDessertIndex, setCurrentDessertIndex] = useState(0)
+  const [dessertTouchStart, setDessertTouchStart] = useState<number | null>(null)
+  const [dessertTouchEnd, setDessertTouchEnd] = useState<number | null>(null)
   const mobileTabsRef = useRef<HTMLDivElement>(null)
   const carouselRef = useRef<HTMLDivElement>(null)
   const [touchStart, setTouchStart] = useState<number | null>(null)
@@ -256,6 +278,40 @@ export function MenuSection({ language }: MenuSectionProps) {
         })
       }
     }
+  }
+
+  // Dessert gallery swipe handlers (separate from main menu swipe)
+  const onDessertTouchStart = (e: React.TouchEvent) => {
+    setDessertTouchEnd(null)
+    setDessertTouchStart(e.targetTouches[0].clientX)
+  }
+
+  const onDessertTouchMove = (e: React.TouchEvent) => {
+    setDessertTouchEnd(e.targetTouches[0].clientX)
+  }
+
+  const onDessertTouchEnd = () => {
+    if (!dessertTouchStart || !dessertTouchEnd) return
+
+    const distance = dessertTouchStart - dessertTouchEnd
+    const isLeftSwipe = distance > minSwipeDistance
+    const isRightSwipe = distance < -minSwipeDistance
+
+    if (isLeftSwipe) {
+      // Swipe left - next image
+      setCurrentDessertIndex((prev) => (prev + 1) % dessertImages.length)
+    } else if (isRightSwipe) {
+      // Swipe right - previous image  
+      setCurrentDessertIndex((prev) => (prev - 1 + dessertImages.length) % dessertImages.length)
+    }
+  }
+
+  const goToPrevDessert = () => {
+    setCurrentDessertIndex((prev) => (prev - 1 + dessertImages.length) % dessertImages.length)
+  }
+
+  const goToNextDessert = () => {
+    setCurrentDessertIndex((prev) => (prev + 1) % dessertImages.length)
   }
 
   return (
@@ -597,9 +653,9 @@ export function MenuSection({ language }: MenuSectionProps) {
           >
             {t.dessertTitle}
           </h3>
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-4xl mx-auto mb-8">
             <p
-              className="text-sm md:text-base lg:text-lg leading-relaxed"
+              className="text-sm md:text-base lg:text-lg leading-relaxed mb-6"
               style={{
                 color: "rgba(255,255,255,0.8)",
                 textShadow: "0 2px 4px rgba(0,0,0,0.6)",
@@ -607,8 +663,168 @@ export function MenuSection({ language }: MenuSectionProps) {
             >
               {t.dessertMessage}
             </p>
+            
+            {/* Story-like Gallery Thumbnails */}
+            <div className="flex justify-center gap-3 flex-wrap">
+              {dessertImages.slice(0, 5).map((image, index) => (
+                <div
+                  key={index}
+                  className="relative cursor-pointer group"
+                  onClick={() => {
+                    setCurrentDessertIndex(index)
+                    setIsGalleryOpen(true)
+                  }}
+                >
+                  {/* Story Ring - Instagram style */}
+                  <div className="w-20 h-20 md:w-24 md:h-24 rounded-full p-[3px] bg-gradient-to-r from-[#e18b1a] via-[#f4a261] to-[#e18b1a] group-hover:from-[#d17a0f] group-hover:to-[#d17a0f] transition-all duration-300">
+                    <div className="w-full h-full rounded-full p-[2px] bg-[#252421]">
+                      <div className="w-full h-full rounded-full overflow-hidden">
+                        <Image
+                          src={image}
+                          alt={`Dessert ${index + 1}`}
+                          width={96}
+                          height={96}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Label */}
+                  <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2">
+                    <span className="text-xs text-white/80 whitespace-nowrap">
+                      {index === 0 ? t.specialties : `${index + 1}`}
+                    </span>
+                  </div>
+                  
+                  {/* Hover effect */}
+                  <div className="absolute inset-0 rounded-full bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+              ))}
+              
+              {/* View All Button */}
+              <div
+                className="relative cursor-pointer group"
+                onClick={() => {
+                  setCurrentDessertIndex(0)
+                  setIsGalleryOpen(true)
+                }}
+              >
+                <div className="w-20 h-20 md:w-24 md:h-24 rounded-full p-[3px] bg-gradient-to-r from-white/20 to-white/10 group-hover:from-[#e18b1a] group-hover:to-[#e18b1a] transition-all duration-300">
+                  <div className="w-full h-full rounded-full bg-[#252421] flex items-center justify-center">
+                    <div className="text-center">
+                      <div className="text-white text-lg font-bold">+{dessertImages.length - 5}</div>
+                      <div className="text-white/60 text-xs">more</div>
+                    </div>
+                  </div>
+                </div>
+                <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2">
+                  <span className="text-xs text-white/80 whitespace-nowrap">
+                    {t.viewGallery}
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+
+        {/* Dessert Gallery Modal */}
+        {isGalleryOpen && (
+          <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center p-4">
+            <div className="relative w-full max-w-4xl mx-auto">
+              {/* Close Button */}
+              <button
+                onClick={() => setIsGalleryOpen(false)}
+                className="absolute -top-12 right-0 z-10 w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300"
+              >
+                <X className="w-5 h-5" />
+              </button>
+              
+              {/* Gallery Header */}
+              <div className="text-center mb-6">
+                <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">
+                  {t.specialties}
+                </h3>
+                <p className="text-white/80 text-sm md:text-base">
+                  {currentDessertIndex + 1} of {dessertImages.length}
+                </p>
+              </div>
+              
+              {/* Main Image */}
+              <div 
+                className="relative h-[60vh] md:h-[70vh] rounded-2xl overflow-hidden mb-4 bg-black/20 select-none"
+                onTouchStart={onDessertTouchStart}
+                onTouchMove={onDessertTouchMove}
+                onTouchEnd={onDessertTouchEnd}
+                style={{
+                  userSelect: "none",
+                  WebkitUserSelect: "none",
+                  MozUserSelect: "none",
+                  msUserSelect: "none",
+                }}
+              >
+                <Image
+                  src={dessertImages[currentDessertIndex]}
+                  alt={`Dessert ${currentDessertIndex + 1}`}
+                  fill
+                  className="object-contain pointer-events-none"
+                  draggable={false}
+                />
+                
+                {/* Navigation Arrows */}
+                <button
+                  onClick={goToPrevDessert}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/60 backdrop-blur-sm border border-white/30 flex items-center justify-center text-white hover:bg-black/80 hover:border-[#e18b1a] hover:scale-110 active:scale-95 transition-all duration-300 group shadow-lg hover:shadow-xl"
+                >
+                  <div className="transform group-hover:-translate-x-0.5 transition-transform duration-200">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="text-white group-hover:text-[#e18b1a]">
+                      <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </div>
+                </button>
+                <button
+                  onClick={goToNextDessert}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/60 backdrop-blur-sm border border-white/30 flex items-center justify-center text-white hover:bg-black/80 hover:border-[#e18b1a] hover:scale-110 active:scale-95 transition-all duration-300 group shadow-lg hover:shadow-xl"
+                >
+                  <div className="transform group-hover:translate-x-0.5 transition-transform duration-200">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="text-white group-hover:text-[#e18b1a]">
+                      <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </div>
+                </button>
+
+                {/* Swipe Indicator for Mobile */}
+                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 md:hidden">
+                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-sm border border-white/20">
+                    <span className="text-white text-xs opacity-70">← Swipe →</span>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Thumbnail Navigation */}
+              <div className="flex justify-center gap-2 overflow-x-auto pb-2">
+                {dessertImages.map((image, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentDessertIndex(index)}
+                    className={`relative w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 transition-all duration-300 ${
+                      currentDessertIndex === index 
+                        ? 'ring-2 ring-[#e18b1a] opacity-100' 
+                        : 'opacity-60 hover:opacity-80'
+                    }`}
+                  >
+                    <Image
+                      src={image}
+                      alt={`Thumbnail ${index + 1}`}
+                      fill
+                      className="object-cover"
+                    />
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       <style jsx>{`

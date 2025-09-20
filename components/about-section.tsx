@@ -12,7 +12,7 @@ const translations = {
       "Kafeinë lindi nga dashuria për kafenë, por edhe për gjithçka që e shoqëron atë. Nga espresso klasike deri te iced teas freskuese, mocha, çokollata të ngrohta, ëmbëlsira artizanale dhe ushqime të lehta – ne përpiqemi të sjellim diçka për secilin shije.",
     mission: "Misioni Ynë",
     missionText:
-      "Të krijojmë një hapësirë të ngrohtë dhe mikpritëse ku miqtë, familjet dhe komuniteti ynë mund të shijojnë produkte të përgatitura me kujdes, në një atmosferë që frymëzon relaks dhe bashkëbisedim.",
+      "Të krijojmë një hapësirë të ngrohtë dhe mikpritëse ku miqtë, familjet dhe komuniteti ynë mund të shijojnë produkte të përgatitur me kujdes, në një atmosferë që frymëzon relaks dhe bashkëbisedim.",
     values: "Vlerat Tona",
     quality: "Cilësia",
     qualityText: "Përdorim vetëm përbërës të cilësisë së lartë",
@@ -54,19 +54,52 @@ export function AboutSection({ language }: AboutSectionProps) {
             <p className="text-lg leading-relaxed">{t.missionText}</p>
           </div>
           <div className="relative">
-            <video autoPlay muted loop playsInline className="rounded-lg shadow-xl w-full h-[500px] object-cover">
-              {/* Primary source - Local video */}
-              <source src="/videos/about-kafeine.mp4" type="video/mp4" />
-              {/* Fallback source - Vercel Blob Storage */}
-              <source
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/2025-05-14_09-30-40_UTC-aycOG1Go9UmBZKPGnM0T8vFWWZOh6G.mp4"
-                type="video/mp4"
-              />
-              {/* Fallback content for browsers that don't support video */}
-              <div className="bg-gradient-to-br from-amber-100 to-amber-200 w-full h-full flex items-center justify-center rounded-lg">
-                <p className="text-amber-800 text-lg font-medium">Loading coffee experience...</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 h-[400px]">
+              {/* First Video - Our Story */}
+              <div className="relative group overflow-hidden rounded-lg shadow-lg">
+                <video
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                >
+                  <source src="/videos/about-kafeine2.mp4" type="video/mp4" />
+                  <source src="/videos/about-kafeine.mp4" type="video/mp4" />
+                  <div className="bg-gradient-to-br from-amber-100 to-amber-200 w-full h-full flex items-center justify-center rounded-lg">
+                    <p className="text-amber-800 text-sm font-medium">Loading...</p>
+                  </div>
+                </video>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-2 left-2 bg-black/50 backdrop-blur-sm px-2 py-1 rounded text-white text-xs font-medium">
+                  Our Story
+                </div>
               </div>
-            </video>
+
+              {/* Second Video - Experience */}
+              <div className="relative group overflow-hidden rounded-lg shadow-lg">
+                <video
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                >
+                  <source src="/videos/about-kafeine.mp4" type="video/mp4" />
+                  <div className="bg-gradient-to-br from-orange-100 to-orange-200 w-full h-full flex items-center justify-center rounded-lg">
+                    <p className="text-orange-800 text-sm font-medium">Loading...</p>
+                  </div>
+                </video>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-2 left-2 bg-black/50 backdrop-blur-sm px-2 py-1 rounded text-white text-xs font-medium">
+                  Experience
+                </div>
+              </div>
+            </div>
+
+            {/* Decorative elements */}
+            <div className="absolute -top-4 -right-4 w-8 h-8 bg-primary/20 rounded-full blur-sm" />
+            <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-amber-400/30 rounded-full blur-sm" />
           </div>
         </div>
 
