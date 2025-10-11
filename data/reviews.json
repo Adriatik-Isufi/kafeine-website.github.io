@@ -1,0 +1,85 @@
+{
+    "reviews": [
+      {
+        "id": 1,
+        "name": "George Cheng",
+        "rating": 5,
+        "date": "2025-10-04",
+        "text": "First time Pristina, this shop is just the right place to enjoy a great coffee after city walk. Friendly staff 🫶🏼 Thank you",
+        "avatar": "GC"
+      },
+      {
+        "id": 2,
+        "name": "Lira Rexha",
+        "rating": 5,
+        "date": "2025-06-11",
+        "text": "A hidden gem for coffee lovers!\nI stopped by and tried their Tiramisu coffee — absolutely amazing! It had the perfect balance of rich espresso and creamy sweetness, just like the dessert. The presentation was beautiful, and the flavor was unforgettable. The staff were warm and attentive, and the atmosphere was cozy and inviting. Definitely coming back for another cup. Highly recommend this place if you’re looking for something unique and delicious!",
+        "avatar": "LR"
+      },
+      {
+        "id": 3,
+        "name": "Erëza Dili",
+        "rating": 5,
+        "date": "2025-06-11",
+        "text": "This charming café is quickly becoming one of my favorite spots. The atmosphere is warm and inviting, perfect for a quiet coffee break or catching up with friends. The coffee is rich and smooth, clearly made with care, and the pastries are fresh, delicious, and beautifully presented. What really stood out to me, though, was the staff. Everyone is genuinely friendly and welcoming, which adds so much to the overall experience. It’s the kind of place you’ll want to come back to again and again. Highly recommend!",
+        "avatar": "ED"
+      },
+      {
+        "id": 4,
+        "name": "Rifat Canaj",
+        "rating": 5,
+        "date": "2025-06-11",
+        "text": "The best coffee shop experience I’ve had! The staff is the friendliest and most attentive, always greeting you with the warmest smiles. The ambiance is the coziest and most stylish, with the most relaxing atmosphere. Truly the finest place to enjoy your coffee!",
+        "avatar": "RC"
+      },
+      {
+        "id": 5,
+        "name": "Endrit Krasniqi",
+        "rating": 5,
+        "date": "2025-06-11",
+        "text": "Warm, cozy ambiance, and the smell of fresh pastries that literally hug your nose. This new spot is the new city story.",
+        "avatar": "EK"
+      },
+      {
+        "id": 6,
+        "name": "Besjana Abazi",
+        "rating": 5,
+        "date": "2025-06-11",
+        "text": "If you’re a cake lover ,this coffee shop is an absolute gem\nHighly recommended for anyone who appreciates good cake and great coffee 😋",
+        "avatar": "BA"
+      },
+      {
+        "id": 7,
+        "name": "Rina Krasniqi",
+        "rating": 5,
+        "date": "2025-06-11",
+        "text": "Kafeine has a calm and welcoming atmosphere, with kind staff and really good coffee. Their fresh pastries are full of flavor and aroma—just perfect! I also tried a sandwich that looked amazing and tasted even better. A cozy little spot in the heart of Pristina. Can’t wait to come back!",
+        "avatar": "RK"
+      },
+      {
+        "id": 8,
+        "name": "Endrit",
+        "rating": 5,
+        "date": "2025-06-11",
+        "text": "Great coffee, friendly staff, and a cozy vibe. No wait, perfect for any group size. Highly recommend!",
+        "avatar": "E"
+      },
+      {
+        "id": 9,
+        "name": "Erëza Krasniqi",
+        "rating": 5,
+        "date": "2025-06-11",
+        "text": "Great coffe,cozy atmosphere and super friendly staf.Will definitely be back !",
+        "avatar": "EK"
+      },
+      {
+        "id": 10,
+        "name": "Besnik Rexhepi",
+        "rating": 5,
+        "date": "2025-06-11",
+        "text": "A cozy spot with great coffee and friendly service! Perfect for a quick stop or a relaxed break. Highly recommended",
+        "avatar": "BR"
+      }
+    ],
+    "googleReviewsUrl": "https://maps.app.goo.gl/dp4yLavm3Cxeh1S57"
+  }
