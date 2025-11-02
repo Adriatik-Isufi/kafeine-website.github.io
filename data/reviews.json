@@ -1,85 +1,229 @@
 {
-    "reviews": [
-      {
-        "id": 1,
-        "name": "George Cheng",
-        "rating": 5,
-        "date": "2025-10-04",
-        "text": "First time Pristina, this shop is just the right place to enjoy a great coffee after city walk. Friendly staff 🫶🏼 Thank you",
-        "avatar": "GC"
-      },
-      {
-        "id": 2,
-        "name": "Lira Rexha",
-        "rating": 5,
-        "date": "2025-06-11",
-        "text": "A hidden gem for coffee lovers!\nI stopped by and tried their Tiramisu coffee — absolutely amazing! It had the perfect balance of rich espresso and creamy sweetness, just like the dessert. The presentation was beautiful, and the flavor was unforgettable. The staff were warm and attentive, and the atmosphere was cozy and inviting. Definitely coming back for another cup. Highly recommend this place if you’re looking for something unique and delicious!",
-        "avatar": "LR"
-      },
-      {
-        "id": 3,
-        "name": "Erëza Dili",
-        "rating": 5,
-        "date": "2025-06-11",
-        "text": "This charming café is quickly becoming one of my favorite spots. The atmosphere is warm and inviting, perfect for a quiet coffee break or catching up with friends. The coffee is rich and smooth, clearly made with care, and the pastries are fresh, delicious, and beautifully presented. What really stood out to me, though, was the staff. Everyone is genuinely friendly and welcoming, which adds so much to the overall experience. It’s the kind of place you’ll want to come back to again and again. Highly recommend!",
-        "avatar": "ED"
-      },
-      {
-        "id": 4,
-        "name": "Rifat Canaj",
-        "rating": 5,
-        "date": "2025-06-11",
-        "text": "The best coffee shop experience I’ve had! The staff is the friendliest and most attentive, always greeting you with the warmest smiles. The ambiance is the coziest and most stylish, with the most relaxing atmosphere. Truly the finest place to enjoy your coffee!",
-        "avatar": "RC"
-      },
-      {
-        "id": 5,
-        "name": "Endrit Krasniqi",
-        "rating": 5,
-        "date": "2025-06-11",
-        "text": "Warm, cozy ambiance, and the smell of fresh pastries that literally hug your nose. This new spot is the new city story.",
-        "avatar": "EK"
-      },
-      {
-        "id": 6,
-        "name": "Besjana Abazi",
-        "rating": 5,
-        "date": "2025-06-11",
-        "text": "If you’re a cake lover ,this coffee shop is an absolute gem\nHighly recommended for anyone who appreciates good cake and great coffee 😋",
-        "avatar": "BA"
-      },
-      {
-        "id": 7,
-        "name": "Rina Krasniqi",
-        "rating": 5,
-        "date": "2025-06-11",
-        "text": "Kafeine has a calm and welcoming atmosphere, with kind staff and really good coffee. Their fresh pastries are full of flavor and aroma—just perfect! I also tried a sandwich that looked amazing and tasted even better. A cozy little spot in the heart of Pristina. Can’t wait to come back!",
-        "avatar": "RK"
-      },
-      {
-        "id": 8,
-        "name": "Endrit",
-        "rating": 5,
-        "date": "2025-06-11",
-        "text": "Great coffee, friendly staff, and a cozy vibe. No wait, perfect for any group size. Highly recommend!",
-        "avatar": "E"
-      },
-      {
-        "id": 9,
-        "name": "Erëza Krasniqi",
-        "rating": 5,
-        "date": "2025-06-11",
-        "text": "Great coffe,cozy atmosphere and super friendly staf.Will definitely be back !",
-        "avatar": "EK"
-      },
-      {
-        "id": 10,
-        "name": "Besnik Rexhepi",
-        "rating": 5,
-        "date": "2025-06-11",
-        "text": "A cozy spot with great coffee and friendly service! Perfect for a quick stop or a relaxed break. Highly recommended",
-        "avatar": "BR"
-      }
-    ],
-    "googleReviewsUrl": "https://maps.app.goo.gl/dp4yLavm3Cxeh1S57"
-  }
+  "reviews": [
+    {
+      "id": 3,
+      "name": "Ricardo Chavarria",
+      "rating": 4,
+      "date": "2 weeks ago",
+      "text": "I love the decore and atmosphere. Coffee was good, just the way I like it. Service was aloof. Restroom was kind of clean but  needed attention. We Will come back for dessert, only had time for coffee ☕️ today. 😁",
+      "avatar": "RC"
+    },
+    {
+      "id": 4,
+      "name": "Rozafa Berisha",
+      "rating": 5,
+      "date": "3 weeks ago",
+      "text": "The best coffee in Town👌highly recommended",
+      "avatar": "RB"
+    },
+    {
+      "id": 5,
+      "name": "Ahmet Furkan",
+      "rating": 5,
+      "date": "3 weeks ago",
+      "text": "It has a very warm atmosphere and there are also areas where you can study. There is a backyard with heaters and blankets you can use. I absolutely loved their coffee. The Americano is fresh and has a wonderful aroma. Thanks to the staff for their attentiveness.",
+      "avatar": "AF"
+    },
+    {
+      "id": 6,
+      "name": "Epik 1",
+      "rating": 5,
+      "date": "3 weeks ago",
+      "text": "Perfect environment, very polite staff and perfect pumpkin spice cake.",
+      "avatar": "E1"
+    },
+    {
+      "id": 11,
+      "name": "George Cheng",
+      "rating": 5,
+      "date": "4 weeks ago",
+      "text": "First time Pristina, this shop is just the right place to enjoy a great coffee after city walk. Friendly staff 🫶🏼 Thank you",
+      "avatar": "GC"
+    },
+    {
+      "id": 12,
+      "name": "Kron Mustafa",
+      "rating": 5,
+      "date": "2 months ago",
+      "text": "Super friendly people, tasty food and good coffee. Love the place",
+      "avatar": "KM"
+    },
+    {
+      "id": 13,
+      "name": "shpat ibrani",
+      "rating": 5,
+      "date": "2 months ago",
+      "text": "Amazing place, great food greater coffee!",
+      "avatar": "SI"
+    },
+    {
+      "id": 17,
+      "name": "KENAN AKKAYA",
+      "rating": 5,
+      "date": "2 months ago",
+      "text": "The girls working are friendly and attentive, and the coffee is good too.",
+      "avatar": "KA"
+    },
+    {
+      "id": 20,
+      "name": "Lira Rexha",
+      "rating": 5,
+      "date": "4 months ago",
+      "text": "A hidden gem for coffee lovers!\nI stopped by and tried their Tiramisu coffee — absolutely amazing! It had the perfect balance of rich espresso and creamy sweetness, just like the dessert. The presentation was beautiful, and the flavor was unforgettable. The staff were warm and attentive, and the atmosphere was cozy and inviting. Definitely coming back for another cup. Highly recommend this place if you’re looking for something unique and delicious!",
+      "avatar": "LR"
+    },
+    {
+      "id": 21,
+      "name": "Endrit",
+      "rating": 5,
+      "date": "4 months ago",
+      "text": "Great coffee, friendly staff, and a cozy vibe. No wait, perfect for any group size. Highly recommend!",
+      "avatar": "E"
+    },
+    {
+      "id": 22,
+      "name": "Besnik Rexhepi",
+      "rating": 5,
+      "date": "5 months ago",
+      "text": "A cozy spot with great coffee and friendly service! Perfect for a quick stop or a relaxed break. Highly recommended",
+      "avatar": "BR"
+    },
+    {
+      "id": 23,
+      "name": "valon neziri",
+      "rating": 5,
+      "date": "5 months ago",
+      "text": "Very good and very friendly place.",
+      "avatar": "VN"
+    },
+    {
+      "id": 24,
+      "name": "Besjana Abazi",
+      "rating": 5,
+      "date": "5 months ago",
+      "text": "If you’re a cake lover ,this coffee shop is an absolute gem\nHighly recommended for anyone who appreciates good cake and great coffee 😋",
+      "avatar": "BA"
+    },
+    {
+      "id": 25,
+      "name": "Fernando Alvarado",
+      "rating": 5,
+      "date": "5 months ago",
+      "text": "Good shit",
+      "avatar": "FA"
+    },
+    {
+      "id": 26,
+      "name": "Erëza Krasniqi",
+      "rating": 5,
+      "date": "5 months ago",
+      "text": "Great coffe,cozy atmosphere and super friendly staf.Will definitely be back !",
+      "avatar": "EK"
+    },
+    {
+      "id": 27,
+      "name": "Bujar Abazi",
+      "rating": 5,
+      "date": "5 months ago",
+      "text": "The best Caramel Frappe I've ever tried, I'll definitely be back!",
+      "avatar": "BA"
+    },
+    {
+      "id": 28,
+      "name": "Endrit Nuhiu",
+      "rating": 5,
+      "date": "5 months ago",
+      "text": "Great coffee, friendly staff and the place looks amazing. Definitely worth checking out!",
+      "avatar": "EN"
+    },
+    {
+      "id": 29,
+      "name": "Rifat Canaj",
+      "rating": 5,
+      "date": "5 months ago",
+      "text": "The best coffee shop experience I’ve had! The staff is the friendliest and most attentive, always greeting you with the warmest smiles. The ambiance is the coziest and most stylish, with the most relaxing atmosphere. Truly the finest place to enjoy your coffee!",
+      "avatar": "RC"
+    },
+    {
+      "id": 30,
+      "name": "Ermira Rexhepi",
+      "rating": 5,
+      "date": "5 months ago",
+      "text": "Very nice atmosphere, like at home!! The ice coffee is very tasty and the chicken baguette is very fresh and full of flavor. I definitely recommend it!",
+      "avatar": "ER"
+    },
+    {
+      "id": 31,
+      "name": "Fis Malësori",
+      "rating": 5,
+      "date": "5 months ago",
+      "text": "Coffee was great, love the terrace in the back and staff is very kind. Keep it up, 10/10 would recommend!",
+      "avatar": "FM"
+    },
+    {
+      "id": 32,
+      "name": "Erëza Dili",
+      "rating": 5,
+      "date": "5 months ago",
+      "text": "This charming café is quickly becoming one of my favorite spots. The atmosphere is warm and inviting, perfect for a quiet coffee break or catching up with friends. The coffee is rich and smooth, clearly made with care, and the pastries are fresh, delicious, and beautifully presented. What really stood out to me, though, was the staff. Everyone is genuinely friendly and welcoming, which adds so much to the overall experience. It’s the kind of place you’ll want to come back to again and again. Highly recommend!",
+      "avatar": "ED"
+    },
+    {
+      "id": 34,
+      "name": "Furtuna Gubetini",
+      "rating": 5,
+      "date": "5 months ago",
+      "text": "Cozy and welcoming spot with great vibes. The coffee is delicious and the atmosphere makes you want to stay longer.",
+      "avatar": "FG"
+    },
+    {
+      "id": 35,
+      "name": "Trim Gashi",
+      "rating": 5,
+      "date": "5 months ago",
+      "text": "Amazing espresso and a perfect place to relax. I’ll be back",
+      "avatar": "TG"
+    },
+    {
+      "id": 36,
+      "name": "Genc Gerguri",
+      "rating": 5,
+      "date": "5 months ago",
+      "text": "Kafeine offers a delightful coffee experience with exceptional service and a relaxing atmosphere. I’d definitely return again.",
+      "avatar": "GG"
+    },
+    {
+      "id": 37,
+      "name": "Berat Ahmetaj",
+      "rating": 5,
+      "date": "5 months ago",
+      "text": "Just had a freshly made cake and a perfect coffee 👌👌 totally recommend ⭐️⭐️",
+      "avatar": "BA"
+    },
+    {
+      "id": 38,
+      "name": "Rina Krasniqi",
+      "rating": 5,
+      "date": "5 months ago",
+      "text": "Kafeine has a calm and welcoming atmosphere, with kind staff and really good coffee. Their fresh pastries are full of flavor and aroma—just perfect! I also tried a sandwich that looked amazing and tasted even better. A cozy little spot in the heart of Pristina. Can’t wait to come back!",
+      "avatar": "RK"
+    },
+    {
+      "id": 40,
+      "name": "Göktuğ E",
+      "rating": 5,
+      "date": "5 months ago",
+      "text": "If you want to have a cozy and quiet moment when you come to Pristina, this cafe is the only one i would recommend, good coffee, good dessert.. Thanks!",
+      "avatar": "GE"
+    },
+    {
+      "id": 41,
+      "name": "Endrit Krasniqi",
+      "rating": 5,
+      "date": "5 months ago",
+      "text": "Warm, cozy ambiance, and the smell of fresh pastries that literally hug your nose. This new spot is the new city story.",
+      "avatar": "EK"
+    }
+  ],
+  "googleReviewsUrl": "https://maps.app.goo.gl/dp4yLavm3Cxeh1S57"
+}

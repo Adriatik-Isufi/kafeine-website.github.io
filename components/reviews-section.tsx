@@ -66,11 +66,7 @@ function ReviewCard({
             ))}
           </div>
           <span className="text-xs text-muted-foreground mt-1 block">
-            {new Date(review.date).toLocaleDateString("sq-AL", {
-              year: "numeric",
-              month: "short",
-              day: "numeric",
-            })}
+            {review.date}
           </span>
         </div>
       </div>
@@ -114,11 +110,7 @@ function MasonryReviewCard({ review }: { review: (typeof reviewsData.reviews)[0]
             ))}
           </div>
           <span className="text-xs text-muted-foreground mt-1 block">
-            {new Date(review.date).toLocaleDateString("sq-AL", {
-              year: "numeric",
-              month: "short",
-              day: "numeric",
-            })}
+            {review.date}
           </span>
         </div>
       </div>
@@ -265,11 +257,7 @@ export function ReviewsSection({ language }: ReviewsSectionProps) {
                         ))}
                       </div>
                       <span className="text-xs text-muted-foreground mt-1 block">
-                        {new Date(selectedReview.date).toLocaleDateString("sq-AL", {
-                          year: "numeric",
-                          month: "short",
-                          day: "numeric",
-                        })}
+                        {selectedReview.date}
                       </span>
                     </div>
                   </div>
