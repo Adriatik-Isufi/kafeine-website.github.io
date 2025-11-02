@@ -10,9 +10,12 @@ import { GallerySection } from "@/components/gallery-section"
 import { ReviewsSection } from "@/components/reviews-section"
 import { ContactSection } from "@/components/contact-section"
 import { Footer } from "@/components/footer"
+import FloatingPumpkin from "@/components/floating-pumpkin"
+import HalloweenModal from "@/components/halloween-modal"
 
 export default function HomePage() {
   const [language, setLanguage] = useState<"sq" | "en">("sq")
+  const [halloweenModalOpen, setHalloweenModalOpen] = useState(false)
 
   return (
     <div className="min-h-screen">
@@ -25,6 +28,9 @@ export default function HomePage() {
       <ReviewsSection language={language} />
       <ContactSection language={language} />
       <Footer language={language} />
+
+      <FloatingPumpkin onClick={() => setHalloweenModalOpen(true)} />
+      <HalloweenModal open={halloweenModalOpen} onOpenChange={setHalloweenModalOpen} />
     </div>
   )
 }

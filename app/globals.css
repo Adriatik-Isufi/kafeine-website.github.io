@@ -202,4 +202,43 @@
   .animate-float {
     animation: float 3s ease-in-out infinite;
   }
+
+  /* Added scrollbar-hide utility for Halloween modal videos */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Added separate animations for pumpkin float and text bounce */
+  @keyframes float-slow {
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-15px);
+    }
+  }
+
+  @keyframes bounce-text {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+
+  .animate-float-slow {
+    animation: float-slow 4s ease-in-out infinite;
+  }
+
+  .animate-bounce-text {
+    animation: bounce-text 2s ease-in-out infinite;
+  }
 }
