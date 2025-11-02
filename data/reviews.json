@@ -1,4 +1,7 @@
 {
+  "overallRating": 4.9,
+  "totalReviews": 41,
+  "googleReviewsUrl": "https://maps.app.goo.gl/dp4yLavm3Cxeh1S57",
   "reviews": [
     {
       "id": 3,
@@ -224,6 +227,5 @@
       "text": "Warm, cozy ambiance, and the smell of fresh pastries that literally hug your nose. This new spot is the new city story.",
       "avatar": "EK"
     }
-  ],
-  "googleReviewsUrl": "https://maps.app.goo.gl/dp4yLavm3Cxeh1S57"
+  ]
 }
