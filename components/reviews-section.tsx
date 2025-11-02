@@ -115,6 +115,8 @@ export function ReviewsSection({ language }: ReviewsSectionProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [cardsPerView, setCardsPerView] = useState(3)
   const containerRef = useRef<HTMLDivElement>(null)
+  const trackRef = useRef<HTMLDivElement>(null)
+  const [translateX, setTranslateX] = useState(0)
 
   useEffect(() => {
     const updateCardsPerView = () => {
@@ -159,29 +161,64 @@ export function ReviewsSection({ language }: ReviewsSectionProps) {
       isDragging = true
     }
 
+    const handleTouchMove = (e: TouchEvent) => {
+      if (!isDragging) return
+      // Prevent default to avoid scrolling while swiping
+      e.preventDefault()
+    }
+
     const handleTouchEnd = (e: TouchEvent) => {
       if (!isDragging) return
       const endX = e.changedTouches[0].pageX
       const diff = startX - endX
 
+      // Swipe threshold of 50px
       if (Math.abs(diff) > 50) {
-        if (diff > 0) {
+        if (diff > 0 && currentIndex < maxIndex) {
           handleNext()
-        } else {
+        } else if (diff < 0 && currentIndex > 0) {
           handlePrev()
         }
       }
       isDragging = false
     }
 
-    container.addEventListener("touchstart", handleTouchStart)
-    container.addEventListener("touchend", handleTouchEnd)
+    container.addEventListener("touchstart", handleTouchStart, { passive: true })
+    container.addEventListener("touchmove", handleTouchMove, { passive: false })
+    container.addEventListener("touchend", handleTouchEnd, { passive: true })
 
     return () => {
       container.removeEventListener("touchstart", handleTouchStart)
+      container.removeEventListener("touchmove", handleTouchMove)
       container.removeEventListener("touchend", handleTouchEnd)
     }
   }, [currentIndex, maxIndex])
+
+  // Recalculate pixel-based translate to ensure last card is fully visible
+  useEffect(() => {
+    const recalc = () => {
+      const container = containerRef.current
+      const track = trackRef.current
+      if (!container || !track) return
+
+      const firstChild = track.firstElementChild as HTMLElement | null
+      if (!firstChild) return
+
+      const style = window.getComputedStyle(track)
+      // Read gap from computed styles (gap or columnGap)
+      const gapPx = parseFloat(style.gap || style.columnGap || "0") || 0
+      const cardWidth = firstChild.getBoundingClientRect().width
+      const step = cardWidth + (cardsPerView === 1 ? 0 : gapPx)
+
+      const maxScroll = Math.max(0, track.scrollWidth - container.clientWidth)
+      const next = Math.min(currentIndex * step, maxScroll)
+      setTranslateX(next)
+    }
+
+    recalc()
+    window.addEventListener("resize", recalc)
+    return () => window.removeEventListener("resize", recalc)
+  }, [currentIndex, cardsPerView])
 
   return (
     <section id="reviews" className="py-20 bg-gradient-to-b from-[#FFF8F0] to-white">
@@ -234,20 +271,27 @@ export function ReviewsSection({ language }: ReviewsSectionProps) {
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto mb-8">
+        <div className="max-w-7xl mx-auto mb-8 px-12 md:px-16">
           <div className="relative">
             <div ref={containerRef} className="overflow-hidden">
               <div
-                className="flex transition-transform duration-500 ease-out gap-6"
+                ref={trackRef}
+                className="flex transition-transform duration-500 ease-out"
                 style={{
-                  transform: `translateX(-${currentIndex * (100 / cardsPerView)}%)`,
+                  transform: `translateX(-${translateX}px)`,
+                  gap: cardsPerView === 1 ? "0" : "1.5rem",
                 }}
               >
                 {reviewsData.reviews.map((review) => (
                   <div
                     key={review.id}
                     className="flex-shrink-0"
-                    style={{ width: `calc(${100 / cardsPerView}% - ${((cardsPerView - 1) * 24) / cardsPerView}px)` }}
+                    style={{
+                      width:
+                        cardsPerView === 1
+                          ? "100%"
+                          : `calc(${100 / cardsPerView}% - ${((cardsPerView - 1) * 1.5) / cardsPerView}rem)`,
+                    }}
                   >
                     <ReviewCard review={review} language={language} />
                   </div>
@@ -258,7 +302,7 @@ export function ReviewsSection({ language }: ReviewsSectionProps) {
             {currentIndex > 0 && (
               <button
                 onClick={handlePrev}
-                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 p-3 rounded-full bg-white shadow-lg border-2 border-[#D4A574] text-[#8B4513] hover:bg-[#8B4513] hover:text-white transition-all duration-300 z-10"
+                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 md:-translate-x-16 p-3 rounded-full bg-white shadow-lg border-2 border-[#D4A574] text-[#8B4513] hover:bg-[#8B4513] hover:text-white transition-all duration-300 z-10"
                 aria-label="Previous reviews"
               >
                 <ChevronLeft className="w-6 h-6" />
@@ -268,7 +312,7 @@ export function ReviewsSection({ language }: ReviewsSectionProps) {
             {currentIndex < maxIndex && (
               <button
                 onClick={handleNext}
-                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 p-3 rounded-full bg-white shadow-lg border-2 border-[#D4A574] text-[#8B4513] hover:bg-[#8B4513] hover:text-white transition-all duration-300 z-10"
+                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 md:translate-x-16 p-3 rounded-full bg-white shadow-lg border-2 border-[#D4A574] text-[#8B4513] hover:bg-[#8B4513] hover:text-white transition-all duration-300 z-10"
                 aria-label="Next reviews"
               >
                 <ChevronRight className="w-6 h-6" />
