@@ -31,7 +31,7 @@
       "id": 7,
       "name": "Epik 1",
       "rating": 5,
-      "date": "a month ago",
+      "date": "2 months ago",
       "text": "Perfect environment, very polite staff and perfect pumpkin spice cake.",
       "avatar": "E1"
     },
@@ -39,7 +39,7 @@
       "id": 12,
       "name": "George Cheng",
       "rating": 5,
-      "date": "a month ago",
+      "date": "2 months ago",
       "text": "First time Pristina, this shop is just the right place to enjoy a great coffee after city walk. Friendly staff 🫶🏼 Thank you",
       "avatar": "GC"
     },
@@ -47,7 +47,7 @@
       "id": 13,
       "name": "Kron Mustafa",
       "rating": 5,
-      "date": "2 months ago",
+      "date": "3 months ago",
       "text": "Super friendly people, tasty food and good coffee. Love the place",
       "avatar": "KM"
     },
@@ -71,7 +71,7 @@
       "id": 21,
       "name": "Lira Rexha",
       "rating": 5,
-      "date": "5 months ago",
+      "date": "6 months ago",
       "text": "A hidden gem for coffee lovers!\nI stopped by and tried their Tiramisu coffee — absolutely amazing! It had the perfect balance of rich espresso and creamy sweetness, just like the dessert. The presentation was beautiful, and the flavor was unforgettable. The staff were warm and attentive, and the atmosphere was cozy and inviting. Definitely coming back for another cup. Highly recommend this place if you’re looking for something unique and delicious!",
       "avatar": "LR"
     },
@@ -79,7 +79,7 @@
       "id": 22,
       "name": "Endrit",
       "rating": 5,
-      "date": "5 months ago",
+      "date": "6 months ago",
       "text": "Great coffee, friendly staff, and a cozy vibe. No wait, perfect for any group size. Highly recommend!",
       "avatar": "E"
     },
@@ -87,7 +87,7 @@
       "id": 23,
       "name": "Besnik Rexhepi",
       "rating": 5,
-      "date": "5 months ago",
+      "date": "6 months ago",
       "text": "A cozy spot with great coffee and friendly service! Perfect for a quick stop or a relaxed break. Highly recommended",
       "avatar": "BR"
     },
@@ -95,7 +95,7 @@
       "id": 24,
       "name": "valon neziri",
       "rating": 5,
-      "date": "5 months ago",
+      "date": "6 months ago",
       "text": "Very good and very friendly place.",
       "avatar": "VN"
     },
@@ -109,11 +109,11 @@
     },
     {
       "id": 26,
-      "name": "Fernando Alvarado",
+      "name": "Psychedelic Monkey",
       "rating": 5,
       "date": "6 months ago",
       "text": "Good shit",
-      "avatar": "FA"
+      "avatar": "PM"
     },
     {
       "id": 27,
