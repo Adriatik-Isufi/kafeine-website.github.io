@@ -22,6 +22,13 @@ RUN pnpm run build
 # Install serve globally to serve static files
 RUN npm install -g serve
 
+# Create a non-root user and switch to it (SECURITY: Prevent privilege escalation)
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nextjs -u 1001 && \
+    chown -R nextjs:nodejs /app
+
+USER nextjs
+
 # Expose port 3000
 EXPOSE 3000
 
