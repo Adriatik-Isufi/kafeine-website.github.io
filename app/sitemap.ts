@@ -1,9 +1,7 @@
 import { MetadataRoute } from 'next'
 
-export const dynamic = 'force-static'
-
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://kafeine-ks.com'
+  const baseUrl = 'https://www.kafeine-ks.com'
   
   return [
     {
