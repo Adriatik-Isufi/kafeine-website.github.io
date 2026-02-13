@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     locale: "sq_AL",
     alternateLocale: ["en_US"],
     siteName: "Kafeinë",
-    url: "https://www.kafeine-ks.com",
+    url: "https://www.kafeine-ks.com/",
     images: [
       {
         url: "/images/logo.png",
@@ -64,10 +64,10 @@ export const metadata: Metadata = {
     shortcut: "/favicon.ico",
   },
   alternates: {
-    canonical: "https://www.kafeine-ks.com",
+    canonical: "https://www.kafeine-ks.com/",
     languages: {
-      "sq": "https://www.kafeine-ks.com",
-      "x-default": "https://www.kafeine-ks.com",
+      "sq": "https://www.kafeine-ks.com/",
+      "x-default": "https://www.kafeine-ks.com/",
     },
   },
   category: "restaurant",
@@ -122,7 +122,7 @@ export default function RootLayout({
               "@type": "CafeOrCoffeeShop",
               name: "Kafeinë",
               description: "Kafeja më e mirë në zemër të Prishtinës me ëmbëlsira të bëra me dorë dhe ushqim të lehtë",
-              url: "https://www.kafeine-ks.com",
+              url: "https://www.kafeine-ks.com/",
               logo: "https://www.kafeine-ks.com/images/logo.png",
               image: [
                 "https://www.kafeine-ks.com/images/logo.png",
@@ -151,7 +151,7 @@ export default function RootLayout({
               servesCuisine: ["Coffee", "Desserts", "Light Meals", "Albanian"],
               paymentAccepted: ["Cash", "Credit Card"],
               currenciesAccepted: "EUR",
-              hasMenu: "https://www.kafeine-ks.com#menu",
+              hasMenu: "https://www.kafeine-ks.com/#menu",
               serviceArea: {
                 "@type": "Place",
                 name: "Prishtinë, Kosovo",
@@ -160,7 +160,7 @@ export default function RootLayout({
                 "@type": "OrderAction",
                 target: {
                   "@type": "EntryPoint",
-                  urlTemplate: "https://www.kafeine-ks.com#menu",
+                  urlTemplate: "https://www.kafeine-ks.com/#menu",
                   inLanguage: ["sq", "en"],
                   actionPlatform: [
                     "http://schema.org/DesktopWebPlatform",
@@ -205,12 +205,12 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "LocalBusiness",
-              "@id": "https://www.kafeine-ks.com",
+              "@id": "https://www.kafeine-ks.com/",
               name: "Kafeinë",
               alternateName: ["Kafe Kafeinë", "Coffee Kafeine"],
               description:
                 "The finest coffee shop in Pristina serving authentic Albanian coffee, handmade desserts, and light meals",
-              url: "https://www.kafeine-ks.com",
+              url: "https://www.kafeine-ks.com/",
               sameAs: [
                 "https://www.facebook.com/profile.php?id=61567364573918",
                 "https://www.instagram.com/kafeine.ks",
