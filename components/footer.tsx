@@ -57,7 +57,9 @@ export function Footer({ language = "sq" }: FooterProps) {
             <div className="flex items-center space-x-2 mb-4">
               <img
                 src={getImagePath("/images/logo.png") || "/placeholder.svg"}
-                alt="Kafeinë"
+                alt="Kafeinë Logo"
+                width={40}
+                height={40}
                 className="h-10 w-auto object-contain"
               />
               <span className="text-2xl font-bold text-[#e18b1a]">Kafeinë</span>

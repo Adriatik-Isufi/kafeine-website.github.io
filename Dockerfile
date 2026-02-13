@@ -32,5 +32,5 @@ USER nextjs
 # Expose port 3000
 EXPOSE 3000
 
-# Serve the static files from the out directory
+# Serve the static files from the out directory (serve.json is copied from public)
 CMD ["serve", "-s", "out", "-l", "3000"]
