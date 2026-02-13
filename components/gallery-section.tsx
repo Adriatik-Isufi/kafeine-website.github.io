@@ -223,11 +223,11 @@ export function GallerySection({ language }: GallerySectionProps) {
         <div className="gallery-container relative w-full max-w-7xl mx-auto min-h-[800px] md:min-h-[900px] overflow-visible">
           {/* Content Block - Text in top-left */}
           <div className="content-block relative z-10 max-w-md">
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">
               {t.title}
               <br />
               <span className="text-xl md:text-2xl font-light text-[#ff9500]">{t.subtitle}</span>
-            </h1>
+            </h2>
             <p className="text-gray-300 text-base leading-relaxed mb-6">{t.description}</p>
             <button
               onClick={() => openGallery(0)}

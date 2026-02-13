@@ -533,7 +533,7 @@ export function MenuSection({ language }: MenuSectionProps) {
                       {media.endsWith(".mp4") ? (
                         <video src={media} muted className="w-full h-full object-cover" />
                       ) : (
-                        <Image src={media || "/placeholder.svg"} alt="" fill className="object-cover" />
+                        <Image src={media || "/placeholder.svg"} alt={`${t[activeTab]} menu item ${index + 1}`} fill className="object-cover" />
                       )}
                       <div className="absolute inset-0 bg-black/20" />
                       {media.endsWith(".mp4") && (

@@ -28,10 +28,12 @@ const translations = {
 export function HeroSection({ language }: HeroSectionProps) {
   const t = translations[language]
 
-  const scrollToMenu = () => {
+  const scrollToMenu = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault()
     const element = document.getElementById("menu")
     if (element) {
       element.scrollIntoView({ behavior: "smooth" })
+      window.history.pushState(null, '', '#menu')
     }
   }
 
@@ -54,13 +56,13 @@ export function HeroSection({ language }: HeroSectionProps) {
           </h1>
           <p className="text-xl md:text-2xl mb-6 text-[#e2ba84] font-medium">{t.subtitle}</p>
           <p className="text-lg mb-8 max-w-2xl mx-auto leading-relaxed text-white/90">{t.description}</p>
-          <Button
+          <a
+            href="#menu"
             onClick={scrollToMenu}
-            size="lg"
-            className="bg-[#e18b1a] hover:bg-[#e18b1a]/90 text-white px-8 py-3 text-lg font-semibold transition-all duration-300 hover:scale-105"
+            className="inline-block bg-[#e18b1a] hover:bg-[#e18b1a]/90 text-white px-8 py-3 text-lg font-semibold transition-all duration-300 hover:scale-105 rounded-md"
           >
             {t.cta}
-          </Button>
+          </a>
         </div>
       </div>
 

@@ -109,16 +109,19 @@ function Navigation({ language = "sq", onLanguageChange, isCareerPage = false }:
     return sectionTextColors[currentSection] || "white"
   }
 
-  const scrollToSection = (sectionId: string) => {
+  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
     if (sectionId === "events") {
-      window.location.href = "/events"
+      // Let the default link behavior work for events page
       return
     }
 
     if (isCareerPage) {
-      window.location.href = `/#${sectionId}`
+      // Let the default link behavior work for career page redirects
       return
     }
+
+    // Prevent default anchor behavior for smooth scroll
+    e.preventDefault()
 
     const element = document.getElementById(sectionId)
     if (element) {
@@ -130,6 +133,9 @@ function Navigation({ language = "sq", onLanguageChange, isCareerPage = false }:
         top: offsetPosition,
         behavior: "smooth",
       })
+
+      // Update URL hash without jumping
+      window.history.pushState(null, '', `#${sectionId}`)
     }
     setIsMenuOpen(false)
   }
@@ -172,7 +178,9 @@ function Navigation({ language = "sq", onLanguageChange, isCareerPage = false }:
           <div className="flex items-center">
             <img
               src={getImagePath("/images/logo.png") || "/placeholder.svg"}
-              alt="Kafeinë"
+              alt="Kafeinë Logo"
+              width={80}
+              height={80}
               className="h-20 w-auto object-contain"
             />
           </div>
@@ -189,10 +197,12 @@ function Navigation({ language = "sq", onLanguageChange, isCareerPage = false }:
                 key === "contact" ||
                 key === "events"
               ) {
+                const href = key === "events" ? "/events" : isCareerPage ? `/#${key}` : `#${key}`
                 return (
-                  <button
+                  <a
                     key={key}
-                    onClick={() => scrollToSection(key)}
+                    href={href}
+                    onClick={(e) => scrollToSection(e, key)}
                     className={`font-medium transition-all duration-300 ${currentSection === key ? "font-bold" : ""}`}
                     style={{
                       color: currentSection === key ? "#e18b1a" : textColor,
@@ -200,17 +210,17 @@ function Navigation({ language = "sq", onLanguageChange, isCareerPage = false }:
                     }}
                     onMouseEnter={(e) => {
                       if (currentSection !== key) {
-                        e.target.style.color = "#e18b1a"
+                        (e.target as HTMLElement).style.color = "#e18b1a"
                       }
                     }}
                     onMouseLeave={(e) => {
                       if (currentSection !== key) {
-                        e.target.style.color = textColor
+                        (e.target as HTMLElement).style.color = textColor
                       }
                     }}
                   >
                     {label}
-                  </button>
+                  </a>
                 )
               }
               return null
@@ -266,7 +276,9 @@ function Navigation({ language = "sq", onLanguageChange, isCareerPage = false }:
               <div className="flex items-center">
                 <img
                   src={getImagePath("/images/logo.png") || "/placeholder.svg"}
-                  alt="Kafeinë"
+                  alt="Kafeinë Logo"
+                  width={80}
+                  height={80}
                   className="h-20 w-auto object-contain filter brightness-0 invert"
                 />
               </div>
@@ -295,6 +307,7 @@ function Navigation({ language = "sq", onLanguageChange, isCareerPage = false }:
                     key === "contact" ||
                     key === "events"
                   ) {
+                    const href = key === "events" ? "/events" : isCareerPage ? `/#${key}` : `#${key}`
                     return (
                       <li
                         key={key}
@@ -305,8 +318,9 @@ function Navigation({ language = "sq", onLanguageChange, isCareerPage = false }:
                           transitionDelay: `${300 + index * 100}ms`,
                         }}
                       >
-                        <button
-                          onClick={() => scrollToSection(key)}
+                        <a
+                          href={href}
+                          onClick={(e) => scrollToSection(e, key)}
                           className="w-full py-3 px-5 rounded-xl bg-gradient-to-r from-amber-800/80 to-amber-900/80 text-white font-medium shadow-lg flex items-center space-x-3 transition-all duration-300 hover:from-amber-700 hover:to-amber-800 hover:scale-105 hover:shadow-xl border border-amber-600/30 active:scale-95 active:shadow-md transform-gpu"
                           onTouchStart={(e) => {
                             const target = e.currentTarget
@@ -329,7 +343,7 @@ function Navigation({ language = "sq", onLanguageChange, isCareerPage = false }:
                             {getNavIcon(key)}
                           </div>
                           <span className="text-base">{label}</span>
-                        </button>
+                        </a>
                       </li>
                     )
                   }

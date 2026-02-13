@@ -42,10 +42,12 @@ const translations = {
 export function Footer({ language = "sq" }: FooterProps) {
   const t = translations[language]
 
-  const scrollToSection = (sectionId: string) => {
+  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
+    e.preventDefault()
     const element = document.getElementById(sectionId)
     if (element) {
       element.scrollIntoView({ behavior: "smooth" })
+      window.history.pushState(null, '', `#${sectionId}`)
     }
   }
 
@@ -67,43 +69,47 @@ export function Footer({ language = "sq" }: FooterProps) {
             <p className="text-gray-300 leading-relaxed max-w-md">{t.description}</p>
           </div>
 
-          <div>
+          <nav>
             <h4 className="text-lg font-semibold mb-4 text-[#e18b1a]">{t.quickLinks}</h4>
             <ul className="space-y-2">
               <li>
-                <button
-                  onClick={() => scrollToSection("home")}
+                <a
+                  href="#home"
+                  onClick={(e) => scrollToSection(e, "home")}
                   className="text-gray-300 hover:text-[#e18b1a] transition-colors"
                 >
                   {t.home}
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  onClick={() => scrollToSection("about")}
+                <a
+                  href="#about"
+                  onClick={(e) => scrollToSection(e, "about")}
                   className="text-gray-300 hover:text-[#e18b1a] transition-colors"
                 >
                   {t.about}
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  onClick={() => scrollToSection("menu")}
+                <a
+                  href="#menu"
+                  onClick={(e) => scrollToSection(e, "menu")}
                   className="text-gray-300 hover:text-[#e18b1a] transition-colors"
                 >
                   {t.menu}
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  onClick={() => scrollToSection("contact")}
+                <a
+                  href="#contact"
+                  onClick={(e) => scrollToSection(e, "contact")}
                   className="text-gray-300 hover:text-[#e18b1a] transition-colors"
                 >
                   {t.contact}
-                </button>
+                </a>
               </li>
             </ul>
-          </div>
+          </nav>
 
           <div>
             <h4 className="text-lg font-semibold mb-4 text-[#e18b1a]">{t.contactInfo}</h4>

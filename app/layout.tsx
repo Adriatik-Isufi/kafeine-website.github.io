@@ -5,9 +5,9 @@ import { GeistMono } from "geist/font/mono"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "Kafeinë - Kafeja më e mirë në Prishtinë | Desserts & Light Meals",
+  title: "Kafeinë - Kafeja më e mirë në Prishtinë",
   description:
-    "Kafeinë: Kafeja më e mirë në zemër të Prishtinës. Zbuloni shijen autentike të kafesë së pjekur me dashuri, ëmbëlsirat e bëra me dorë dhe ushqimin e lehtë. Espresso, smoothies, granitas dhe më shumë.",
+    "Kafeja më e mirë në zemër të Prishtinës. Zbuloni shijen autentike të kafesë, ëmbëlsirat e bëra me dorë dhe ushqimin e lehtë.",
   keywords:
     "kafeinë prishtinë, kafe prishtina, coffee pristina, espresso kosovo, desserts prishtinë, smoothies kosovo, kafenë kosovo, restaurant prishtina, light meals kosovo",
   generator: "Next.js",
