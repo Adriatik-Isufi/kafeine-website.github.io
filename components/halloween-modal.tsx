@@ -3,7 +3,7 @@
 import type React from "react"
 
 import { useState } from "react"
-import { Dialog, DialogContent } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import GlitchText from "./glitch-text"
 
@@ -68,21 +68,21 @@ export default function HalloweenModal({ open, onOpenChange }: HalloweenModalPro
 
   const videos = [
     {
-      src: "/halloween-2025/video1.mp4",
+      src: "/celebrations/halloween-2025/video1.mp4",
       title: "Halloween ka arritur",
       description:
         "Hajdeni dhe shijoni një ditë me ambient spooky, shumë shije të veçanta dhe atmosferë të paharrueshme në Kafeinë.",
       textPosition: "top",
     },
     {
-      src: "/halloween-2025/video2.mp4",
+      src: "/celebrations/halloween-2025/video2.mp4",
       title: "Order if you dare",
       description:
         "Përjetoni atmosferën spooky ndërsa barista jonë fantazmë ju shërben kafenë tuaj të preferuar me një prekje Halloween.",
       textPosition: "bottom",
     },
     {
-      src: "/halloween-2025/video3.mp4",
+      src: "/celebrations/halloween-2025/video3.mp4",
       title: "Trick or treat ☕👻",
       description: "#kafeinë #coffeeshop #kafe #smoothie #food #drinks #chessecake #lemonade",
       textPosition: "top",
@@ -95,6 +95,8 @@ export default function HalloweenModal({ open, onOpenChange }: HalloweenModalPro
         className="!max-w-[95vw] !w-[95vw] h-[90vh] p-0 bg-black border-[#e18b1a] border-2 overflow-hidden"
         showCloseButton={true}
       >
+        <DialogTitle className="sr-only">Halloween 2025 Gallery</DialogTitle>
+        <DialogDescription className="sr-only">Gallery of Halloween 2025 celebration featuring spooky atmosphere, special treats, and entertainment videos</DialogDescription>
         <div
           className="relative w-full h-full"
           onTouchStart={handleTouchStart}
@@ -109,9 +111,9 @@ export default function HalloweenModal({ open, onOpenChange }: HalloweenModalPro
           >
             <div className="w-full h-full flex items-center justify-center md:p-2 pb-16">
               <picture>
-                <source media="(min-width: 1024px)" srcSet="/halloween-2025/poster.png" />
+                <source media="(min-width: 1024px)" srcSet="/celebrations/halloween-2025/poster.png" />
                 <img
-                  src="/halloween-2025/poster-portrait.png"
+                  src="/celebrations/halloween-2025/poster-portrait.png"
                   alt="Kafeinë Halloween 2025"
                   className="max-w-full max-h-full object-contain"
                 />

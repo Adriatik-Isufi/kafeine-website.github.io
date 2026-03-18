@@ -103,42 +103,49 @@ export function AboutSection({ language }: AboutSectionProps) {
           </div>
         </div>
 
-        <div className="text-center mb-12">
-          <h3 className="text-3xl font-bold text-foreground mb-8">{t.values}</h3>
-        </div>
+        <div className="border-t border-border/40 pt-16 mt-4">
+          <h3 className="text-xs uppercase tracking-[0.2em] text-muted-foreground font-semibold mb-12 text-center">{t.values}</h3>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div className="group bg-card/50 backdrop-blur-sm p-6 rounded-xl border border-border/50 hover:border-primary/20 transition-all duration-300 hover:shadow-md hover:-translate-y-1">
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-amber-400 to-amber-600 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
-                <span className="text-xl">☕</span>
+          <div className="grid sm:grid-cols-3 gap-px bg-border/30 rounded-xl overflow-hidden">
+            {/* Quality */}
+            <div className="group bg-card/60 hover:bg-card transition-colors duration-300 p-8 flex flex-col gap-5">
+              <div className="w-8 h-8 text-primary/70 group-hover:text-primary transition-colors duration-300">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 2l2.09 6.26L20 9.27l-4.91 4.78L16.18 21 12 18.27 7.82 21l1.09-6.95L4 9.27l5.91-.01z" />
+                </svg>
               </div>
-              <div className="flex-1 min-w-0">
-                <h4 className="text-lg font-bold text-foreground mb-2">{t.quality}</h4>
+              <div>
+                <h4 className="text-base font-semibold text-foreground mb-2 tracking-wide">{t.quality}</h4>
                 <p className="text-sm text-muted-foreground leading-relaxed">{t.qualityText}</p>
               </div>
             </div>
-          </div>
 
-          <div className="group bg-card/50 backdrop-blur-sm p-6 rounded-xl border border-border/50 hover:border-primary/20 transition-all duration-300 hover:shadow-md hover:-translate-y-1">
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
-                <span className="text-xl">🤝</span>
+            {/* Community */}
+            <div className="group bg-card/60 hover:bg-card transition-colors duration-300 p-8 flex flex-col gap-5">
+              <div className="w-8 h-8 text-primary/70 group-hover:text-primary transition-colors duration-300">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                  <circle cx="9" cy="7" r="4" />
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg>
               </div>
-              <div className="flex-1 min-w-0">
-                <h4 className="text-lg font-bold text-foreground mb-2">{t.community}</h4>
+              <div>
+                <h4 className="text-base font-semibold text-foreground mb-2 tracking-wide">{t.community}</h4>
                 <p className="text-sm text-muted-foreground leading-relaxed">{t.communityText}</p>
               </div>
             </div>
-          </div>
 
-          <div className="group bg-card/50 backdrop-blur-sm p-6 rounded-xl border border-border/50 hover:border-primary/20 transition-all duration-300 hover:shadow-md hover:-translate-y-1 sm:col-span-2 lg:col-span-1">
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-stone-600 to-stone-800 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
-                <span className="text-xl text-white">🏛️</span>
+            {/* Tradition */}
+            <div className="group bg-card/60 hover:bg-card transition-colors duration-300 p-8 flex flex-col gap-5">
+              <div className="w-8 h-8 text-primary/70 group-hover:text-primary transition-colors duration-300">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                  <polyline points="9 22 9 12 15 12 15 22" />
+                </svg>
               </div>
-              <div className="flex-1 min-w-0">
-                <h4 className="text-lg font-bold text-foreground mb-2">{t.tradition}</h4>
+              <div>
+                <h4 className="text-base font-semibold text-foreground mb-2 tracking-wide">{t.tradition}</h4>
                 <p className="text-sm text-muted-foreground leading-relaxed">{t.traditionText}</p>
               </div>
             </div>

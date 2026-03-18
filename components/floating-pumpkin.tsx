@@ -9,7 +9,7 @@ export default function FloatingPumpkin({ onClick }: { onClick: () => void }) {
     >
       <div className="w-20 h-20 animate-float-slow">
         <img
-          src="/halloween-2025/pumpkin.png"
+          src="/celebrations/halloween-2025/pumpkin.png"
           alt="Halloween Pumpkin"
           className="w-full h-full object-contain drop-shadow-2xl"
         />

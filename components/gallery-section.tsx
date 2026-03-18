@@ -3,6 +3,7 @@
 import React, { useState } from "react"
 import { getImagePath } from "@/lib/utils"
 import { DotLottieReact } from "@lottiefiles/dotlottie-react"
+import { galleryImages } from "@/data/gallery"
 
 interface GallerySectionProps {
   language: "sq" | "en"
@@ -33,29 +34,13 @@ export function GallerySection({ language }: GallerySectionProps) {
   const [mouseStart, setMouseStart] = useState<number | null>(null)
   const [mouseEnd, setMouseEnd] = useState<number | null>(null)
   const [isDragging, setIsDragging] = useState(false)
-  
-  // Thumbnail strip swipe states
-  const [thumbTouchStart, setThumbTouchStart] = useState<number | null>(null)
-  const [thumbTouchEnd, setThumbTouchEnd] = useState<number | null>(null)
-  const [thumbMouseStart, setThumbMouseStart] = useState<number | null>(null)
-  const [thumbMouseEnd, setThumbMouseEnd] = useState<number | null>(null)
-  const [isThumbDragging, setIsThumbDragging] = useState(false)
 
   const minSwipeDistance = 50
 
-  const images = [
-    { src: getImagePath("/New Batch/DJJvASBPbHA_3.jpg"), alt: "Coffee and Pastry", size: "large" },
-    { src: getImagePath("/New Batch/DJlmvvUtCIi_1.jpg"), alt: "Delicious Cake", size: "medium" },
-    { src: getImagePath("/New Batch/DJtwuGLu8MD_1.jpg"), alt: "Fresh Dessert", size: "small" },
-    { src: getImagePath("/New Batch/DKw8QbUteRT_1.jpg"), alt: "Sweet Treat", size: "medium" },
-    { src: getImagePath("/New Batch/DLmRJ2-PFT4_1.jpg"), alt: "Gourmet Cake", size: "large" },
-    { src: getImagePath("/New Batch/DMsS1AUqodn_1.jpg"), alt: "Artisan Dessert", size: "small" },
-    { src: getImagePath("/New Batch/DOLmerZDDpw_6.jpg"), alt: "Premium Pastry", size: "medium" },
-    { src: getImagePath("/New Batch/DM93hBlhIZS_3.jpg"), alt: "Coffee Specialty", size: "small" },
-    { src: getImagePath("/New Batch/DJWwCVVtALD_1.jpg"), alt: "Elegant Dessert", size: "medium" },
-    { src: getImagePath("/New Batch/DKZbjqhu64R_1.jpg"), alt: "Artisan Creation", size: "large" },
-    { src: getImagePath("/New Batch/DLt4okuMGV9_1.jpg"), alt: "Sweet Delicacy", size: "small" },
-  ]
+  const images = galleryImages.map((img) => ({
+    ...img,
+    src: getImagePath(img.src),
+  }))
 
   const openGallery = (index: number) => {
     setCurrentImageIndex(index)
@@ -137,72 +122,6 @@ export function GallerySection({ language }: GallerySectionProps) {
     setIsDragging(false)
   }
 
-  // Thumbnail strip swipe handlers
-  const onThumbTouchStart = (e: React.TouchEvent) => {
-    setThumbTouchEnd(null)
-    setThumbTouchStart(e.targetTouches[0].clientX)
-  }
-
-  const onThumbTouchMove = (e: React.TouchEvent) => {
-    setThumbTouchEnd(e.targetTouches[0].clientX)
-  }
-
-  const onThumbTouchEnd = () => {
-    if (!thumbTouchStart || !thumbTouchEnd) return
-
-    const distance = thumbTouchStart - thumbTouchEnd
-    const isLeftSwipe = distance > minSwipeDistance
-    const isRightSwipe = distance < -minSwipeDistance
-
-    const thumbnailStrip = document.getElementById('thumbnail-strip')
-    if (thumbnailStrip) {
-      const scrollAmount = 100 // pixels to scroll
-      if (isLeftSwipe) {
-        thumbnailStrip.scrollLeft += scrollAmount
-      } else if (isRightSwipe) {
-        thumbnailStrip.scrollLeft -= scrollAmount
-      }
-    }
-  }
-
-  const onThumbMouseDown = (e: React.MouseEvent) => {
-    setThumbMouseEnd(null)
-    setThumbMouseStart(e.clientX)
-    setIsThumbDragging(true)
-  }
-
-  const onThumbMouseMove = (e: React.MouseEvent) => {
-    if (!isThumbDragging) return
-    setThumbMouseEnd(e.clientX)
-  }
-
-  const onThumbMouseUp = () => {
-    if (!thumbMouseStart || !thumbMouseEnd || !isThumbDragging) {
-      setIsThumbDragging(false)
-      return
-    }
-
-    const distance = thumbMouseStart - thumbMouseEnd
-    const isLeftDrag = distance > minSwipeDistance
-    const isRightDrag = distance < -minSwipeDistance
-
-    const thumbnailStrip = document.getElementById('thumbnail-strip')
-    if (thumbnailStrip) {
-      const scrollAmount = 100 // pixels to scroll
-      if (isLeftDrag) {
-        thumbnailStrip.scrollLeft += scrollAmount
-      } else if (isRightDrag) {
-        thumbnailStrip.scrollLeft -= scrollAmount
-      }
-    }
-
-    setIsThumbDragging(false)
-  }
-
-  const onThumbMouseLeave = () => {
-    setIsThumbDragging(false)
-  }
-
   const handleKeyPress = (e: KeyboardEvent) => {
     if (!selectedImage) return
     if (e.key === 'ArrowRight') nextImage()
@@ -223,11 +142,11 @@ export function GallerySection({ language }: GallerySectionProps) {
         <div className="gallery-container relative w-full max-w-7xl mx-auto min-h-[800px] md:min-h-[900px] overflow-visible">
           {/* Content Block - Text in top-left */}
           <div className="content-block relative z-10 max-w-md">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
               {t.title}
               <br />
               <span className="text-xl md:text-2xl font-light text-[#ff9500]">{t.subtitle}</span>
-            </h2>
+            </h1>
             <p className="text-gray-300 text-base leading-relaxed mb-6">{t.description}</p>
             <button
               onClick={() => openGallery(0)}
@@ -256,8 +175,6 @@ export function GallerySection({ language }: GallerySectionProps) {
                 <img
                   src={image.src || "/placeholder.svg"}
                   alt={image.alt}
-                  width={400}
-                  height={300}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
@@ -300,8 +217,6 @@ export function GallerySection({ language }: GallerySectionProps) {
               <img
                 src={images[0]?.src || "/placeholder.svg"}
                 alt={images[0]?.alt}
-                width={340}
-                height={260}
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
@@ -328,8 +243,6 @@ export function GallerySection({ language }: GallerySectionProps) {
               <img
                 src={images[1]?.src || "/placeholder.svg"}
                 alt={images[1]?.alt}
-                width={280}
-                height={350}
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
@@ -356,8 +269,6 @@ export function GallerySection({ language }: GallerySectionProps) {
               <img
                 src={images[2]?.src || "/placeholder.svg"}
                 alt={images[2]?.alt}
-                width={260}
-                height={200}
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
@@ -384,8 +295,6 @@ export function GallerySection({ language }: GallerySectionProps) {
               <img
                 src={images[3]?.src || "/placeholder.svg"}
                 alt={images[3]?.alt}
-                width={240}
-                height={240}
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
@@ -412,8 +321,6 @@ export function GallerySection({ language }: GallerySectionProps) {
               <img
                 src={images[4]?.src || "/placeholder.svg"}
                 alt={images[4]?.alt}
-                width={300}
-                height={220}
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
@@ -440,8 +347,6 @@ export function GallerySection({ language }: GallerySectionProps) {
               <img
                 src={images[5]?.src || "/placeholder.svg"}
                 alt={images[5]?.alt}
-                width={220}
-                height={180}
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
@@ -468,8 +373,6 @@ export function GallerySection({ language }: GallerySectionProps) {
               <img
                 src={images[6]?.src || "/placeholder.svg"}
                 alt={images[6]?.alt}
-                width={200}
-                height={280}
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
@@ -496,8 +399,6 @@ export function GallerySection({ language }: GallerySectionProps) {
               <img
                 src={images[7]?.src || "/placeholder.svg"}
                 alt={images[7]?.alt}
-                width={160}
-                height={120}
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
@@ -524,8 +425,6 @@ export function GallerySection({ language }: GallerySectionProps) {
               <img
                 src={images[8]?.src || "/placeholder.svg"}
                 alt={images[8]?.alt}
-                width={280}
-                height={200}
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
@@ -552,8 +451,6 @@ export function GallerySection({ language }: GallerySectionProps) {
               <img
                 src={images[9]?.src || "/placeholder.svg"}
                 alt={images[9]?.alt}
-                width={180}
-                height={240}
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
@@ -580,8 +477,6 @@ export function GallerySection({ language }: GallerySectionProps) {
               <img
                 src={images[10]?.src || "/placeholder.svg"}
                 alt={images[10]?.alt}
-                width={140}
-                height={140}
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
@@ -621,11 +516,16 @@ export function GallerySection({ language }: GallerySectionProps) {
                 <img
                   src={selectedImage || "/placeholder.svg"}
                   alt={images[currentImageIndex]?.alt || "Gallery image"}
-                  width={800}
-                  height={600}
                   className="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl pointer-events-none"
                   draggable={false}
                 />
+
+                {/* Swipe Hint for Mobile */}
+                <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 pointer-events-none lg:hidden">
+                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/30 backdrop-blur-sm border border-white/20 opacity-0 animate-pulse">
+                    <span className="text-white text-xs">← Swipe →</span>
+                  </div>
+                </div>
                 
                 {/* Close Button */}
                 <button
@@ -651,43 +551,22 @@ export function GallerySection({ language }: GallerySectionProps) {
               </button>
 
               {/* Thumbnail Strip */}
-              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/30 p-3 rounded-xl backdrop-blur-sm max-w-sm sm:max-w-lg md:max-w-xl lg:max-w-2xl">
-                <div 
-                  id="thumbnail-strip"
-                  className="flex space-x-2 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing scroll-smooth"
-                  onTouchStart={onThumbTouchStart}
-                  onTouchMove={onThumbTouchMove}
-                  onTouchEnd={onThumbTouchEnd}
-                  onMouseDown={onThumbMouseDown}
-                  onMouseMove={onThumbMouseMove}
-                  onMouseUp={onThumbMouseUp}
-                  onMouseLeave={onThumbMouseLeave}
-                  style={{
-                    userSelect: "none",
-                    WebkitUserSelect: "none",
-                    MozUserSelect: "none",
-                    msUserSelect: "none",
-                  }}
-                >
-                  {images.map((image, index) => (
-                    <button
-                      key={index}
-                      onClick={() => openGallery(index)}
-                      className={`w-12 h-12 rounded-lg overflow-hidden transition-all duration-300 hover:scale-110 flex-shrink-0 ${
-                        index === currentImageIndex ? 'ring-2 ring-[#ff9500] scale-110' : 'opacity-70 hover:opacity-100'
-                      }`}
-                    >
-                      <img
-                        src={image.src || "/placeholder.svg"}
-                        alt={`${image.alt} thumbnail`}
-                        width={48}
-                        height={48}
-                        className="w-full h-full object-cover pointer-events-none"
-                        draggable={false}
-                      />
-                    </button>
-                  ))}
-                </div>
+              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 bg-black/30 p-3 rounded-xl backdrop-blur-sm">
+                {images.map((image, index) => (
+                  <button
+                    key={index}
+                    onClick={() => openGallery(index)}
+                    className={`w-12 h-12 rounded-lg overflow-hidden transition-all duration-300 hover:scale-110 ${
+                      index === currentImageIndex ? 'ring-2 ring-[#ff9500] scale-110' : 'opacity-70 hover:opacity-100'
+                    }`}
+                  >
+                    <img
+                      src={image.src || "/placeholder.svg"}
+                      alt={image.alt}
+                      className="w-full h-full object-cover"
+                    />
+                  </button>
+                ))}
               </div>
             </div>
 
@@ -701,12 +580,15 @@ export function GallerySection({ language }: GallerySectionProps) {
       </div>
       
       <style jsx>{`
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
+        /* Swipe hint animation */
+        @keyframes fadeInOut {
+          0%, 100% { opacity: 0; }
+          50% { opacity: 0.7; }
         }
-        .scrollbar-hide {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
+        
+        .animate-pulse {
+          animation: fadeInOut 3s ease-in-out infinite;
+          animation-delay: 2s;
         }
       `}</style>
     </section>

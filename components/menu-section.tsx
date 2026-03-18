@@ -5,6 +5,7 @@ import type React from "react"
 import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 import { X } from "lucide-react"
+import { categoryImages, dessertImages } from "@/data/menu-images"
 
 interface MenuSectionProps {
   language: "sq" | "en"
@@ -45,47 +46,8 @@ const translations = {
   },
 }
 
-const categoryImages = {
-  espresso: ["/Menu/Coffe1.jpg", "/Menu/Coffe2.jpg", "/Menu/machiato1.png", "/Menu/turkcoffe1.jpg"],
-  icedCoffee: ["/Menu/IcedCoffe1.jpg", "/Menu/MatchaLate1.jpg", "/Menu/IcedMotcha1.png", "/Menu/IcedCaramel1.png"],
-  teas: ["/Menu/IcedTea1.jpg", "/Menu/IcedTea2.jpg", "/Menu/IcedTea3.jpg"],
-  smoothies: [
-    "/Menu/Smoothie1.jpg",
-    "/Menu/Smoothie2.jpg",
-    "/Menu/Smoothie3.jpg",
-    "/Menu/Smoothie4.jpg",
-    "/Menu/Smoothie5.jpg",
-    "/Menu/Smoothie6.jpg",
-    "/Menu/Smoothie7.jpg",
-  ],
-  milkshakes: ["/Menu/MilkShake1.jpg", "/Menu/MilkShake2.jpg", "/Menu/MilkShake3.jpg"],
-  granitas: [
-    "/Menu/Granita1.jpg",
-    "/Menu/Granita2.jpg",
-    "/Menu/Granita3.jpg",
-    "/Menu/Granita4.jpg",
-    "/Menu/Granita5.jpg",
-    "/Menu/Granita6.jpg",
-  ],
-  food: [
-    "/Menu/Food1.jpg",
-    "/Menu/Food2.jpg",
-    "/Menu/Food3.jpg",
-    "/videos/SandwitchEaten1.mp4",
-    "/videos/SandwithcEaten.mp4",
-  ],
-}
 
-// Dessert/Specialty images for the story-like gallery
-const dessertImages = [
-  "/images/Desert1.jpg",
-  "/images/berry-cake.jpg", 
-  "/images/carrot-cake.jpg",
-  "/images/carrot-cake-slice.jpg",
-  "/images/lemon-cake.jpg",
-  "/images/lemon-cheesecake.jpg",
-  "/images/lotus-cheesecake.jpg",
-]
+
 
 export function MenuSection({ language }: MenuSectionProps) {
   const t = translations[language]
@@ -177,6 +139,7 @@ export function MenuSection({ language }: MenuSectionProps) {
   useEffect(() => {
     setCurrentImageIndex(0)
   }, [activeTab])
+
 
   const menuItems = {
     espresso: [
@@ -490,16 +453,18 @@ export function MenuSection({ language }: MenuSectionProps) {
                   </p>
                 </div>
 
-                {/* Carousel Indicators */}
-                <div className="absolute bottom-4 right-4 lg:right-6 flex gap-2 pointer-events-auto">
+                {/* Carousel Indicators - Modern Dots */}
+                <div className="absolute bottom-4 right-4 lg:right-6 flex gap-2 pointer-events-auto bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full border border-white/20">
                   {categoryImages[activeTab].map((_, index) => (
                     <button
                       key={index}
                       onClick={() => setCurrentImageIndex(index)}
-                      className="w-2 h-2 rounded-full transition-all duration-300"
-                      style={{
-                        backgroundColor: currentImageIndex === index ? "#e18b1a" : "rgba(255,255,255,0.5)",
-                      }}
+                      className={`rounded-full transition-all duration-300 ${
+                        currentImageIndex === index 
+                          ? "w-3 h-3 bg-gradient-to-r from-[#e18b1a] to-[#f5a623]" 
+                          : "w-2 h-2 bg-white/40 hover:bg-white/60"
+                      }`}
+                      aria-label={`Slide ${index + 1}`}
                     />
                   ))}
                 </div>
@@ -533,7 +498,7 @@ export function MenuSection({ language }: MenuSectionProps) {
                       {media.endsWith(".mp4") ? (
                         <video src={media} muted className="w-full h-full object-cover" />
                       ) : (
-                        <Image src={media || "/placeholder.svg"} alt={`${t[activeTab]} menu item ${index + 1}`} fill className="object-cover" />
+                        <Image src={media || "/placeholder.svg"} alt="" fill className="object-cover" />
                       )}
                       <div className="absolute inset-0 bg-black/20" />
                       {media.endsWith(".mp4") && (
@@ -576,66 +541,41 @@ export function MenuSection({ language }: MenuSectionProps) {
             </div>
           </div>
 
-          {/* Right Side - Menu Items - Mobile Responsive */}
-          <div className="space-y-4 order-1 lg:order-2">
-            <div className="space-y-3 max-h-[400px] lg:max-h-[626px] overflow-y-auto pr-2 custom-scrollbar">
+          {/* Right Side - Menu Items */}
+          <div className="order-1 lg:order-2">
+            <div className="max-h-[400px] lg:max-h-[626px] overflow-y-auto pr-2 custom-scrollbar">
               {menuItems[activeTab].map((item, index) => (
                 <div
                   key={index}
-                  className="group relative p-3 lg:p-4 rounded-xl lg:rounded-2xl transition-all duration-300 hover:scale-[1.02] border cursor-pointer"
-                  style={{
-                    backgroundColor: "#1a1a1a",
-                    borderColor: "rgba(255,255,255,0.2)",
-                    backdropFilter: "blur(10px)",
-                  }}
+                  className="group border-b border-white/10 last:border-0 py-3 lg:py-4"
                 >
-                  <div className="flex justify-between items-start">
-                    <div className="flex-1 pr-2 lg:pr-4">
-                      <h4
-                        className="text-base lg:text-lg xl:text-xl font-semibold mb-1 group-hover:text-[#e18b1a] transition-colors duration-300 leading-tight"
-                        style={{
-                          color: "#ffffff",
-                          textShadow: "0 2px 4px rgba(0,0,0,0.8)",
-                        }}
-                      >
+                  {/* Single price — simple one-liner */}
+                  {Object.keys(item.prices).length === 1 ? (
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-white/90 text-sm lg:text-base font-medium group-hover:text-[#e18b1a] transition-colors duration-200 leading-snug flex-1">
                         {item.name}
-                      </h4>
-
-                      <div className="hidden sm:flex items-center gap-2 mb-2">
-                        <span className="text-xs text-gray-400 font-mono">#{String(index + 1).padStart(2, "0")}</span>
-                        <div className="flex-1 h-px bg-gradient-to-r from-gray-600 to-transparent" />
-                      </div>
-
-                      <div className="flex flex-wrap gap-1.5 lg:gap-2">
+                      </span>
+                      <span className="shrink-0 border-b border-dotted border-white/20 flex-1 mx-2 mb-1" />
+                      <span className="shrink-0 text-[#e18b1a] font-semibold text-sm lg:text-base tabular-nums">
+                        {Object.values(item.prices)[0]}
+                      </span>
+                    </div>
+                  ) : (
+                    /* Multiple sizes — name on top, sizes in a clean row below */
+                    <div>
+                      <span className="block text-white/90 text-sm lg:text-base font-medium group-hover:text-[#e18b1a] transition-colors duration-200 leading-snug mb-2">
+                        {item.name}
+                      </span>
+                      <div className="flex flex-wrap gap-x-4 gap-y-1 pl-1">
                         {Object.entries(item.prices).map(([size, price]) => (
-                          <div key={size} className="flex items-center gap-1.5 lg:gap-2">
-                            {Object.keys(item.prices).length > 1 && (
-                              <span className="text-xs uppercase tracking-wider font-medium text-gray-400">{size}</span>
-                            )}
-                            <span
-                              className="text-sm lg:text-base font-bold px-2.5 lg:px-3 py-1 rounded-full text-white"
-                              style={{ backgroundColor: "#e18b1a" }}
-                            >
-                              {price}
-                            </span>
+                          <div key={size} className="flex items-baseline gap-1.5">
+                            <span className="text-xs uppercase tracking-widest text-white/40 font-medium">{size}</span>
+                            <span className="text-[#e18b1a] font-semibold text-sm tabular-nums">{price}</span>
                           </div>
                         ))}
                       </div>
                     </div>
-
-                    <div className="hidden lg:block opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <div
-                        className="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform"
-                        style={{ backgroundColor: "#e18b1a" }}
-                      >
-                        <span className="text-white text-sm font-bold">+</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="absolute inset-0 rounded-xl lg:rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                    <div className="absolute inset-0 rounded-xl lg:rounded-2xl bg-gradient-to-r from-[#e18b1a]/5 to-transparent" />
-                  </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -730,99 +670,83 @@ export function MenuSection({ language }: MenuSectionProps) {
 
         {/* Dessert Gallery Modal */}
         {isGalleryOpen && (
-          <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center p-4">
-            <div className="relative w-full max-w-4xl mx-auto">
-              {/* Close Button */}
+          <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
+            <div className="relative max-w-5xl max-h-full w-full flex items-center justify-center">
+
+              {/* Prev Button */}
               <button
-                onClick={() => setIsGalleryOpen(false)}
-                className="absolute -top-12 right-0 z-10 w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300"
+                onClick={goToPrevDessert}
+                className="absolute left-0 top-1/2 transform -translate-y-1/2 text-white bg-black/50 hover:bg-[#e18b1a] rounded-full w-12 h-12 flex items-center justify-center transition-all duration-300 hover:scale-110 z-10"
+                style={{ fontSize: '20px' }}
               >
-                <X className="w-5 h-5" />
+                ‹
               </button>
-              
-              {/* Gallery Header */}
-              <div className="text-center mb-6">
-                <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">
-                  {t.specialties}
-                </h3>
-                <p className="text-white/80 text-sm md:text-base">
-                  {currentDessertIndex + 1} of {dessertImages.length}
-                </p>
-              </div>
-              
+
               {/* Main Image */}
-              <div 
-                className="relative h-[60vh] md:h-[70vh] rounded-2xl overflow-hidden mb-4 bg-black/20 select-none"
+              <div
+                className="relative max-w-4xl max-h-full select-none"
                 onTouchStart={onDessertTouchStart}
                 onTouchMove={onDessertTouchMove}
                 onTouchEnd={onDessertTouchEnd}
-                style={{
-                  userSelect: "none",
-                  WebkitUserSelect: "none",
-                  MozUserSelect: "none",
-                  msUserSelect: "none",
-                }}
+                style={{ userSelect: "none", WebkitUserSelect: "none" }}
               >
-                <Image
+                <img
                   src={dessertImages[currentDessertIndex]}
                   alt={`Dessert ${currentDessertIndex + 1}`}
-                  fill
-                  className="object-contain pointer-events-none"
+                  className="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl pointer-events-none"
                   draggable={false}
                 />
-                
-                {/* Navigation Arrows */}
+
+                {/* Close Button */}
                 <button
-                  onClick={goToPrevDessert}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/60 backdrop-blur-sm border border-white/30 flex items-center justify-center text-white hover:bg-black/80 hover:border-[#e18b1a] hover:scale-110 active:scale-95 transition-all duration-300 group shadow-lg hover:shadow-xl"
+                  onClick={() => setIsGalleryOpen(false)}
+                  className="absolute top-4 right-4 text-white bg-black/50 rounded-full w-10 h-10 flex items-center justify-center hover:bg-[#e18b1a] transition-colors"
                 >
-                  <div className="transform group-hover:-translate-x-0.5 transition-transform duration-200">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="text-white group-hover:text-[#e18b1a]">
-                      <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </div>
-                </button>
-                <button
-                  onClick={goToNextDessert}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/60 backdrop-blur-sm border border-white/30 flex items-center justify-center text-white hover:bg-black/80 hover:border-[#e18b1a] hover:scale-110 active:scale-95 transition-all duration-300 group shadow-lg hover:shadow-xl"
-                >
-                  <div className="transform group-hover:translate-x-0.5 transition-transform duration-200">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="text-white group-hover:text-[#e18b1a]">
-                      <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </div>
+                  ✕
                 </button>
 
-                {/* Swipe Indicator for Mobile */}
-                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 md:hidden">
-                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-sm border border-white/20">
-                    <span className="text-white text-xs opacity-70">← Swipe →</span>
-                  </div>
+                {/* Counter */}
+                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/50 text-white px-4 py-2 rounded-full text-sm">
+                  {currentDessertIndex + 1} / {dessertImages.length}
                 </div>
               </div>
-              
-              {/* Thumbnail Navigation */}
-              <div className="flex justify-center gap-2 overflow-x-auto pb-2">
+
+              {/* Next Button */}
+              <button
+                onClick={goToNextDessert}
+                className="absolute right-0 top-1/2 transform -translate-y-1/2 text-white bg-black/50 hover:bg-[#e18b1a] rounded-full w-12 h-12 flex items-center justify-center transition-all duration-300 hover:scale-110 z-10"
+                style={{ fontSize: '20px' }}
+              >
+                ›
+              </button>
+
+              {/* Thumbnail Strip */}
+              <div
+                data-dessert-carousel
+                className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 bg-black/30 p-3 rounded-xl backdrop-blur-sm overflow-x-auto scrollbar-hide max-w-[90vw]"
+              >
                 {dessertImages.map((image, index) => (
                   <button
                     key={index}
                     onClick={() => setCurrentDessertIndex(index)}
-                    className={`relative w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 transition-all duration-300 ${
-                      currentDessertIndex === index 
-                        ? 'ring-2 ring-[#e18b1a] opacity-100' 
-                        : 'opacity-60 hover:opacity-80'
+                    className={`w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 transition-all duration-300 hover:scale-110 ${
+                      index === currentDessertIndex
+                        ? 'ring-2 ring-[#e18b1a] scale-110'
+                        : 'opacity-70 hover:opacity-100'
                     }`}
                   >
-                    <Image
+                    <img
                       src={image}
                       alt={`Thumbnail ${index + 1}`}
-                      fill
-                      className="object-cover"
+                      className="w-full h-full object-cover"
                     />
                   </button>
                 ))}
               </div>
             </div>
+
+            {/* Background click to close */}
+            <div className="absolute inset-0 -z-10" onClick={() => setIsGalleryOpen(false)} />
           </div>
         )}
       </div>

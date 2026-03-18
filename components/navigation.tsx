@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
 import { LanguageToggle } from "./language-toggle"
 import { getImagePath } from "@/lib/utils"
 import {
@@ -48,6 +49,7 @@ const translations = {
 }
 
 function Navigation({ language = "sq", onLanguageChange, isCareerPage = false }: NavigationProps) {
+  const router = useRouter()
   const [isScrolled, setIsScrolled] = useState(false)
   const [currentSection, setCurrentSection] = useState(isCareerPage ? "" : "home")
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -111,7 +113,10 @@ function Navigation({ language = "sq", onLanguageChange, isCareerPage = false }:
 
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
     if (sectionId === "events") {
-      // Let the default link behavior work for events page
+      // Use client-side navigation for events page
+      e.preventDefault()
+      router.push("/events/")
+      setIsMenuOpen(false)
       return
     }
 
@@ -197,7 +202,7 @@ function Navigation({ language = "sq", onLanguageChange, isCareerPage = false }:
                 key === "contact" ||
                 key === "events"
               ) {
-                const href = key === "events" ? "/events" : isCareerPage ? `/#${key}` : `#${key}`
+                const href = key === "events" ? "/events/" : isCareerPage ? `/#${key}` : `#${key}`
                 return (
                   <a
                     key={key}
@@ -307,7 +312,7 @@ function Navigation({ language = "sq", onLanguageChange, isCareerPage = false }:
                     key === "contact" ||
                     key === "events"
                   ) {
-                    const href = key === "events" ? "/events" : isCareerPage ? `/#${key}` : `#${key}`
+                    const href = key === "events" ? "/events/" : isCareerPage ? `/#${key}` : `#${key}`
                     return (
                       <li
                         key={key}

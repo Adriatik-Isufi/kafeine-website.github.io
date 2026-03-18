@@ -1,0 +1,23 @@
+{
+  "name": "Kafeinë",
+  "short_name": "Kafeinë",
+  "description": "Kafeja më e mirë në zemër të Prishtinës",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#e18b1a",
+  "lang": "sq",
+  "icons": [
+    {
+      "src": "/images/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

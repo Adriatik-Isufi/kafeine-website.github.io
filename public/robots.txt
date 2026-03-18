@@ -1,5 +1,10 @@
 User-agent: *
 Allow: /
 
+# Block static assets that are not web pages
+Disallow: /_next/static/media/
+Disallow: /favicon.ico
+Disallow: /images/logo.ico
+
 # Sitemap
-Sitemap: https://kafeine-ks.com/sitemap.xml
+Sitemap: https://www.kafeine-ks.com/sitemap.xml
