@@ -167,18 +167,19 @@ function Navigation({ language = "sq", onLanguageChange, isCareerPage = false }:
         <div
           className={`transition-all duration-500 ease-out mx-auto flex items-center justify-between ${
             isScrolled
-              ? "mt-3 px-4 py-3 max-w-5xl rounded-2xl shadow-2xl border border-white/10"
+              ? "mt-3 px-4 py-3 max-w-5xl rounded-2xl"
               : "px-6 py-4 max-w-full rounded-none"
           }`}
           style={{
-            background: isScrolled
-              ? "rgba(28, 26, 23, 0.72)"
-              : "transparent",
+            background: isScrolled ? "rgba(28, 26, 23, 0.72)" : "transparent",
             backdropFilter: isScrolled ? "blur(28px) saturate(180%)" : "none",
             WebkitBackdropFilter: isScrolled ? "blur(28px) saturate(180%)" : "none",
             boxShadow: isScrolled
               ? "0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08)"
               : "none",
+            border: "1px solid",
+            borderColor: isScrolled ? "rgba(255,255,255,0.10)" : "rgba(255,255,255,0)",
+            transition: "all 500ms cubic-bezier(0.4,0,0.2,1), border-color 500ms cubic-bezier(0.4,0,0.2,1)",
           }}
         >
           {/* Logo */}
