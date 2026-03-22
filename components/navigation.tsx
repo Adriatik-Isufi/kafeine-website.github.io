@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
 import { LanguageToggle } from "./language-toggle"
 import { getImagePath } from "@/lib/utils"
 import {
@@ -49,7 +48,6 @@ const translations = {
 }
 
 function Navigation({ language = "sq", onLanguageChange, isCareerPage = false }: NavigationProps) {
-  const router = useRouter()
   const [isScrolled, setIsScrolled] = useState(false)
   const [currentSection, setCurrentSection] = useState(isCareerPage ? "" : "home")
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -111,22 +109,16 @@ function Navigation({ language = "sq", onLanguageChange, isCareerPage = false }:
     return sectionTextColors[currentSection] || "white"
   }
 
-  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
+  const scrollToSection = (sectionId: string) => {
     if (sectionId === "events") {
-      // Use client-side navigation for events page
-      e.preventDefault()
-      router.push("/events/")
-      setIsMenuOpen(false)
+      window.location.href = "/events"
       return
     }
 
     if (isCareerPage) {
-      // Let the default link behavior work for career page redirects
+      window.location.href = `/#${sectionId}`
       return
     }
-
-    // Prevent default anchor behavior for smooth scroll
-    e.preventDefault()
 
     const element = document.getElementById(sectionId)
     if (element) {
@@ -138,9 +130,6 @@ function Navigation({ language = "sq", onLanguageChange, isCareerPage = false }:
         top: offsetPosition,
         behavior: "smooth",
       })
-
-      // Update URL hash without jumping
-      window.history.pushState(null, '', `#${sectionId}`)
     }
     setIsMenuOpen(false)
   }
@@ -173,85 +162,83 @@ function Navigation({ language = "sq", onLanguageChange, isCareerPage = false }:
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isCareerPage ? "career-nav" : ""}`}
-        style={{
-          background: isScrolled ? "rgba(37, 36, 33, 0.95)" : "rgba(37, 36, 33, 0.8)",
-          backdropFilter: "blur(10px)",
-        }}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${isCareerPage ? "career-nav" : ""}`}
       >
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center">
+        <div
+          className={`transition-all duration-500 ease-out mx-auto flex items-center justify-between ${
+            isScrolled
+              ? "mt-3 px-4 py-3 max-w-5xl rounded-2xl shadow-2xl border border-white/10"
+              : "px-6 py-4 max-w-full rounded-none"
+          }`}
+          style={{
+            background: isScrolled
+              ? "rgba(28, 26, 23, 0.72)"
+              : "transparent",
+            backdropFilter: isScrolled ? "blur(28px) saturate(180%)" : "none",
+            WebkitBackdropFilter: isScrolled ? "blur(28px) saturate(180%)" : "none",
+            boxShadow: isScrolled
+              ? "0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08)"
+              : "none",
+          }}
+        >
+          {/* Logo */}
+          <div className="flex items-center flex-shrink-0">
             <img
               src={getImagePath("/images/logo.png") || "/placeholder.svg"}
-              alt="Kafeinë Logo"
-              width={80}
-              height={80}
-              className="h-20 w-auto object-contain"
+              alt="Kafeinë"
+              className={`w-auto object-contain transition-all duration-500 ${isScrolled ? "h-10" : "h-16"}`}
             />
           </div>
 
-          <div className="hidden md:flex items-center space-x-8">
+          {/* Desktop links */}
+          <div className="hidden md:flex items-center gap-1">
             {Object.entries(t).map(([key, label]) => {
-              if (
-                key === "home" ||
-                key === "about" ||
-                key === "menu" ||
-                key === "workspace" ||
-                key === "gallery" ||
-                key === "reviews" ||
-                key === "contact" ||
-                key === "events"
-              ) {
-                const href = key === "events" ? "/events/" : isCareerPage ? `/#${key}` : `#${key}`
-                return (
-                  <a
-                    key={key}
-                    href={href}
-                    onClick={(e) => scrollToSection(e, key)}
-                    className={`font-medium transition-all duration-300 ${currentSection === key ? "font-bold" : ""}`}
-                    style={{
-                      color: currentSection === key ? "#e18b1a" : textColor,
-                      textShadow: textColor === "white" ? "0 1px 2px rgba(0,0,0,0.3)" : "none",
-                    }}
-                    onMouseEnter={(e) => {
-                      if (currentSection !== key) {
-                        (e.target as HTMLElement).style.color = "#e18b1a"
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (currentSection !== key) {
-                        (e.target as HTMLElement).style.color = textColor
-                      }
-                    }}
-                  >
-                    {label}
-                  </a>
-                )
-              }
-              return null
+              const isActive = currentSection === key
+              const validKeys = ["home","about","menu","workspace","gallery","reviews","contact","events"]
+              if (!validKeys.includes(key)) return null
+              return (
+                <button
+                  key={key}
+                  onClick={() => scrollToSection(key)}
+                  className={`relative px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    isActive
+                      ? "text-[#e18b1a]"
+                      : "text-white/70 hover:text-white"
+                  }`}
+                  style={{ textShadow: "0 1px 3px rgba(0,0,0,0.5)" }}
+                >
+                  {isActive && (
+                    <span
+                      className="absolute inset-0 rounded-lg"
+                      style={{
+                        background: "rgba(225, 139, 26, 0.12)",
+                        boxShadow: "inset 0 1px 0 rgba(225,139,26,0.2)",
+                      }}
+                    />
+                  )}
+                  <span className="relative">{label}</span>
+                </button>
+              )
             })}
           </div>
 
-          <div className="flex items-center space-x-4">
+          {/* Right side */}
+          <div className="flex items-center gap-3">
             {onLanguageChange && (
               <div className="opacity-60 hover:opacity-100 transition-opacity">
                 <LanguageToggle onLanguageChange={onLanguageChange} currentLang={language} />
               </div>
             )}
-
             <div className="md:hidden">
-              <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2" style={{ color: textColor }}>
-                {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="p-2 rounded-lg text-white/80 hover:text-white hover:bg-white/10 transition-all duration-200"
+              >
+                {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
               </button>
             </div>
           </div>
         </div>
-
-        {process.env.NODE_ENV === "development" && (
-          <div className="absolute top-full left-4 bg-black text-white px-2 py-1 text-xs rounded">
-            Current: {currentSection}
-          </div>
-        )}
       </nav>
 
       {isMenuOpen && (
@@ -281,9 +268,7 @@ function Navigation({ language = "sq", onLanguageChange, isCareerPage = false }:
               <div className="flex items-center">
                 <img
                   src={getImagePath("/images/logo.png") || "/placeholder.svg"}
-                  alt="Kafeinë Logo"
-                  width={80}
-                  height={80}
+                  alt="Kafeinë"
                   className="h-20 w-auto object-contain filter brightness-0 invert"
                 />
               </div>
@@ -312,7 +297,6 @@ function Navigation({ language = "sq", onLanguageChange, isCareerPage = false }:
                     key === "contact" ||
                     key === "events"
                   ) {
-                    const href = key === "events" ? "/events/" : isCareerPage ? `/#${key}` : `#${key}`
                     return (
                       <li
                         key={key}
@@ -323,9 +307,8 @@ function Navigation({ language = "sq", onLanguageChange, isCareerPage = false }:
                           transitionDelay: `${300 + index * 100}ms`,
                         }}
                       >
-                        <a
-                          href={href}
-                          onClick={(e) => scrollToSection(e, key)}
+                        <button
+                          onClick={() => scrollToSection(key)}
                           className="w-full py-3 px-5 rounded-xl bg-gradient-to-r from-amber-800/80 to-amber-900/80 text-white font-medium shadow-lg flex items-center space-x-3 transition-all duration-300 hover:from-amber-700 hover:to-amber-800 hover:scale-105 hover:shadow-xl border border-amber-600/30 active:scale-95 active:shadow-md transform-gpu"
                           onTouchStart={(e) => {
                             const target = e.currentTarget
@@ -348,7 +331,7 @@ function Navigation({ language = "sq", onLanguageChange, isCareerPage = false }:
                             {getNavIcon(key)}
                           </div>
                           <span className="text-base">{label}</span>
-                        </a>
+                        </button>
                       </li>
                     )
                   }
