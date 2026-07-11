@@ -47,7 +47,13 @@ export const categoryImages: Record<string, string[]> = {
     "/Menu/Granita5.jpg",
     "/Menu/Granita6.jpg",
   ],
-  softDrinks: [],
+  // Free Unsplash photos (no brand logos) — juice / water / lemonade vibe for Pije
+  softDrinks: [
+    "/Menu/soft-drinks/juice-orange.jpg",
+    "/Menu/soft-drinks/juice-fresh.jpg",
+    "/Menu/soft-drinks/lemonade.jpg",
+    "/Menu/soft-drinks/water-sparkling.jpg",
+  ],
   food: [
     "/Menu/Food1.jpg",
     "/Menu/Food2.jpg",
