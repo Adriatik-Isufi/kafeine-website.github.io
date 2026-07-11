@@ -1,0 +1,861 @@
+{
+  "_comment": "AUTO-GENERATED from data/menu.csv — do not edit. Run: npm run sync-menu",
+  "items": {
+    "espresso": [
+      {
+        "name": "Espresso",
+        "prices": {
+          "small": "1.10€",
+          "double": "1.90€"
+        }
+      },
+      {
+        "name": "Macchiato",
+        "prices": {
+          "small": "1.20€",
+          "large": "1.40€"
+        }
+      },
+      {
+        "name": "Double Espresso Macchiato",
+        "prices": {
+          "small": "2.20€"
+        }
+      },
+      {
+        "name": "Espresso Arabica",
+        "prices": {
+          "small": "1.40€"
+        }
+      },
+      {
+        "name": "Espresso Tonic",
+        "prices": {
+          "small": "2.50€"
+        }
+      },
+      {
+        "name": "Caffe Latte",
+        "prices": {
+          "small": "1.70€"
+        }
+      },
+      {
+        "name": "Caffe Americano",
+        "prices": {
+          "small": "1.40€"
+        }
+      },
+      {
+        "name": "Cappuccino",
+        "prices": {
+          "small": "1.40€"
+        }
+      },
+      {
+        "name": "Spanish Latte",
+        "prices": {
+          "small": "1.60€"
+        }
+      },
+      {
+        "name": "Caramel Macchiato",
+        "prices": {
+          "small": "2.20€"
+        }
+      },
+      {
+        "name": "Mocha",
+        "prices": {
+          "small": "1.80€"
+        }
+      },
+      {
+        "name": "Kafe Turke",
+        "prices": {
+          "small": "1.20€"
+        }
+      },
+      {
+        "name": "Kafe Turke me Qumësht",
+        "prices": {
+          "small": "1.30€"
+        }
+      },
+      {
+        "name": "Espresso Freddo",
+        "prices": {
+          "small": "1.50€"
+        }
+      },
+      {
+        "name": "Cappuccino Freddo",
+        "prices": {
+          "small": "2.00€"
+        }
+      },
+      {
+        "name": "Tiramisu Latte",
+        "prices": {
+          "small": "3.00€"
+        }
+      },
+      {
+        "name": "Matcha Latte",
+        "prices": {
+          "small": "3.50€"
+        }
+      },
+      {
+        "name": "Pumpkin Spice Latte",
+        "prices": {
+          "small": "1.90€"
+        }
+      },
+      {
+        "name": "Filtered Coffee",
+        "prices": {
+          "small": "1.50€"
+        }
+      },
+      {
+        "name": "Decaf Espresso",
+        "prices": {
+          "small": "1.40€"
+        }
+      },
+      {
+        "name": "Affogato",
+        "prices": {
+          "small": "3.00€"
+        }
+      },
+      {
+        "name": "Hot Chocolate",
+        "prices": {
+          "small": "2.00€"
+        }
+      },
+      {
+        "name": "Salep",
+        "prices": {
+          "small": "2.00€"
+        }
+      }
+    ],
+    "icedCoffee": [
+      {
+        "name": "Iced Mocha",
+        "prices": {
+          "small": "2.20€",
+          "medium": "2.70€",
+          "large": "3.20€"
+        }
+      },
+      {
+        "name": "Iced Caramel Latte",
+        "prices": {
+          "small": "2.20€",
+          "medium": "2.70€",
+          "large": "3.20€"
+        }
+      },
+      {
+        "name": "Iced Caffe Americano",
+        "prices": {
+          "small": "1.60€",
+          "medium": "1.90€",
+          "large": "2.20€"
+        }
+      },
+      {
+        "name": "Iced Caffe Latte",
+        "prices": {
+          "small": "1.80€",
+          "medium": "2.10€",
+          "large": "2.40€"
+        }
+      },
+      {
+        "name": "White Iced Matcha Latte",
+        "prices": {
+          "small": "3.50€",
+          "medium": "3.90€",
+          "large": "4.30€"
+        }
+      },
+      {
+        "name": "Ice Pumpkin Spice Latte",
+        "prices": {
+          "small": "2.00€",
+          "medium": "2.50€",
+          "large": "3.00€"
+        }
+      },
+      {
+        "name": "Mocha Frappe",
+        "prices": {
+          "small": "2.50€",
+          "medium": "3.00€",
+          "large": "3.50€"
+        }
+      },
+      {
+        "name": "Caramel Frappe",
+        "prices": {
+          "small": "2.50€",
+          "medium": "3.00€",
+          "large": "3.50€"
+        }
+      },
+      {
+        "name": "Vanilla Bean Frappe",
+        "prices": {
+          "small": "2.50€",
+          "medium": "3.00€",
+          "large": "3.50€"
+        }
+      },
+      {
+        "name": "Cookies and Cream Frappe",
+        "prices": {
+          "small": "3.30€",
+          "medium": "3.80€",
+          "large": "4.30€"
+        }
+      },
+      {
+        "name": "Banoffee Frappe",
+        "prices": {
+          "small": "3.00€"
+        }
+      }
+    ],
+    "teas": [
+      {
+        "name": "Forest Fruit Tea",
+        "prices": {
+          "small": "1.50€"
+        }
+      },
+      {
+        "name": "Chamomile Tea",
+        "prices": {
+          "small": "1.50€"
+        }
+      },
+      {
+        "name": "Green Tea",
+        "prices": {
+          "small": "1.50€"
+        }
+      },
+      {
+        "name": "Oolong Peach Tea",
+        "prices": {
+          "small": "1.50€"
+        }
+      },
+      {
+        "name": "English Breakfast Tea",
+        "prices": {
+          "small": "1.50€"
+        }
+      },
+      {
+        "name": "Peppermint Tea",
+        "prices": {
+          "small": "1.50€"
+        }
+      },
+      {
+        "name": "Matcha Tea",
+        "prices": {
+          "small": "2.00€"
+        }
+      },
+      {
+        "name": "Passion Fruit Iced Tea",
+        "prices": {
+          "small": "1.70€",
+          "medium": "2.20€",
+          "large": "2.70€"
+        }
+      },
+      {
+        "name": "Strawberry Iced Tea",
+        "prices": {
+          "small": "1.70€",
+          "medium": "2.20€",
+          "large": "2.70€"
+        }
+      },
+      {
+        "name": "Raspberry Iced Tea",
+        "prices": {
+          "small": "1.70€",
+          "medium": "2.20€",
+          "large": "2.70€"
+        }
+      },
+      {
+        "name": "Peach Iced Tea",
+        "prices": {
+          "small": "1.70€",
+          "medium": "2.20€",
+          "large": "2.70€"
+        }
+      },
+      {
+        "name": "Mango Iced Tea",
+        "prices": {
+          "small": "1.70€",
+          "medium": "2.20€",
+          "large": "2.70€"
+        }
+      },
+      {
+        "name": "Cherry Iced Tea",
+        "prices": {
+          "small": "1.70€",
+          "medium": "2.20€",
+          "large": "2.70€"
+        }
+      }
+    ],
+    "smoothies": [
+      {
+        "name": "Peach Smoothie",
+        "prices": {
+          "small": "3.30€"
+        }
+      },
+      {
+        "name": "Raspberry Smoothie",
+        "prices": {
+          "small": "3.30€"
+        }
+      },
+      {
+        "name": "Mango Smoothie",
+        "prices": {
+          "small": "3.30€"
+        }
+      },
+      {
+        "name": "Strawberry Smoothie",
+        "prices": {
+          "small": "3.30€"
+        }
+      },
+      {
+        "name": "Passion Fruit Smoothie",
+        "prices": {
+          "small": "3.30€"
+        }
+      },
+      {
+        "name": "Cherry Smoothie",
+        "prices": {
+          "small": "3.30€"
+        }
+      }
+    ],
+    "milkshakes": [
+      {
+        "name": "Chocolate Milkshake",
+        "prices": {
+          "small": "2.50€",
+          "medium": "2.90€",
+          "large": "3.20€"
+        }
+      },
+      {
+        "name": "Pistachio Milkshake",
+        "prices": {
+          "small": "2.50€",
+          "medium": "2.90€",
+          "large": "3.20€"
+        }
+      },
+      {
+        "name": "Oreo Milkshake",
+        "prices": {
+          "small": "2.50€",
+          "medium": "2.90€",
+          "large": "3.20€"
+        }
+      },
+      {
+        "name": "Coffee Milkshake",
+        "prices": {
+          "small": "2.50€",
+          "medium": "2.90€",
+          "large": "3.20€"
+        }
+      },
+      {
+        "name": "Lotus Biscoff Milkshake",
+        "prices": {
+          "small": "2.50€",
+          "medium": "2.90€",
+          "large": "3.20€"
+        }
+      },
+      {
+        "name": "Caramel Milkshake",
+        "prices": {
+          "small": "2.50€",
+          "medium": "2.90€",
+          "large": "3.20€"
+        }
+      }
+    ],
+    "granitas": [
+      {
+        "name": "Raspberry Lemonade Granita",
+        "prices": {
+          "small": "2.00€"
+        }
+      },
+      {
+        "name": "Passion Fruit Granita",
+        "prices": {
+          "small": "2.00€"
+        }
+      },
+      {
+        "name": "Strawberry Granita",
+        "prices": {
+          "small": "2.00€"
+        }
+      },
+      {
+        "name": "Mango Lemonade Granita",
+        "prices": {
+          "small": "2.00€"
+        }
+      },
+      {
+        "name": "Cherry Granita",
+        "prices": {
+          "small": "2.00€"
+        }
+      },
+      {
+        "name": "Peach Granita",
+        "prices": {
+          "small": "2.00€"
+        }
+      }
+    ],
+    "softDrinks": [
+      {
+        "name": "Cola",
+        "prices": {
+          "small": "1.50€"
+        }
+      },
+      {
+        "name": "Cola 0",
+        "prices": {
+          "small": "1.50€"
+        }
+      },
+      {
+        "name": "Fanta",
+        "prices": {
+          "small": "1.50€"
+        }
+      },
+      {
+        "name": "Sprite",
+        "prices": {
+          "small": "1.50€"
+        }
+      },
+      {
+        "name": "Schweppes Bitter Lemon",
+        "prices": {
+          "small": "1.50€"
+        }
+      },
+      {
+        "name": "Schweppes Tonic",
+        "prices": {
+          "small": "1.50€"
+        }
+      },
+      {
+        "name": "Red Bull",
+        "prices": {
+          "small": "3.00€"
+        }
+      },
+      {
+        "name": "Ujë mineral 0.25",
+        "prices": {
+          "small": "1.00€"
+        }
+      },
+      {
+        "name": "Ujë mineral 0.75",
+        "prices": {
+          "small": "2.50€"
+        }
+      },
+      {
+        "name": "Ujë natyral 0.5",
+        "prices": {
+          "small": "1.00€"
+        }
+      },
+      {
+        "name": "Ujë natyral 0.75",
+        "prices": {
+          "small": "2.50€"
+        }
+      },
+      {
+        "name": "Lëng Ace",
+        "prices": {
+          "small": "1.50€"
+        }
+      },
+      {
+        "name": "Lëng Dredhëzë",
+        "prices": {
+          "small": "1.50€"
+        }
+      },
+      {
+        "name": "Lëng Mollë",
+        "prices": {
+          "small": "1.50€"
+        }
+      },
+      {
+        "name": "Lëng Pjeshkë",
+        "prices": {
+          "small": "1.50€"
+        }
+      },
+      {
+        "name": "Lëng Portokalli",
+        "prices": {
+          "small": "1.50€"
+        }
+      },
+      {
+        "name": "Lëng Vishnje",
+        "prices": {
+          "small": "1.50€"
+        }
+      },
+      {
+        "name": "Lëng Boronicë",
+        "prices": {
+          "small": "1.50€"
+        }
+      },
+      {
+        "name": "Lëng Ananasi",
+        "prices": {
+          "small": "1.50€"
+        }
+      },
+      {
+        "name": "Lëng Banane",
+        "prices": {
+          "small": "1.50€"
+        }
+      }
+    ],
+    "food": [
+      {
+        "name": "Baguette me pulë dhe suxhuk te tymosur",
+        "prices": {
+          "small": "3.80€"
+        }
+      },
+      {
+        "name": "Baguette Pulë Pesto",
+        "prices": {
+          "small": "3.80€"
+        }
+      },
+      {
+        "name": "Baguette Vegjetarian",
+        "prices": {
+          "small": "3.80€"
+        }
+      },
+      {
+        "name": "Baguette Tuna",
+        "prices": {
+          "small": "3.80€"
+        }
+      },
+      {
+        "name": "Focaccia me Përshutë dhe Suxhuk të tymosur",
+        "prices": {
+          "small": "4.00€"
+        }
+      },
+      {
+        "name": "Veggie Bagel",
+        "prices": {
+          "small": "3.50€"
+        }
+      },
+      {
+        "name": "PB&J Bagel",
+        "prices": {
+          "small": "3.20€"
+        }
+      },
+      {
+        "name": "Cream Cheese & Jam Bagel",
+        "prices": {
+          "small": "3.20€"
+        }
+      },
+      {
+        "name": "Shkopinj të kripur",
+        "prices": {
+          "small": "1.30€"
+        }
+      },
+      {
+        "name": "Shkopinj me rozmarinë",
+        "prices": {
+          "small": "1.30€"
+        }
+      }
+    ],
+    "bakery": [
+      {
+        "name": "Cinnamon Rolls klasik",
+        "prices": {
+          "small": "2.20€"
+        }
+      },
+      {
+        "name": "Cinnamon Rolls me krem",
+        "prices": {
+          "small": "2.50€"
+        }
+      },
+      {
+        "name": "Cinnamon Rolls me festek",
+        "prices": {
+          "small": "2.50€"
+        }
+      },
+      {
+        "name": "Cinnamon Rolls me çokollatë",
+        "prices": {
+          "small": "2.50€"
+        }
+      },
+      {
+        "name": "Cinnamon Rolls me mjedër",
+        "prices": {
+          "small": "2.50€"
+        }
+      },
+      {
+        "name": "Croissant klasik",
+        "prices": {
+          "small": "1.50€"
+        }
+      },
+      {
+        "name": "Croissant me çokollatë dhe lajthi",
+        "prices": {
+          "small": "1.90€"
+        }
+      },
+      {
+        "name": "Croissant me festek",
+        "prices": {
+          "small": "1.90€"
+        }
+      },
+      {
+        "name": "Croissant me Oreo",
+        "prices": {
+          "small": "1.90€"
+        }
+      },
+      {
+        "name": "Croissant me Lotus",
+        "prices": {
+          "small": "1.90€"
+        }
+      },
+      {
+        "name": "Muffin me boronicë",
+        "prices": {
+          "small": "1.50€"
+        }
+      },
+      {
+        "name": "Muffin me çokollatë",
+        "prices": {
+          "small": "1.50€"
+        }
+      },
+      {
+        "name": "Muffin me limon",
+        "prices": {
+          "small": "1.50€"
+        }
+      },
+      {
+        "name": "Scone me kajsi të thatë",
+        "prices": {
+          "small": "1.70€"
+        }
+      },
+      {
+        "name": "Scone me rrush të thatë",
+        "prices": {
+          "small": "1.70€"
+        }
+      },
+      {
+        "name": "Scone me cranberry",
+        "prices": {
+          "small": "3.00€"
+        }
+      },
+      {
+        "name": "Scone me arra dhe çokolladë",
+        "prices": {
+          "small": "1.70€"
+        }
+      },
+      {
+        "name": "Cookie me çokolladë të kaftë",
+        "prices": {
+          "small": "1.60€"
+        }
+      },
+      {
+        "name": "Cookie me çokolladë të bardhë",
+        "prices": {
+          "small": "1.60€"
+        }
+      },
+      {
+        "name": "Cookie me fruta të thata",
+        "prices": {
+          "small": "1.60€"
+        }
+      },
+      {
+        "name": "Cookie me Oreo",
+        "prices": {
+          "small": "1.60€"
+        }
+      },
+      {
+        "name": "Cheesecake me fruta mali",
+        "prices": {
+          "small": "2.70€"
+        }
+      },
+      {
+        "name": "Cheesecake me festek",
+        "prices": {
+          "small": "2.70€"
+        }
+      },
+      {
+        "name": "Cheesecake me Lotus",
+        "prices": {
+          "small": "3.00€"
+        }
+      },
+      {
+        "name": "Cheesecake me limon",
+        "prices": {
+          "small": "3.00€"
+        }
+      },
+      {
+        "name": "Snowy Coconut Cheesecake",
+        "prices": {
+          "small": "3.00€"
+        }
+      },
+      {
+        "name": "Apple Pie",
+        "prices": {
+          "small": "2.50€"
+        }
+      },
+      {
+        "name": "Banana Bread",
+        "prices": {
+          "small": "1.80€"
+        }
+      },
+      {
+        "name": "Limon Bread",
+        "prices": {
+          "small": "1.80€"
+        }
+      },
+      {
+        "name": "Carrot Cake",
+        "prices": {
+          "small": "2.70€"
+        }
+      },
+      {
+        "name": "Çokolladë Cake",
+        "prices": {
+          "small": "3.30€"
+        }
+      },
+      {
+        "name": "Chocolate Mousse Cake",
+        "prices": {
+          "small": "3.00€"
+        }
+      },
+      {
+        "name": "Pistachio Bites",
+        "prices": {
+          "small": "1.10€"
+        }
+      },
+      {
+        "name": "Lotus Bites",
+        "prices": {
+          "small": "1.10€"
+        }
+      },
+      {
+        "name": "Choco Bites",
+        "prices": {
+          "small": "1.10€"
+        }
+      },
+      {
+        "name": "Raspberry Bites",
+        "prices": {
+          "small": "1.10€"
+        }
+      },
+      {
+        "name": "Snickers Bites",
+        "prices": {
+          "small": "1.10€"
+        }
+      }
+    ]
+  }
+}

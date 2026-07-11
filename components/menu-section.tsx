@@ -5,7 +5,13 @@ import type React from "react"
 import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 import { X } from "lucide-react"
-import { categoryImages, dessertImages } from "@/data/menu-images"
+import { dessertImages } from "@/data/menu-images"
+import {
+  getActiveCategories,
+  getCategoryGallery,
+  menuItems,
+  type MenuCategoryId,
+} from "@/data/menu"
 
 interface MenuSectionProps {
   language: "sq" | "en"
@@ -20,7 +26,9 @@ const translations = {
     smoothies: "Smoothie",
     milkshakes: "Milkshake",
     granitas: "Granita",
+    softDrinks: "Pije",
     food: "Ushqim",
+    bakery: "Ëmbëlsira & Bakery",
     dessertTitle: "Ëmbëlsirat Tona",
     dessertMessage:
       "Kemi një larmi ëmbëlsirash të shijshme siç shihen në fotografitë më poshtë. Për të ditur saktësisht çfarë kemi në disponim sot, ju lutemi na vizitoni ose na kontaktoni.",
@@ -36,7 +44,9 @@ const translations = {
     smoothies: "Smoothies",
     milkshakes: "Milkshakes",
     granitas: "Granitas",
+    softDrinks: "Soft Drinks",
     food: "Food",
+    bakery: "Bakery & Sweets",
     dessertTitle: "Our Desserts",
     dessertMessage:
       "We have a variety of delicious desserts as you can see in the pictures below. To know exactly what we have in store today, please visit us or contact us.",
@@ -51,9 +61,9 @@ const translations = {
 
 export function MenuSection({ language }: MenuSectionProps) {
   const t = translations[language]
-  const [activeTab, setActiveTab] = useState<
-    "espresso" | "icedCoffee" | "teas" | "smoothies" | "milkshakes" | "granitas" | "food"
-  >("espresso")
+  const categories = getActiveCategories()
+  const [activeTab, setActiveTab] = useState<MenuCategoryId>(categories[0] ?? "espresso")
+  const gallery = getCategoryGallery(activeTab)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [isGalleryOpen, setIsGalleryOpen] = useState(false)
   const [currentDessertIndex, setCurrentDessertIndex] = useState(0)
@@ -86,11 +96,9 @@ export function MenuSection({ language }: MenuSectionProps) {
     const isRightSwipe = distance < -minSwipeDistance
 
     if (isLeftSwipe) {
-      // Swipe left - next image
-      setCurrentImageIndex((prev) => (prev + 1) % categoryImages[activeTab].length)
+      setCurrentImageIndex((prev) => (prev + 1) % gallery.length)
     } else if (isRightSwipe) {
-      // Swipe right - previous image
-      setCurrentImageIndex((prev) => (prev - 1 + categoryImages[activeTab].length) % categoryImages[activeTab].length)
+      setCurrentImageIndex((prev) => (prev - 1 + gallery.length) % gallery.length)
     }
   }
 
@@ -116,9 +124,9 @@ export function MenuSection({ language }: MenuSectionProps) {
     const isRightDrag = distance < -minSwipeDistance
 
     if (isLeftDrag) {
-      setCurrentImageIndex((prev) => (prev + 1) % categoryImages[activeTab].length)
+      setCurrentImageIndex((prev) => (prev + 1) % gallery.length)
     } else if (isRightDrag) {
-      setCurrentImageIndex((prev) => (prev - 1 + categoryImages[activeTab].length) % categoryImages[activeTab].length)
+      setCurrentImageIndex((prev) => (prev - 1 + gallery.length) % gallery.length)
     }
 
     setIsDragging(false)
@@ -129,101 +137,25 @@ export function MenuSection({ language }: MenuSectionProps) {
   }
 
   useEffect(() => {
+    if (gallery.length <= 1) return
+
     const interval = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % categoryImages[activeTab].length)
-    }, 4000) // Change image every 4 seconds
+      setCurrentImageIndex((prev) => (prev + 1) % gallery.length)
+    }, 4000)
 
     return () => clearInterval(interval)
-  }, [activeTab])
+  }, [activeTab, gallery.length])
 
   useEffect(() => {
     setCurrentImageIndex(0)
   }, [activeTab])
 
-
-  const menuItems = {
-    espresso: [
-      { name: "Espresso", prices: { small: "1.00€", double: "1.60€" } },
-      { name: "Macchiato", prices: { small: "1.00€", large: "1.20€" } },
-      { name: "Espresso Arabica", prices: { small: "1.30€" } },
-      { name: "Espresso Tonic", prices: { small: "2.00€" } },
-      { name: "Caffe Latte", prices: { small: "1.50€" } },
-      { name: "Caffe Americano", prices: { small: "1.20€" } },
-      { name: "Cappuccino", prices: { small: "1.20€" } },
-      { name: "Spanish Latte", prices: { small: "1.60€" } },
-      { name: "Caramel Macchiato", prices: { small: "2.00€" } },
-      { name: "Mocha", prices: { small: "1.60€" } },
-      { name: "Kafe Turke", prices: { small: "1.20€" } },
-      { name: "Kafe Turke me Qumësht", prices: { small: "1.30€" } },
-      { name: "Espresso Freddo", prices: { small: "2.00€" } },
-      { name: "Cappuccino Freddo", prices: { small: "1.50€" } },
-      { name: "Tiramisu Latte", prices: { small: "3.00€" } },
-      { name: "Matcha Latte", prices: { small: "3.00€" } },
-      { name: "Affogato", prices: { small: "3.00€" } },
-      { name: "Hot Chocolate", prices: { small: "2.00€" } },
-      { name: "Salep", prices: { small: "2.00€" } },
-    ],
-    icedCoffee: [
-      { name: "Iced Mocha", prices: { small: "2.00€", medium: "2.50€", large: "3.00€" } },
-      { name: "Iced Caramel Latte", prices: { small: "2.00€", medium: "2.50€", large: "3.00€" } },
-      { name: "Iced Caffe Americano", prices: { small: "1.50€", medium: "1.80€", large: "2.10€" } },
-      { name: "Iced Caffe Latte", prices: { small: "1.80€", medium: "2.10€", large: "2.40€" } },
-      { name: "White Iced Matcha Latte", prices: { small: "3.00€", medium: "3.50€", large: "4.00€" } },
-      { name: "Mocha Frappe", prices: { small: "2.50€", medium: "2.90€", large: "3.30€" } },
-      { name: "Caramel Frappe", prices: { small: "2.50€", medium: "2.90€", large: "3.30€" } },
-      { name: "Vanilla Bean Frappe", prices: { small: "2.50€", medium: "3.00€", large: "3.50€" } },
-      { name: "Cookies and Cream Frappe", prices: { small: "3.00€", medium: "3.50€", large: "4.00€" } },
-    ],
-    teas: [
-      { name: "Organic Tea", prices: { small: "1.20€" } },
-      { name: "Matcha Tea", prices: { small: "2.00€" } },
-      { name: "Passion Fruit Iced Tea", prices: { small: "1.50€", medium: "2.00€", large: "2.50€" } },
-      { name: "Strawberry Iced Tea", prices: { small: "1.50€", medium: "2.00€", large: "2.50€" } },
-      { name: "Raspberry Iced Tea", prices: { small: "1.50€", medium: "2.00€", large: "2.50€" } },
-      { name: "Peach Iced Tea", prices: { small: "1.50€", medium: "2.00€", large: "2.50€" } },
-      { name: "Mango Iced Tea", prices: { small: "1.50€", medium: "2.00€", large: "2.50€" } },
-      { name: "Cherry Iced Tea", prices: { small: "1.50€", medium: "2.00€", large: "2.50€" } },
-    ],
-    smoothies: [
-      { name: "Peach Smoothie", prices: { small: "3.00€" } },
-      { name: "Raspberry Smoothie", prices: { small: "3.00€" } },
-      { name: "Mango Smoothie", prices: { small: "3.00€" } },
-      { name: "Strawberry Smoothie", prices: { small: "3.00€" } },
-      { name: "Passion Fruit Smoothie", prices: { small: "3.00€" } },
-      { name: "Cherry Smoothie", prices: { small: "3.00€" } },
-    ],
-    milkshakes: [
-      { name: "Chocolate Milkshake", prices: { small: "2.40€", medium: "2.80€", large: "3.00€" } },
-      { name: "Pistachio Milkshake", prices: { small: "2.40€", medium: "2.80€", large: "3.00€" } },
-      { name: "Oreo Milkshake", prices: { small: "2.40€", medium: "2.80€", large: "3.00€" } },
-      { name: "Coffee Milkshake", prices: { small: "2.40€", medium: "2.80€", large: "3.00€" } },
-      { name: "Lotus Biscoff Milkshake", prices: { small: "2.40€", medium: "2.80€", large: "3.00€" } },
-      { name: "Caramel Milkshake", prices: { small: "2.40€", medium: "2.80€", large: "3.00€" } },
-    ],
-    granitas: [
-      { name: "Raspberry Lemonade Granita", prices: { small: "1.80€" } },
-      { name: "Passion Fruit Granita", prices: { small: "1.80€" } },
-      { name: "Strawberry Granita", prices: { small: "1.80€" } },
-      { name: "Mango Lemonade Granita", prices: { small: "1.80€" } },
-      { name: "Cherry Granita", prices: { small: "1.80€" } },
-      { name: "Peach Granita", prices: { small: "1.80€" } },
-    ],
-    food: [
-      { name: "Baguette me pulë dhe suxhuk te tymosur", prices: { small: "3.80€" } },
-      { name: "Baguette Pulë Pesto", prices: { small: "3.80€" } },
-      { name: "Baguette Vegjetarian", prices: { small: "3.80€" } },
-      { name: "Baguette Tuna", prices: { small: "3.80€" } },
-      { name: "Focaccia me Përshutë dhe Suxhuk të tymosur", prices: { small: "4.00€" } },
-    ],
-  }
-
-  const handleTabSelect = (tab: typeof activeTab) => {
+  const handleTabSelect = (tab: MenuCategoryId) => {
     setActiveTab(tab)
 
     if (mobileTabsRef.current) {
       const tabButtons = mobileTabsRef.current.querySelectorAll("button")
-      const tabs = ["espresso", "icedCoffee", "teas", "smoothies", "milkshakes", "granitas", "food"]
-      const tabIndex = tabs.indexOf(tab)
+      const tabIndex = categories.indexOf(tab)
 
       if (tabButtons[tabIndex]) {
         const button = tabButtons[tabIndex] as HTMLElement
@@ -313,8 +245,7 @@ export function MenuSection({ language }: MenuSectionProps) {
                   borderColor: "rgba(255,255,255,0.1)",
                 }}
               >
-                {(["espresso", "icedCoffee", "teas", "smoothies", "milkshakes", "granitas", "food"] as const).map(
-                  (tab) => (
+                {categories.map((tab) => (
                     <button
                       key={tab}
                       onClick={() => handleTabSelect(tab)}
@@ -327,8 +258,7 @@ export function MenuSection({ language }: MenuSectionProps) {
                     >
                       {t[tab]}
                     </button>
-                  ),
-                )}
+                  ))}
               </div>
             </div>
 
@@ -341,8 +271,7 @@ export function MenuSection({ language }: MenuSectionProps) {
                   borderColor: "rgba(255,255,255,0.1)",
                 }}
               >
-                {(["espresso", "icedCoffee", "teas", "smoothies", "milkshakes", "granitas", "food"] as const).map(
-                  (tab) => (
+                {categories.map((tab) => (
                     <button
                       key={tab}
                       onClick={() => setActiveTab(tab)}
@@ -354,8 +283,7 @@ export function MenuSection({ language }: MenuSectionProps) {
                     >
                       {t[tab]}
                     </button>
-                  ),
-                )}
+                  ))}
               </div>
             </div>
 
@@ -368,8 +296,7 @@ export function MenuSection({ language }: MenuSectionProps) {
                   borderColor: "rgba(255,255,255,0.1)",
                 }}
               >
-                {(["espresso", "icedCoffee", "teas", "smoothies", "milkshakes", "granitas", "food"] as const).map(
-                  (tab) => (
+                {categories.map((tab) => (
                     <button
                       key={tab}
                       onClick={() => setActiveTab(tab)}
@@ -381,8 +308,7 @@ export function MenuSection({ language }: MenuSectionProps) {
                     >
                       {t[tab]}
                     </button>
-                  ),
-                )}
+                  ))}
               </div>
             </div>
           </div>
@@ -411,9 +337,9 @@ export function MenuSection({ language }: MenuSectionProps) {
                   msUserSelect: "none",
                 }}
               >
-                {categoryImages[activeTab][currentImageIndex]?.endsWith(".mp4") ? (
+                {gallery[currentImageIndex]?.endsWith(".mp4") ? (
                   <video
-                    src={categoryImages[activeTab][currentImageIndex]}
+                    src={gallery[currentImageIndex]}
                     autoPlay
                     muted
                     loop
@@ -423,7 +349,7 @@ export function MenuSection({ language }: MenuSectionProps) {
                   />
                 ) : (
                   <Image
-                    src={categoryImages[activeTab][currentImageIndex] || "/placeholder.svg"}
+                    src={gallery[currentImageIndex] || "/placeholder.svg"}
                     alt={t[activeTab]}
                     fill
                     className="object-cover transition-all duration-1000 pointer-events-none"
@@ -455,7 +381,7 @@ export function MenuSection({ language }: MenuSectionProps) {
 
                 {/* Carousel Indicators - Modern Dots */}
                 <div className="absolute bottom-4 right-4 lg:right-6 flex gap-2 pointer-events-auto bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full border border-white/20">
-                  {categoryImages[activeTab].map((_, index) => (
+                  {gallery.map((_, index) => (
                     <button
                       key={index}
                       onClick={() => setCurrentImageIndex(index)}
@@ -480,15 +406,15 @@ export function MenuSection({ language }: MenuSectionProps) {
               <div className="hidden lg:block relative">
                 <div
                   className={`flex gap-3 pb-2 scroll-smooth ${
-                    categoryImages[activeTab].length <= 4 ? "justify-center" : "overflow-x-auto scrollbar-hide"
+                    gallery.length <= 4 ? "justify-center" : "overflow-x-auto scrollbar-hide"
                   }`}
                   id={`thumbnails-${activeTab}`}
                 >
-                  {categoryImages[activeTab].map((media, index) => (
+                  {gallery.map((media, index) => (
                     <div
                       key={index}
                       className={`relative rounded-xl overflow-hidden transition-opacity cursor-pointer ${
-                        categoryImages[activeTab].length <= 4 ? "h-28 w-28 flex-shrink-0" : "h-24 w-24 flex-shrink-0"
+                        gallery.length <= 4 ? "h-28 w-28 flex-shrink-0" : "h-24 w-24 flex-shrink-0"
                       }`}
                       style={{
                         opacity: currentImageIndex === index ? 1 : 0.6,
@@ -515,7 +441,7 @@ export function MenuSection({ language }: MenuSectionProps) {
                   ))}
                 </div>
 
-                {categoryImages[activeTab].length > 4 && (
+                {gallery.length > 4 && (
                   <>
                     <button
                       onClick={() => {

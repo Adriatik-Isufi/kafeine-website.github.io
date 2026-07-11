@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "sync-menu": "node scripts/sync-menu.mjs",
+    "prebuild": "node scripts/sync-menu.mjs",
+    "predev": "node scripts/sync-menu.mjs",
     "build": "next build",
     "export": "next build",
     "deploy": "pnpm build",
