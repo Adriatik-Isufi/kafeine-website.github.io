@@ -52,7 +52,6 @@ export const categoryImages: Record<string, string[]> = {
     "/Menu/soft-drinks/juice-orange.jpg",
     "/Menu/soft-drinks/juice-fresh.jpg",
     "/Menu/soft-drinks/lemonade.jpg",
-    "/Menu/soft-drinks/water-sparkling.jpg",
   ],
   food: [
     "/Menu/Food1.jpg",
