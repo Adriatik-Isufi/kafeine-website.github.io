@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { Wifi, Zap, Coffee, Users, Clock, MapPin } from "lucide-react"
 import Image from "next/image"
 import { getImagePath } from "@/lib/utils"
+import { LazyVideo } from "./lazy-video"
 
 interface WorkSectionProps {
   language: "sq" | "en"
@@ -61,8 +62,8 @@ export function WorkSection({ language }: WorkSectionProps) {
   const [currentWorkImageIndex, setCurrentWorkImageIndex] = useState(0)
 
   const workImages = [
-    "/images/Work1.jpg",
-    "/images/workspace.png"
+    "/optimized/images/Work1.webp",
+    "/optimized/images/workspace.webp"
   ]
 
   // Auto-rotate work images every 5 seconds
@@ -125,13 +126,16 @@ export function WorkSection({ language }: WorkSectionProps) {
               {/* Work and Eat Video - Positioned below features */}
               <div className="relative group cursor-pointer">
                 <div className="overflow-hidden rounded-3xl shadow-2xl transform hover:scale-[1.02] transition-all duration-500">
-                  <video
-                    src="/videos/WorkAndEat.mp4"
+                  <LazyVideo
+                    sources={[{ src: "/videos/WorkAndEat.mp4" }]}
                     autoPlay
                     muted
                     loop
                     playsInline
                     className="w-full h-[320px] object-cover group-hover:scale-110 transition-transform duration-700"
+                    placeholder={
+                      <div className="w-full h-[320px] bg-gradient-to-br from-primary/10 to-secondary/10" />
+                    }
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   
@@ -168,7 +172,7 @@ export function WorkSection({ language }: WorkSectionProps) {
                 <div className="absolute -top-12 -right-8 w-72 h-48 hidden lg:block">
                   <div className="relative overflow-hidden rounded-2xl shadow-2xl transform rotate-3 hover:rotate-0 transition-all duration-500 border-4 border-white">
                     <Image
-                      src={getImagePath("/New Batch/DNz_ox82HJV_1.jpg")}
+                      src={getImagePath("/optimized/New Batch/DNz_ox82HJV_1.webp")}
                       alt="Coffee and laptop"
                       width={300}
                       height={200}

@@ -10,18 +10,18 @@
  */
 
 export const galleryImages = [
-    // Main food photography
-    { src: "/New Batch/DJJvASBPbHA_3.jpg",   alt: "Coffee and Pastry",        size: "large"  },
-    { src: "/New Batch/DJlmvvUtCIi_1.jpg",   alt: "Delicious Cake",           size: "medium" },
-    { src: "/New Batch/DJtwuGLu8MD_1.jpg",   alt: "Fresh Dessert",            size: "small"  },
-    { src: "/New Batch/DKw8QbUteRT_1.jpg",   alt: "Sweet Treat",              size: "medium" },
-    { src: "/New Batch/DLmRJ2-PFT4_1.jpg",   alt: "Gourmet Cake",             size: "large"  },
-    { src: "/New Batch/DMsS1AUqodn_1.jpg",   alt: "Artisan Dessert",          size: "small"  },
-    { src: "/New Batch/DOLmerZDDpw_6.jpg",   alt: "Premium Pastry",           size: "medium" },
-    { src: "/New Batch/DM93hBlhIZS_3.jpg",   alt: "Coffee Specialty",         size: "small"  },
-    { src: "/New Batch/DJWwCVVtALD_1.jpg",   alt: "Elegant Dessert",          size: "medium" },
-    { src: "/New Batch/DKZbjqhu64R_1.jpg",   alt: "Artisan Creation",         size: "large"  },
-    { src: "/New Batch/DLt4okuMGV9_1.jpg",   alt: "Sweet Delicacy",           size: "small"  },
+    // Main food photography (pre-optimized WebP, see scripts/optimize-images.mjs)
+    { src: "/optimized/New Batch/DJJvASBPbHA_3.webp",   alt: "Coffee and Pastry",        size: "large"  },
+    { src: "/optimized/New Batch/DJlmvvUtCIi_1.webp",   alt: "Delicious Cake",           size: "medium" },
+    { src: "/optimized/New Batch/DJtwuGLu8MD_1.webp",   alt: "Fresh Dessert",            size: "small"  },
+    { src: "/optimized/New Batch/DKw8QbUteRT_1.webp",   alt: "Sweet Treat",              size: "medium" },
+    { src: "/optimized/New Batch/DLmRJ2-PFT4_1.webp",   alt: "Gourmet Cake",             size: "large"  },
+    { src: "/optimized/New Batch/DMsS1AUqodn_1.webp",   alt: "Artisan Dessert",          size: "small"  },
+    { src: "/optimized/New Batch/DOLmerZDDpw_6.webp",   alt: "Premium Pastry",           size: "medium" },
+    { src: "/optimized/New Batch/DM93hBlhIZS_3.webp",   alt: "Coffee Specialty",         size: "small"  },
+    { src: "/optimized/New Batch/DJWwCVVtALD_1.webp",   alt: "Elegant Dessert",          size: "medium" },
+    { src: "/optimized/New Batch/DKZbjqhu64R_1.webp",   alt: "Artisan Creation",         size: "large"  },
+    { src: "/optimized/New Batch/DLt4okuMGV9_1.webp",   alt: "Sweet Delicacy",           size: "small"  },
   
     // Dessert stories — drop new files in /public/stories/ and add a line here
     { src: "/stories/storie_picture.webp",   alt: "Delicious Dessert",            size: "medium" },

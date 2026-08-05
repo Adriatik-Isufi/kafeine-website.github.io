@@ -619,6 +619,7 @@ export function MenuSection({ language }: MenuSectionProps) {
                 <img
                   src={dessertImages[currentDessertIndex]}
                   alt={`Dessert ${currentDessertIndex + 1}`}
+                  decoding="async"
                   className="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl pointer-events-none"
                   draggable={false}
                 />
@@ -664,6 +665,10 @@ export function MenuSection({ language }: MenuSectionProps) {
                     <img
                       src={image}
                       alt={`Thumbnail ${index + 1}`}
+                      width={48}
+                      height={48}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover"
                     />
                   </button>

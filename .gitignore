@@ -46,4 +46,7 @@ next-env.d.ts
 *.swp
 *.swo
 
+# Generated at build time by scripts/optimize-images.mjs
+/public/optimized
+
 /docs

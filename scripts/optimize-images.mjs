@@ -1,169 +1,108 @@
-import sharp from 'sharp';
-import { readdir, stat, mkdir, copyFile, unlink, rename } from 'fs/promises';
-import { join, extname, basename, dirname } from 'path';
-import { existsSync } from 'fs';
-import { tmpdir } from 'os';
+// Generates WebP siblings of the large photography used across the site into
+// public/optimized/<same relative path>.webp — fully non-destructive (the
+// original JPG/PNG files under public/ are never touched) and idempotent
+// (skips files whose WebP output is already newer than the source).
+//
+// Runs automatically before `next build`/`next dev` via the "prebuild"/"predev"
+// npm scripts, so newly dropped photos get optimized on every deploy without
+// any manual step.
 
-const PUBLIC_DIR = './public';
-const QUALITY = 80; // JPEG/WebP quality (0-100)
-const MAX_WIDTH = 1920; // Max width for large images
-const SIZE_THRESHOLD = 100 * 1024; // 100KB threshold
+import { promises as fs } from 'node:fs'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
+import sharp from 'sharp'
 
-const IMAGE_DIRS = [
-  'images',
-  'Menu',
-  'New Batch',
-];
+const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)))
+const publicDir = path.join(root, 'public')
+const outRoot = path.join(publicDir, 'optimized')
 
-async function getImageFiles(dir) {
-  const files = [];
-  const items = await readdir(dir, { withFileTypes: true });
+// Each entry caps the resize width to the largest size the image is ever
+// rendered at (with headroom for retina), so we get the win from both
+// re-encoding to WebP *and* not shipping needlessly high resolutions.
+const TARGETS = [
+  { dir: 'New Batch', maxWidth: 1000, quality: 72 },
+  { dir: 'Menu', maxWidth: 800, quality: 72 },
+  { dir: 'stories', maxWidth: 800, quality: 72 },
+]
 
-  for (const item of items) {
-    const fullPath = join(dir, item.name);
-    if (item.isDirectory()) {
-      files.push(...await getImageFiles(fullPath));
-    } else if (item.isFile()) {
-      const ext = extname(item.name).toLowerCase();
-      if (['.jpg', '.jpeg', '.png', '.webp'].includes(ext)) {
-        files.push(fullPath);
-      }
-    }
+const SINGLE_FILES = [
+  { file: 'pristina-map-dark.png', maxWidth: 1200, quality: 75 },
+  { file: 'images/coffee-pour.jpg', maxWidth: 1920, quality: 75 },
+  { file: 'images/Work1.jpg', maxWidth: 1000, quality: 75 },
+  { file: 'images/workspace.png', maxWidth: 1000, quality: 75 },
+]
+
+const IMAGE_EXT = /\.(jpe?g|png)$/i
+
+async function isUpToDate(src, out) {
+  try {
+    const [srcStat, outStat] = await Promise.all([fs.stat(src), fs.stat(out)])
+    return outStat.mtimeMs >= srcStat.mtimeMs
+  } catch {
+    return false
   }
-  return files;
 }
 
-async function optimizeImage(filePath) {
-  try {
-    const stats = await stat(filePath);
-    const originalSize = stats.size;
+async function convert(src, out, maxWidth, quality) {
+  if (await isUpToDate(src, out)) return false
+  await fs.mkdir(path.dirname(out), { recursive: true })
+  await sharp(src)
+    .resize({ width: maxWidth, withoutEnlargement: true })
+    .webp({ quality })
+    .toFile(out)
+  return true
+}
 
-    // Skip if already small
-    if (originalSize < SIZE_THRESHOLD) {
-      console.log(`⏭️  Skipping ${basename(filePath)} (${(originalSize / 1024).toFixed(1)}KB - already optimized)`);
-      return { skipped: true, originalSize };
-    }
-
-    const ext = extname(filePath).toLowerCase();
-    const image = sharp(filePath);
-    const metadata = await image.metadata();
-
-    let pipeline = image;
-
-    // Resize if too large
-    if (metadata.width > MAX_WIDTH) {
-      pipeline = pipeline.resize(MAX_WIDTH, null, {
-        withoutEnlargement: true,
-        fit: 'inside'
-      });
-    }
-
-    // Optimize based on format
-    if (ext === '.jpg' || ext === '.jpeg') {
-      pipeline = pipeline.jpeg({
-        quality: QUALITY,
-        progressive: true,
-        mozjpeg: true
-      });
-    } else if (ext === '.png') {
-      pipeline = pipeline.png({
-        compressionLevel: 9,
-        palette: true
-      });
-    } else if (ext === '.webp') {
-      pipeline = pipeline.webp({
-        quality: QUALITY
-      });
-    }
-
-    // Write to buffer first to compare sizes
-    const optimizedBuffer = await pipeline.toBuffer();
-    const newSize = optimizedBuffer.length;
-
-    // Only save if we achieved compression
-    if (newSize < originalSize) {
-      // Use temp file approach for Windows compatibility
-      const tempPath = join(tmpdir(), `opt_${Date.now()}_${basename(filePath)}`);
-      try {
-        await sharp(optimizedBuffer).toFile(tempPath);
-        await copyFile(tempPath, filePath);
-        await unlink(tempPath);
-        const savings = ((originalSize - newSize) / originalSize * 100).toFixed(1);
-        console.log(`✅ ${basename(filePath)}: ${(originalSize / 1024).toFixed(1)}KB → ${(newSize / 1024).toFixed(1)}KB (${savings}% saved)`);
-        return { optimized: true, originalSize, newSize };
-      } catch (writeError) {
-        // Fallback: try direct write
-        try {
-          await sharp(optimizedBuffer).toFile(filePath);
-          const savings = ((originalSize - newSize) / originalSize * 100).toFixed(1);
-          console.log(`✅ ${basename(filePath)}: ${(originalSize / 1024).toFixed(1)}KB → ${(newSize / 1024).toFixed(1)}KB (${savings}% saved)`);
-          return { optimized: true, originalSize, newSize };
-        } catch (directError) {
-          throw writeError;
-        }
-      }
-    } else {
-      console.log(`⏭️  Skipping ${basename(filePath)} (optimization wouldn't reduce size)`);
-      return { skipped: true, originalSize };
-    }
-  } catch (error) {
-    console.error(`❌ Error optimizing ${filePath}:`, error.message);
-    return { error: true, originalSize: 0 };
-  }
+async function walk(dir) {
+  const entries = await fs.readdir(dir, { withFileTypes: true })
+  const files = await Promise.all(
+    entries.map(async (entry) => {
+      const full = path.join(dir, entry.name)
+      if (entry.isDirectory()) return walk(full)
+      return IMAGE_EXT.test(entry.name) ? [full] : []
+    })
+  )
+  return files.flat()
 }
 
 async function main() {
-  console.log('🖼️  Image Optimization Script');
-  console.log('============================\n');
+  let generated = 0
+  let checked = 0
 
-  let totalOriginal = 0;
-  let totalOptimized = 0;
-  let optimizedCount = 0;
-  let skippedCount = 0;
-  let errorCount = 0;
-
-  for (const dir of IMAGE_DIRS) {
-    const fullDir = join(PUBLIC_DIR, dir);
-
-    if (!existsSync(fullDir)) {
-      console.log(`⚠️  Directory not found: ${fullDir}`);
-      continue;
+  for (const { dir, maxWidth, quality } of TARGETS) {
+    const srcDir = path.join(publicDir, dir)
+    let files = []
+    try {
+      files = await walk(srcDir)
+    } catch {
+      console.warn(`[optimize-images] WARNING: directory not found: ${dir}/`)
+      continue
     }
-
-    console.log(`\n📁 Processing: ${dir}/`);
-    console.log('-'.repeat(40));
-
-    const files = await getImageFiles(fullDir);
-
-    for (const file of files) {
-      const result = await optimizeImage(file);
-
-      if (result.optimized) {
-        totalOriginal += result.originalSize;
-        totalOptimized += result.newSize;
-        optimizedCount++;
-      } else if (result.skipped) {
-        totalOriginal += result.originalSize;
-        totalOptimized += result.originalSize;
-        skippedCount++;
-      } else if (result.error) {
-        errorCount++;
-      }
+    for (const src of files) {
+      const rel = path.relative(publicDir, src).replace(IMAGE_EXT, '.webp')
+      const out = path.join(outRoot, rel)
+      checked++
+      if (await convert(src, out, maxWidth, quality)) generated++
     }
   }
 
-  console.log('\n============================');
-  console.log('📊 Summary:');
-  console.log(`   Optimized: ${optimizedCount} images`);
-  console.log(`   Skipped: ${skippedCount} images`);
-  console.log(`   Errors: ${errorCount} images`);
-
-  if (totalOriginal > 0) {
-    const totalSaved = totalOriginal - totalOptimized;
-    const percentSaved = (totalSaved / totalOriginal * 100).toFixed(1);
-    console.log(`\n   Total size: ${(totalOriginal / 1024 / 1024).toFixed(2)}MB → ${(totalOptimized / 1024 / 1024).toFixed(2)}MB`);
-    console.log(`   Total saved: ${(totalSaved / 1024 / 1024).toFixed(2)}MB (${percentSaved}%)`);
+  for (const { file, maxWidth, quality } of SINGLE_FILES) {
+    const src = path.join(publicDir, file)
+    const out = path.join(outRoot, file.replace(IMAGE_EXT, '.webp'))
+    checked++
+    try {
+      await fs.access(src)
+    } catch {
+      console.warn(`[optimize-images] WARNING: ${file} not found`)
+      continue
+    }
+    if (await convert(src, out, maxWidth, quality)) generated++
   }
+
+  console.log(`[optimize-images] ${checked} source images checked, ${generated} WebP files (re)generated`)
 }
 
-main().catch(console.error);
+main().catch((err) => {
+  console.error('[optimize-images] failed:', err)
+  process.exit(1)
+})

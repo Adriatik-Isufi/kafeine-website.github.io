@@ -42,7 +42,7 @@ export function HeroSection({ language }: HeroSectionProps) {
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: `url(${getImagePath("/images/coffee-pour.jpg")})`,
+          backgroundImage: `url(${getImagePath("/optimized/images/coffee-pour.webp")})`,
           filter: "brightness(0.6)",
         }}
       />

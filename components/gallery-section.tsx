@@ -175,6 +175,10 @@ export function GallerySection({ language }: GallerySectionProps) {
                 <img
                   src={image.src || "/placeholder.svg"}
                   alt={image.alt}
+                  width={400}
+                  height={300}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
@@ -217,6 +221,10 @@ export function GallerySection({ language }: GallerySectionProps) {
               <img
                 src={images[0]?.src || "/placeholder.svg"}
                 alt={images[0]?.alt}
+                width={340}
+                height={260}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
@@ -243,6 +251,10 @@ export function GallerySection({ language }: GallerySectionProps) {
               <img
                 src={images[1]?.src || "/placeholder.svg"}
                 alt={images[1]?.alt}
+                width={280}
+                height={350}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
@@ -269,6 +281,10 @@ export function GallerySection({ language }: GallerySectionProps) {
               <img
                 src={images[2]?.src || "/placeholder.svg"}
                 alt={images[2]?.alt}
+                width={260}
+                height={200}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
@@ -295,6 +311,10 @@ export function GallerySection({ language }: GallerySectionProps) {
               <img
                 src={images[3]?.src || "/placeholder.svg"}
                 alt={images[3]?.alt}
+                width={240}
+                height={240}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
@@ -321,6 +341,10 @@ export function GallerySection({ language }: GallerySectionProps) {
               <img
                 src={images[4]?.src || "/placeholder.svg"}
                 alt={images[4]?.alt}
+                width={300}
+                height={220}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
@@ -347,6 +371,10 @@ export function GallerySection({ language }: GallerySectionProps) {
               <img
                 src={images[5]?.src || "/placeholder.svg"}
                 alt={images[5]?.alt}
+                width={220}
+                height={180}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
@@ -373,6 +401,10 @@ export function GallerySection({ language }: GallerySectionProps) {
               <img
                 src={images[6]?.src || "/placeholder.svg"}
                 alt={images[6]?.alt}
+                width={200}
+                height={280}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
@@ -399,6 +431,10 @@ export function GallerySection({ language }: GallerySectionProps) {
               <img
                 src={images[7]?.src || "/placeholder.svg"}
                 alt={images[7]?.alt}
+                width={160}
+                height={120}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
@@ -425,6 +461,10 @@ export function GallerySection({ language }: GallerySectionProps) {
               <img
                 src={images[8]?.src || "/placeholder.svg"}
                 alt={images[8]?.alt}
+                width={280}
+                height={200}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
@@ -451,6 +491,10 @@ export function GallerySection({ language }: GallerySectionProps) {
               <img
                 src={images[9]?.src || "/placeholder.svg"}
                 alt={images[9]?.alt}
+                width={180}
+                height={240}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
@@ -477,6 +521,10 @@ export function GallerySection({ language }: GallerySectionProps) {
               <img
                 src={images[10]?.src || "/placeholder.svg"}
                 alt={images[10]?.alt}
+                width={140}
+                height={140}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
@@ -516,6 +564,7 @@ export function GallerySection({ language }: GallerySectionProps) {
                 <img
                   src={selectedImage || "/placeholder.svg"}
                   alt={images[currentImageIndex]?.alt || "Gallery image"}
+                  decoding="async"
                   className="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl pointer-events-none"
                   draggable={false}
                 />
@@ -563,6 +612,10 @@ export function GallerySection({ language }: GallerySectionProps) {
                     <img
                       src={image.src || "/placeholder.svg"}
                       alt={image.alt}
+                      width={48}
+                      height={48}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover"
                     />
                   </button>

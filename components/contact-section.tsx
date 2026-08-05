@@ -145,11 +145,11 @@ export function ContactSection({ language }: ContactSectionProps) {
           onClick={() => window.open("https://maps.app.goo.gl/wNuyyjrLL8s8Mzwb7", "_blank")}
         >
           <Image
-            src={getImagePath("/pristina-map-dark.png") || "/placeholder.svg"}
+            src={getImagePath("/optimized/pristina-map-dark.webp") || "/placeholder.svg"}
             alt="Pristina Map"
             fill
+            loading="lazy"
             className="object-cover group-hover:scale-105 transition-transform duration-300"
-            priority
           />
           {/* Floating location indicator */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">

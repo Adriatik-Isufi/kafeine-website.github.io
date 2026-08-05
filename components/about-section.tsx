@@ -1,5 +1,7 @@
 "use client"
 
+import { LazyVideo } from "./lazy-video"
+
 interface AboutSectionProps {
   language: "sq" | "en"
 }
@@ -57,19 +59,22 @@ export function AboutSection({ language }: AboutSectionProps) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 h-[400px]">
               {/* First Video - Our Story */}
               <div className="relative group overflow-hidden rounded-lg shadow-lg">
-                <video
+                <LazyVideo
                   autoPlay
                   muted
                   loop
                   playsInline
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                >
-                  <source src="/videos/about-kafeine2.mp4" type="video/mp4" />
-                  <source src="/videos/about-kafeine.mp4" type="video/mp4" />
-                  <div className="bg-gradient-to-br from-amber-100 to-amber-200 w-full h-full flex items-center justify-center rounded-lg">
-                    <p className="text-amber-800 text-sm font-medium">Loading...</p>
-                  </div>
-                </video>
+                  sources={[
+                    { src: "/videos/about-kafeine2.mp4" },
+                    { src: "/videos/about-kafeine.mp4" },
+                  ]}
+                  placeholder={
+                    <div className="bg-gradient-to-br from-amber-100 to-amber-200 w-full h-full flex items-center justify-center rounded-lg">
+                      <p className="text-amber-800 text-sm font-medium">Loading...</p>
+                    </div>
+                  }
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-2 left-2 bg-black/50 backdrop-blur-sm px-2 py-1 rounded text-white text-xs font-medium">
                   Our Story
@@ -78,18 +83,19 @@ export function AboutSection({ language }: AboutSectionProps) {
 
               {/* Second Video - Experience */}
               <div className="relative group overflow-hidden rounded-lg shadow-lg">
-                <video
+                <LazyVideo
                   autoPlay
                   muted
                   loop
                   playsInline
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                >
-                  <source src="/videos/about-kafeine.mp4" type="video/mp4" />
-                  <div className="bg-gradient-to-br from-orange-100 to-orange-200 w-full h-full flex items-center justify-center rounded-lg">
-                    <p className="text-orange-800 text-sm font-medium">Loading...</p>
-                  </div>
-                </video>
+                  sources={[{ src: "/videos/about-kafeine.mp4" }]}
+                  placeholder={
+                    <div className="bg-gradient-to-br from-orange-100 to-orange-200 w-full h-full flex items-center justify-center rounded-lg">
+                      <p className="text-orange-800 text-sm font-medium">Loading...</p>
+                    </div>
+                  }
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-2 left-2 bg-black/50 backdrop-blur-sm px-2 py-1 rounded text-white text-xs font-medium">
                   Experience
