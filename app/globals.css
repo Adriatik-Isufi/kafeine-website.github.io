@@ -242,3 +242,11 @@
     animation: bounce-text 2s ease-in-out infinite;
   }
 }
+
+/* Defer layout/paint for below-fold sections until near the viewport.
+   Hero (#home) stays eager so LCP is unaffected. */
+main > section:not(#home),
+.min-h-screen > section:not(#home) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+}

@@ -185,8 +185,11 @@ function Navigation({ language = "sq", onLanguageChange, isCareerPage = false }:
           {/* Logo */}
           <div className="flex items-center flex-shrink-0">
             <img
-              src={getImagePath("/images/logo.png") || "/placeholder.svg"}
+              src={getImagePath("/optimized/images/logo-208.webp") || "/placeholder.svg"}
               alt="Kafeinë"
+              width={64}
+              height={64}
+              decoding="async"
               className={`w-auto object-contain transition-all duration-500 ${isScrolled ? "h-10" : "h-16"}`}
             />
           </div>
@@ -233,9 +236,11 @@ function Navigation({ language = "sq", onLanguageChange, isCareerPage = false }:
             <div className="md:hidden">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
+                aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+                aria-expanded={isMenuOpen}
                 className="p-2 rounded-lg text-white/80 hover:text-white hover:bg-white/10 transition-all duration-200"
               >
-                {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+                {isMenuOpen ? <X className="h-5 w-5" aria-hidden="true" /> : <Menu className="h-5 w-5" aria-hidden="true" />}
               </button>
             </div>
           </div>
@@ -268,8 +273,11 @@ function Navigation({ language = "sq", onLanguageChange, isCareerPage = false }:
             >
               <div className="flex items-center">
                 <img
-                  src={getImagePath("/images/logo.png") || "/placeholder.svg"}
+                  src={getImagePath("/optimized/images/logo-208.webp") || "/placeholder.svg"}
                   alt="Kafeinë"
+                  width={80}
+                  height={80}
+                  decoding="async"
                   className="h-20 w-auto object-contain filter brightness-0 invert"
                 />
               </div>
@@ -378,6 +386,7 @@ function Navigation({ language = "sq", onLanguageChange, isCareerPage = false }:
                   href="https://www.instagram.com/kafeine.ks"
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label="Instagram"
                   className="hover:text-amber-400 transition-all duration-200 transform hover:scale-125 active:scale-110"
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -388,6 +397,7 @@ function Navigation({ language = "sq", onLanguageChange, isCareerPage = false }:
                   href="https://www.facebook.com/profile.php?id=61567364573918"
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label="Facebook"
                   className="hover:text-amber-400 transition-all duration-200 transform hover:scale-125 active:scale-110"
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -398,6 +408,7 @@ function Navigation({ language = "sq", onLanguageChange, isCareerPage = false }:
                   href="https://www.tiktok.com/@kafeine.ks"
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label="TikTok"
                   className="hover:text-amber-400 transition-all duration-200 transform hover:scale-125 active:scale-110"
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">

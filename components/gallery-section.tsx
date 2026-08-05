@@ -2,7 +2,7 @@
 
 import React, { useState } from "react"
 import { getImagePath } from "@/lib/utils"
-import { DotLottieReact } from "@lottiefiles/dotlottie-react"
+import { LazyLottie } from "@/components/lazy-lottie"
 import { galleryImages } from "@/data/gallery"
 
 interface GallerySectionProps {
@@ -193,10 +193,8 @@ export function GallerySection({ language }: GallerySectionProps) {
               className="absolute bottom-10 left-10 hover:rotate-2 transition-transform duration-300"
               style={{width: '300px', height: '360px', zIndex: 1}}
             >
-              <DotLottieReact
+              <LazyLottie
                 src="https://lottie.host/c5b2c2f8-8a34-4f4c-b7c5-0c7de60e81ad/QmAiB5name.lottie"
-                loop
-                autoplay
                 style={{width: '100%', height: '100%'}}
               />
             </div>

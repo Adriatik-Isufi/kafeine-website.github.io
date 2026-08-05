@@ -58,10 +58,12 @@ export function Footer({ language = "sq" }: FooterProps) {
           <div className="md:col-span-2">
             <div className="flex items-center space-x-2 mb-4">
               <img
-                src={getImagePath("/images/logo.png") || "/placeholder.svg"}
+                src={getImagePath("/optimized/images/logo-208.webp") || "/placeholder.svg"}
                 alt="Kafeinë Logo"
                 width={40}
                 height={40}
+                loading="lazy"
+                decoding="async"
                 className="h-10 w-auto object-contain"
               />
               <span className="text-2xl font-bold text-[#e18b1a]">Kafeinë</span>
@@ -164,6 +166,7 @@ export function Footer({ language = "sq" }: FooterProps) {
                   href="https://www.instagram.com/kafeine.ks"
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label="Instagram"
                   className="w-8 h-8 bg-[#e18b1a]/20 rounded-full flex items-center justify-center hover:bg-[#e18b1a]/30 transition-colors"
                 >
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -174,6 +177,7 @@ export function Footer({ language = "sq" }: FooterProps) {
                   href="https://www.facebook.com/profile.php?id=61567364573918"
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label="Facebook"
                   className="w-8 h-8 bg-[#e18b1a]/20 rounded-full flex items-center justify-center hover:bg-[#e18b1a]/30 transition-colors"
                 >
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -184,6 +188,7 @@ export function Footer({ language = "sq" }: FooterProps) {
                   href="https://www.tiktok.com/@kafeine.ks"
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label="TikTok"
                   className="w-8 h-8 bg-[#e18b1a]/20 rounded-full flex items-center justify-center hover:bg-[#e18b1a]/30 transition-colors"
                 >
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">

@@ -298,6 +298,15 @@ export default function RootLayout({
     <html lang="sq" className="scroll-smooth">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link
+          rel="preload"
+          as="image"
+          type="image/avif"
+          href="/optimized/images/coffee-pour-640.avif"
+          imageSrcSet="/optimized/images/coffee-pour-640.avif 640w, /optimized/images/coffee-pour-960.avif 960w, /optimized/images/coffee-pour-1280.avif 1280w"
+          imageSizes="100vw"
+          fetchPriority="high"
+        />
 
         {/* Geographic Meta Tags */}
         <meta name="geo.region" content="XK" />

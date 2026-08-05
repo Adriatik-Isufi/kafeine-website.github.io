@@ -5,7 +5,7 @@ import { useState } from "react"
 import emailjs from "@emailjs/browser"
 import { Button } from "@/components/ui/button"
 import { MapPin, Phone, Briefcase, ArrowRight } from "lucide-react"
-import { DotLottieReact } from "@lottiefiles/dotlottie-react"
+import { LazyLottie } from "@/components/lazy-lottie"
 import Image from "next/image"
 import { getImagePath } from "@/lib/utils"
 
@@ -180,10 +180,9 @@ export function ContactSection({ language }: ContactSectionProps) {
               <div className="flex items-center justify-center gap-2 lg:gap-4 mb-4">
                 <h2 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-white">{t.title}</h2>
                 <div className="w-12 h-12 lg:w-20 lg:h-20">
-                  <DotLottieReact
+                  <LazyLottie
                     src="https://lottie.host/076689ac-fe46-4151-aa4f-dd3ef88582eb/gZ7nyyGSmr.lottie"
-                    loop
-                    autoplay
+                    style={{ width: "100%", height: "100%" }}
                   />
                 </div>
               </div>
@@ -281,6 +280,7 @@ export function ContactSection({ language }: ContactSectionProps) {
                     href="https://www.instagram.com/kafeine.ks"
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label="Instagram"
                     className="w-10 h-10 lg:w-12 lg:h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-gradient-to-br hover:from-pink-500 hover:to-purple-600 transition-all duration-300 group"
                   >
                     <svg
@@ -295,6 +295,7 @@ export function ContactSection({ language }: ContactSectionProps) {
                     href="https://www.facebook.com/profile.php?id=61567364573918"
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label="Facebook"
                     className="w-10 h-10 lg:w-12 lg:h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-gradient-to-br hover:from-blue-500 hover:to-blue-600 transition-all duration-300 group"
                   >
                     <svg
@@ -309,6 +310,7 @@ export function ContactSection({ language }: ContactSectionProps) {
                     href="https://www.tiktok.com/@kafeine.ks"
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label="TikTok"
                     className="w-10 h-10 lg:w-12 lg:h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-gradient-to-br hover:from-black hover:to-gray-800 transition-all duration-300 group"
                   >
                     <svg

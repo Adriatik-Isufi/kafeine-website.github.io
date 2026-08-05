@@ -1,7 +1,7 @@
-// Generates WebP siblings of the large photography used across the site into
-// public/optimized/<same relative path>.webp — fully non-destructive (the
-// original JPG/PNG files under public/ are never touched) and idempotent
-// (skips files whose WebP output is already newer than the source).
+// Generates WebP (and AVIF for the LCP hero) siblings of the large photography
+// used across the site into public/optimized/<same relative path>... —
+// fully non-destructive (originals under public/ are never touched) and
+// idempotent (skips files whose output is already newer than the source).
 //
 // Runs automatically before `next build`/`next dev` via the "prebuild"/"predev"
 // npm scripts, so newly dropped photos get optimized on every deploy without
@@ -16,9 +16,6 @@ const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)))
 const publicDir = path.join(root, 'public')
 const outRoot = path.join(publicDir, 'optimized')
 
-// Each entry caps the resize width to the largest size the image is ever
-// rendered at (with headroom for retina), so we get the win from both
-// re-encoding to WebP *and* not shipping needlessly high resolutions.
 const TARGETS = [
   { dir: 'New Batch', maxWidth: 1000, quality: 72 },
   { dir: 'Menu', maxWidth: 800, quality: 72 },
@@ -27,10 +24,13 @@ const TARGETS = [
 
 const SINGLE_FILES = [
   { file: 'pristina-map-dark.png', maxWidth: 1200, quality: 75 },
-  { file: 'images/coffee-pour.jpg', maxWidth: 1920, quality: 75 },
   { file: 'images/Work1.jpg', maxWidth: 1000, quality: 75 },
   { file: 'images/workspace.png', maxWidth: 1000, quality: 75 },
 ]
+
+// Responsive LCP hero background — AVIF + WebP at mobile/tablet/desktop widths.
+const HERO_WIDTHS = [640, 960, 1280]
+const LOGO_WIDTHS = [208, 416]
 
 const IMAGE_EXT = /\.(jpe?g|png)$/i
 
@@ -63,6 +63,74 @@ async function walk(dir) {
     })
   )
   return files.flat()
+}
+
+async function optimizeHero() {
+  const src = path.join(publicDir, 'images', 'coffee-pour.jpg')
+  let generated = 0
+  try {
+    await fs.access(src)
+  } catch {
+    console.warn('[optimize-images] WARNING: images/coffee-pour.jpg not found')
+    return 0
+  }
+
+  for (const width of HERO_WIDTHS) {
+    const webpOut = path.join(outRoot, 'images', `coffee-pour-${width}.webp`)
+    if (!(await isUpToDate(src, webpOut))) {
+      await fs.mkdir(path.dirname(webpOut), { recursive: true })
+      await sharp(src)
+        .resize({ width, withoutEnlargement: true })
+        .webp({ quality: width <= 640 ? 68 : 72 })
+        .toFile(webpOut)
+      generated++
+    }
+
+    const avifOut = path.join(outRoot, 'images', `coffee-pour-${width}.avif`)
+    if (!(await isUpToDate(src, avifOut))) {
+      await fs.mkdir(path.dirname(avifOut), { recursive: true })
+      await sharp(src)
+        .resize({ width, withoutEnlargement: true })
+        .avif({ quality: 45, effort: 5 })
+        .toFile(avifOut)
+      generated++
+    }
+  }
+
+  // Keep a plain coffee-pour.webp for any leftover CSS references.
+  const legacy = path.join(outRoot, 'images', 'coffee-pour.webp')
+  if (!(await isUpToDate(src, legacy))) {
+    await sharp(src)
+      .resize({ width: 1280, withoutEnlargement: true })
+      .webp({ quality: 72 })
+      .toFile(legacy)
+    generated++
+  }
+
+  return generated
+}
+
+async function optimizeLogo() {
+  const src = path.join(publicDir, 'images', 'logo.png')
+  let generated = 0
+  try {
+    await fs.access(src)
+  } catch {
+    console.warn('[optimize-images] WARNING: images/logo.png not found')
+    return 0
+  }
+
+  for (const width of LOGO_WIDTHS) {
+    const out = path.join(outRoot, 'images', `logo-${width}.webp`)
+    if (await isUpToDate(src, out)) continue
+    await fs.mkdir(path.dirname(out), { recursive: true })
+    await sharp(src)
+      .resize({ width, withoutEnlargement: true })
+      .webp({ quality: 80 })
+      .toFile(out)
+    generated++
+  }
+  return generated
 }
 
 async function main() {
@@ -99,7 +167,11 @@ async function main() {
     if (await convert(src, out, maxWidth, quality)) generated++
   }
 
-  console.log(`[optimize-images] ${checked} source images checked, ${generated} WebP files (re)generated`)
+  checked += 2
+  generated += await optimizeHero()
+  generated += await optimizeLogo()
+
+  console.log(`[optimize-images] ${checked} source images checked, ${generated} optimized files (re)generated`)
 }
 
 main().catch((err) => {

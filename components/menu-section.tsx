@@ -153,25 +153,12 @@ export function MenuSection({ language }: MenuSectionProps) {
   const handleTabSelect = (tab: MenuCategoryId) => {
     setActiveTab(tab)
 
+    // Prefer scrollIntoView over offsetLeft/clientWidth reads to avoid forced reflow.
     if (mobileTabsRef.current) {
       const tabButtons = mobileTabsRef.current.querySelectorAll("button")
       const tabIndex = categories.indexOf(tab)
-
-      if (tabButtons[tabIndex]) {
-        const button = tabButtons[tabIndex] as HTMLElement
-        const container = mobileTabsRef.current
-        const buttonLeft = button.offsetLeft
-        const containerScrollLeft = container.scrollLeft
-        const containerWidth = container.clientWidth
-        const buttonWidth = button.offsetWidth
-
-        const targetScrollLeft = buttonLeft - 16
-
-        container.scrollTo({
-          left: Math.max(0, targetScrollLeft),
-          behavior: "smooth",
-        })
-      }
+      const button = tabButtons[tabIndex] as HTMLElement | undefined
+      button?.scrollIntoView({ behavior: "smooth", inline: "nearest", block: "nearest" })
     }
   }
 
