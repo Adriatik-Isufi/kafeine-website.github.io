@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { getImagePath } from "@/lib/utils"
 import { LazyLottie } from "@/components/lazy-lottie"
 import { galleryImages } from "@/data/gallery"
@@ -34,6 +34,7 @@ export function GallerySection({ language }: GallerySectionProps) {
   const [mouseStart, setMouseStart] = useState<number | null>(null)
   const [mouseEnd, setMouseEnd] = useState<number | null>(null)
   const [isDragging, setIsDragging] = useState(false)
+  const thumbnailStripRef = useRef<HTMLDivElement>(null)
 
   const minSwipeDistance = 50
 
@@ -134,6 +135,14 @@ export function GallerySection({ language }: GallerySectionProps) {
     window.addEventListener('keydown', handleKeyPress)
     return () => window.removeEventListener('keydown', handleKeyPress)
   }, [selectedImage, currentImageIndex])
+
+  // Keep the active thumbnail visible as users swipe through the gallery.
+  useEffect(() => {
+    if (!selectedImage || !thumbnailStripRef.current) return
+    const buttons = thumbnailStripRef.current.querySelectorAll("button")
+    const active = buttons[currentImageIndex] as HTMLElement | undefined
+    active?.scrollIntoView({ behavior: "smooth", inline: "nearest", block: "nearest" })
+  }, [currentImageIndex, selectedImage])
 
   return (
     <section id="gallery" className="py-20 bg-[#2a2a2a]">
@@ -598,12 +607,15 @@ export function GallerySection({ language }: GallerySectionProps) {
               </button>
 
               {/* Thumbnail Strip */}
-              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 bg-black/30 p-3 rounded-xl backdrop-blur-sm">
+              <div
+                ref={thumbnailStripRef}
+                className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 bg-black/30 p-3 rounded-xl backdrop-blur-sm overflow-x-auto scrollbar-hide max-w-[90vw]"
+              >
                 {images.map((image, index) => (
                   <button
                     key={index}
                     onClick={() => openGallery(index)}
-                    className={`w-12 h-12 rounded-lg overflow-hidden transition-all duration-300 hover:scale-110 ${
+                    className={`w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 transition-all duration-300 hover:scale-110 ${
                       index === currentImageIndex ? 'ring-2 ring-[#ff9500] scale-110' : 'opacity-70 hover:opacity-100'
                     }`}
                   >
